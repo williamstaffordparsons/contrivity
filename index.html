@@ -1,0 +1,3000 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Eightomic: Play Contrivity</title>
+    <link href="favicon.ico" rel="icon" type="image/x-icon">
+    <meta content="noindex" name="robots">
+    <meta charset="utf-8">
+    <style type="text/css">
+      [recoil="0"] {
+        margin-top: -3px;
+      }
+      [recoil="1"] {
+        margin-top: 3px;
+      }
+      [recoil="2"] {
+        margin-left: -2px;
+      }
+      [recoil="3"] {
+        margin-left: 2px;
+      }
+      body,
+      html {
+        background: #f3f3f3;
+        font-family: sans-serif;
+        margin: 0;
+        overflow: hidden;
+      }
+      p {
+        margin: 0;
+        position: absolute;
+        z-index: 6;
+      }
+      .bounds {
+        background-color: #000;
+        border-radius: 5px;
+        height: 378px;
+        overflow: hidden;
+        position: absolute;
+        width: 672px;
+      }
+      .bullet-time {
+        transition: background-color 2s ease-out;
+      }
+        .bullet-time .enemy {
+          transition: border-color 0.06s ease,
+            left 0.4s ease-out,
+            top 0.4s ease-out;
+        }
+        .bullet-time .gore div {
+          transition: margin 0.08s ease;
+        }
+        .bullet-time .pieces div {
+          transition: background-color 0.6s ease,
+            margin 0.2s ease;
+        }
+        .bullet-time .player-weapon {
+          transition: margin 0.1s ease;
+        }
+        .bullet-time .player-weapon-spark {
+          transition: left 0.1s ease-out,
+            top 0.1s ease-out;
+        }
+      .element {
+        display: block;
+        position: absolute;
+      }
+      .enemy {
+        background-color: #000;
+        border: 4px solid #777;
+        border-radius: 60px;
+        height: 20px;
+        transition: border-color 0.03s ease,
+          left 0.2s ease-out,
+          top 0.2s ease-out;
+        width: 20px;
+        z-index: 4;
+      }
+        .enemy.hit {
+          border-color: #bbb;
+          z-index: 5;
+        }
+          .enemy.hit .health {
+            background-color: #ed4040;
+          }
+        .enemy .health-container {
+          background-color: #780c0c;
+          border-radius: 8px;
+          height: 4px;
+          left: -2px;
+          position: absolute;
+          top: -15px;
+          width: 24px;
+        }
+        .enemy .health {
+          background-color: #f02222;
+          border-radius: 7px;
+          height: 4px;
+          left: 0;
+          position: absolute;
+          top: 0;
+          transition: background-color 0.05s ease;
+        }
+      .gore {
+        z-index: 2;
+      }
+        .gore div {
+          background: #222;
+          border-radius: 10px;
+          height: 4px;
+          position: absolute;
+          transition: margin 0.04s ease;
+          width: 4px;
+        }
+        .gore-0 div:nth-child(1) {
+          background: #292929;
+          margin: 19px 0 0 9px;
+        }
+        .gore-0 div:nth-child(2) {
+          background: #555;
+          margin: 4px 0 0 2px;
+          transform: rotate(154deg);
+          width: 8px;
+        }
+        .gore-0 div:nth-child(3) {
+          background: #181818;
+          margin: -11px 0 0 23px;
+        }
+        .gore-0 div:nth-child(4) {
+          background: #181818;
+          margin: -11px 0 0 -29px;
+          transform: rotate(175deg);
+          width: 10px;
+        }
+        .gore-0 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: -15px 0 0 -58px;
+        }
+        .gore-0 div:nth-child(6) {
+          background: #3a3a3a;
+          margin: 11px 0 0 -20px;
+          transform: rotate(28deg);
+          width: 6px;
+        }
+        .gore-1 div:nth-child(1) {
+          background: #3a3a3a;
+          margin: 1px 0 0 35px;
+        }
+        .gore-1 div:nth-child(2) {
+          background: #3a3a3a;
+          margin: 22px 0 0 39px;
+          transform: rotate(113deg);
+          width: 8px;
+        }
+        .gore-1 div:nth-child(3) {
+          background: #181818;
+          margin: 56px 0 0 12px;
+        }
+        .gore-1 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: -17px 0 0 15px;
+          transform: rotate(42deg);
+          width: 10px;
+        }
+        .gore-1 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: -16px 0 0 31px;
+        }
+        .gore-1 div:nth-child(6) {
+          background: #555;
+          margin: -8px 0 0 -3px;
+          transform: rotate(113deg);
+          width: 6px;
+        }
+        .gore-1 div:nth-child(7) {
+          background: #292929;
+          margin: 4px 0 0 2px;
+          transform: rotate(154deg);
+          width: 8px;
+        }
+        .gore-1 div:nth-child(8) {
+          background: #181818;
+          margin: -21px 0 0 23px;
+        }
+        .gore-1 div:nth-child(9) {
+          background: #181818;
+          margin: -11px 0 0 -29px;
+          transform: rotate(175deg);
+          width: 10px;
+        }
+        .gore-2 div:nth-child(1) {
+          background: #181818;
+          margin: 8px 0 0 -2px;
+        }
+        .gore-2 div:nth-child(2) {
+          background: #292929;
+          margin: 11px 0 0 10px;
+          transform: rotate(172deg);
+          width: 8px;
+        }
+        .gore-2 div:nth-child(3) {
+          background: #181818;
+          margin: 10px 0 0 -2px;
+        }
+        .gore-2 div:nth-child(4) {
+          background: #292929;
+          margin: 1px 0 0 21px;
+          transform: rotate(93deg);
+          width: 10px;
+        }
+        .gore-2 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: 4px 0 0 20px;
+        }
+        .gore-2 div:nth-child(6) {
+          background: #292929;
+          margin: 16px 0 0 14px;
+          transform: rotate(158deg);
+          width: 6px;
+        }
+        .gore-2 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 42px 0 0 19px;
+          transform: rotate(113deg);
+          width: 8px;
+        }
+        .gore-2 div:nth-child(8) {
+          background: #555;
+          margin: 26px 0 0 12px;
+        }
+        .gore-2 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: -17px 0 0 15px;
+          transform: rotate(42deg);
+          width: 10px;
+        }
+        .gore-3 div:nth-child(1) {
+          background: #292929;
+          margin: -6px 0 0 16px;
+        }
+        .gore-3 div:nth-child(2) {
+          background: #292929;
+          margin: 18px 0 0 19px;
+          transform: rotate(112deg);
+          width: 8px;
+        }
+        .gore-3 div:nth-child(3) {
+          background: #292929;
+          margin: -25px 0 0 -24px;
+        }
+        .gore-3 div:nth-child(4) {
+          background: #555;
+          margin: -55px 0 0 22px;
+          transform: rotate(77deg);
+          width: 10px;
+        }
+        .gore-3 div:nth-child(5) {
+          background: #181818;
+          margin: -21px 0 0 8px;
+        }
+        .gore-3 div:nth-child(6) {
+          background: #292929;
+          margin: -16px 0 0 -17px;
+          transform: rotate(155deg);
+          width: 6px;
+        }
+        .gore-3 div:nth-child(7) {
+          background: #292929;
+          margin: 11px 0 0 10px;
+          transform: rotate(172deg);
+          width: 8px;
+        }
+        .gore-3 div:nth-child(8) {
+          background: #181818;
+          margin: 10px 0 0 -2px;
+        }
+        .gore-3 div:nth-child(9) {
+          background: #292929;
+          margin: 1px 0 0 21px;
+          transform: rotate(93deg);
+          width: 10px;
+        }
+        .gore-4 div:nth-child(1) {
+          background: #292929;
+          margin: -15px 0 0 10px;
+        }
+        .gore-4 div:nth-child(2) {
+          background: #555;
+          margin: 23px 0 0 23px;
+          transform: rotate(64deg);
+          width: 8px;
+        }
+        .gore-4 div:nth-child(3) {
+          background: #292929;
+          margin: 7px 0 0 24px;
+        }
+        .gore-4 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: -28px 0 0 22px;
+          transform: rotate(102deg);
+          width: 10px;
+        }
+        .gore-4 div:nth-child(5) {
+          background: #181818;
+          margin: 16px 0 0 9px;
+        }
+        .gore-4 div:nth-child(6) {
+          background: #181818;
+          margin: -8px 0 0 19px;
+          transform: rotate(132deg);
+          width: 6px;
+        }
+        .gore-4 div:nth-child(7) {
+          background: #292929;
+          margin: -6px 0 0 16px;
+        }
+        .gore-4 div:nth-child(8) {
+          background: #292929;
+          margin: 58px 0 0 29px;
+          transform: rotate(112deg);
+          width: 8px;
+        }
+        .gore-4 div:nth-child(9) {
+          background: #292929;
+          margin: -45px 0 0 -24px;
+        }
+        .gore-5 div:nth-child(1) {
+          background: #3a3a3a;
+          margin: -9px 0 0 27px;
+        }
+        .gore-5 div:nth-child(2) {
+          background: #3a3a3a;
+          margin: -8px 0 0 2px;
+          transform: rotate(139deg);
+          width: 8px;
+        }
+        .gore-5 div:nth-child(3) {
+          background: #3a3a3a;
+          margin: 22px 0 0 16px;
+        }
+        .gore-5 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: -6px 0 0 -1px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .gore-5 div:nth-child(5) {
+          background: #181818;
+          margin: -46px 0 0 -13px;
+        }
+        .gore-5 div:nth-child(6) {
+          background: #3a3a3a;
+          margin: -16px 0 0 9px;
+          transform: rotate(80deg);
+          width: 6px;
+        }
+        .gore-5 div:nth-child(7) {
+          background: #555;
+          margin: 23px 0 0 23px;
+          transform: rotate(64deg);
+          width: 8px;
+        }
+        .gore-5 div:nth-child(8) {
+          background: #292929;
+          margin: 7px 0 0 24px;
+        }
+        .gore-5 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: -28px 0 0 22px;
+          transform: rotate(102deg);
+          width: 10px;
+        }
+        .gore-6 div:nth-child(1) {
+          background: #181818;
+          margin: -25px 0 0 25px;
+        }
+        .gore-6 div:nth-child(2) {
+          background: #181818;
+          margin: 26px 0 0 -5px;
+          transform: rotate(4deg);
+          width: 8px;
+        }
+        .gore-6 div:nth-child(3) {
+          background: #292929;
+          margin: -72px 0 0 7px;
+        }
+        .gore-6 div:nth-child(4) {
+          background: #555;
+          margin: -19px 0 0 -7px;
+          transform: rotate(109deg);
+          width: 10px;
+        }
+        .gore-6 div:nth-child(5) {
+          background: #292929;
+          margin: -11px 0 0 -16px;
+        }
+        .gore-6 div:nth-child(6) {
+          background: #3a3a3a;
+          margin: -11px 0 0 49px;
+          transform: rotate(25deg);
+          width: 6px;
+        }
+        .gore-6 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 22px 0 0 16px;
+        }
+        .gore-6 div:nth-child(8) {
+          background: #181818;
+          margin: -6px 0 0 -13px;
+        }
+        .gore-6 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: -16px 0 0 9px;
+          transform: rotate(80deg);
+          width: 6px;
+        }
+        .gore-7 div:nth-child(1) {
+          background: #292929;
+          margin: 2px 0 0 22px;
+        }
+        .gore-7 div:nth-child(2) {
+          background: #181818;
+          margin: 26px 0 0 -51px;
+          transform: rotate(95deg);
+          width: 8px;
+        }
+        .gore-7 div:nth-child(3) {
+          background: #3a3a3a;
+          margin: 25px 0 0 -14px;
+        }
+        .gore-7 div:nth-child(4) {
+          background: #292929;
+          margin: 21px 0 0 -16px;
+          transform: rotate(30deg);
+          width: 10px;
+        }
+        .gore-7 div:nth-child(5) {
+          background: #292929;
+          margin: -26px 0 0 -10px;
+        }
+        .gore-7 div:nth-child(6) {
+          background: #555;
+          margin: -5px 0 0 13px;
+          transform: rotate(169deg);
+          width: 6px;
+        }
+        .gore-7 div:nth-child(7) {
+          background: #181818;
+          margin: 26px 0 0 -5px;
+          transform: rotate(4deg);
+          width: 8px;
+        }
+        .gore-7 div:nth-child(8) {
+          background: #292929;
+          margin: -19px 0 0 -7px;
+          transform: rotate(109deg);
+          width: 10px;
+        }
+        .gore-7 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: -11px 0 0 19px;
+          transform: rotate(25deg);
+          width: 6px;
+        }
+        .gore-8 div:nth-child(1) {
+          background: #3a3a3a;
+          margin: 17px 0 0 -4px;
+        }
+        .gore-8 div:nth-child(2) {
+          background: #3a3a3a;
+          margin: 25px 0 0 52px;
+          transform: rotate(48deg);
+          width: 8px;
+        }
+        .gore-8 div:nth-child(3) {
+          background: #181818;
+          margin: 16px 0 0 15px;
+        }
+        .gore-8 div:nth-child(4) {
+          background: #292929;
+          margin: 2px 0 0 20px;
+          transform: rotate(96deg);
+          width: 10px;
+        }
+        .gore-8 div:nth-child(5) {
+          background: #292929;
+          margin: -12px 0 0 7px;
+        }
+        .gore-8 div:nth-child(6) {
+          background: #181818;
+          margin: -16px 0 0 18px;
+          transform: rotate(44deg);
+          width: 6px;
+        }
+        .gore-8 div:nth-child(7) {
+          background: #292929;
+          margin: 2px 0 0 22px;
+        }
+        .gore-8 div:nth-child(8) {
+          background: #181818;
+          margin: 66px 0 0 -21px;
+          transform: rotate(95deg);
+          width: 8px;
+        }
+        .gore-8 div:nth-child(9) {
+          background: #555;
+          margin: 15px 0 0 -14px;
+        }
+        .gore-9 div:nth-child(1) {
+          background: #3a3a3a;
+          margin: 2px 0 0 26px;
+        }
+        .gore-9 div:nth-child(2) {
+          background: #181818;
+          margin: -11px 0 0 25px;
+          transform: rotate(69deg);
+          width: 8px;
+        }
+        .gore-9 div:nth-child(3) {
+          background: #292929;
+          margin: -27px 0 0 -11px;
+        }
+        .gore-9 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: 5px 0 0 -27px;
+          transform: rotate(129deg);
+          width: 10px;
+        }
+        .gore-9 div:nth-child(5) {
+          background: #292929;
+          margin: -29px 0 0 15px;
+        }
+        .gore-9 div:nth-child(6) {
+          background: #181818;
+          margin: 28px 0 0 -6px;
+          transform: rotate(159deg);
+          width: 6px;
+        }
+        .gore-9 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 17px 0 0 -4px;
+        }
+        .gore-9 div:nth-child(8) {
+          background: #555;
+          margin: 25px 0 0 12px;
+          transform: rotate(48deg);
+          width: 8px;
+        }
+        .gore-9 div:nth-child(9) {
+          background: #181818;
+          margin: 16px 0 0 15px;
+        }
+        .gore-10 div:nth-child(1) {
+          background: #555;
+          margin: -42px 0 0 -18px;
+        }
+        .gore-10 div:nth-child(2) {
+          background: #3a3a3a;
+          margin: -15px 0 0 -27px;
+          transform: rotate(105deg);
+          width: 8px;
+        }
+        .gore-10 div:nth-child(3) {
+          background: #292929;
+          margin: 17px 0 0 9px;
+        }
+        .gore-10 div:nth-child(4) {
+          background: #292929;
+          margin: 18px 0 0 10px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .gore-10 div:nth-child(5) {
+          background: #181818;
+          margin: -15px 0 0 13px;
+        }
+        .gore-10 div:nth-child(6) {
+          background: #555;
+          margin: -10px 0 0 2px;
+          transform: rotate(172deg);
+          width: 6px;
+        }
+        .gore-10 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 2px 0 0 26px;
+        }
+        .gore-10 div:nth-child(8) {
+          background: #292929;
+          margin: -27px 0 0 -11px;
+        }
+        .gore-10 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: 5px 0 0 -27px;
+          transform: rotate(129deg);
+          width: 10px;
+        }
+        .gore-11 div:nth-child(1) {
+          background: #292929;
+          margin: -3px 0 0 14px;
+        }
+        .gore-11 div:nth-child(2) {
+          background: #3a3a3a;
+          margin: 10px 0 0 8px;
+          transform: rotate(35deg);
+          width: 8px;
+        }
+        .gore-11 div:nth-child(3) {
+          background: #181818;
+          margin: 17px 0 0 25px;
+        }
+        .gore-11 div:nth-child(4) {
+          background: #292929;
+          margin: 19px 0 0 -28px;
+          transform: rotate(4deg);
+          width: 10px;
+        }
+        .gore-11 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: -28px 0 0 -10px;
+        }
+        .gore-11 div:nth-child(6) {
+          background: #3a3a3a;
+          margin: -2px 0 0 -7px;
+          transform: rotate(106deg);
+          width: 6px;
+        }
+        .gore-11 div:nth-child(7) {
+          background: #555;
+          margin: 48px 0 0 34px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .gore-11 div:nth-child(8) {
+          background: #181818;
+          margin: -15px 0 0 13px;
+        }
+        .gore-11 div:nth-child(9) {
+          background: #181818;
+          margin: -10px 0 0 2px;
+          transform: rotate(172deg);
+          width: 6px;
+        }
+        .gore-12 div:nth-child(1) {
+          background: #181818;
+          margin: -13px 0 0 -18px;
+        }
+        .gore-12 div:nth-child(2) {
+          background: #292929;
+          margin: -10px 0 0 -13px;
+          transform: rotate(116deg);
+          width: 8px;
+        }
+        .gore-12 div:nth-child(3) {
+          background: #292929;
+          margin: 4px 0 0 -20px;
+        }
+        .gore-12 div:nth-child(4) {
+          background: #555;
+          margin: 20px 0 0 -57px;
+          transform: rotate(58deg);
+          width: 10px;
+        }
+        .gore-12 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: 2px 0 0 16px;
+        }
+        .gore-12 div:nth-child(6) {
+          background: #181818;
+          margin: 14px 0 0 4px;
+          transform: rotate(59deg);
+          width: 6px;
+        }
+        .gore-12 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 0 0 0 8px;
+          transform: rotate(35deg);
+          width: 8px;
+        }
+        .gore-12 div:nth-child(8) {
+          background: #181818;
+          margin: 17px 0 0 25px;
+        }
+        .gore-12 div:nth-child(9) {
+          background: #292929;
+          margin: 19px 0 0 -28px;
+          transform: rotate(4deg);
+          width: 10px;
+        }
+        .gore-13 div:nth-child(1) {
+          background: #292929;
+          margin: -27px 0 0 -18px;
+        }
+        .gore-13 div:nth-child(2) {
+          background: #555;
+          margin: 26px 0 0 -15px;
+          transform: rotate(78deg);
+          width: 8px;
+        }
+        .gore-13 div:nth-child(3) {
+          background: #3a3a3a;
+          margin: -13px 0 0 5px;
+        }
+        .gore-13 div:nth-child(4) {
+          background: #181818;
+          margin: -29px 0 0 -15px;
+          transform: rotate(108deg);
+          width: 10px;
+        }
+        .gore-13 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: 24px 0 0 44px;
+        }
+        .gore-13 div:nth-child(6) {
+          background: #3a3a3a;
+          margin: -12px 0 0 3px;
+          transform: rotate(139deg);
+          width: 6px;
+        }
+        .gore-13 div:nth-child(7) {
+          background: #181818;
+          margin: -73px 0 0 -18px;
+        }
+        .gore-13 div:nth-child(8) {
+          background: #292929;
+          margin: 4px 0 0 -20px;
+        }
+        .gore-13 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: 12px 0 0 16px;
+        }
+        .gore-14 div:nth-child(1) {
+          background: #3a3a3a;
+          margin: -27px 0 0 15px;
+        }
+        .gore-14 div:nth-child(2) {
+          background: #3a3a3a;
+          margin: -2px 0 0 -23px;
+          transform: rotate(91deg);
+          width: 8px;
+        }
+        .gore-14 div:nth-child(3) {
+          background: #181818;
+          margin: 29px 0 0 26px;
+        }
+        .gore-14 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: 17px 0 0 28px;
+          transform: rotate(174deg);
+          width: 10px;
+        }
+        .gore-14 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: 16px 0 0 19px;
+        }
+        .gore-14 div:nth-child(6) {
+          background: #555;
+          margin: -18px 0 0 -12px;
+          transform: rotate(143deg);
+          width: 6px;
+        }
+        .gore-14 div:nth-child(7) {
+          background: #292929;
+          margin: -27px 0 0 -18px;
+        }
+        .gore-14 div:nth-child(8) {
+          background: #181818;
+          margin: 26px 0 0 -15px;
+          transform: rotate(78deg);
+          width: 8px;
+        }
+        .gore-14 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: -13px 0 0 5px;
+        }
+        .gore-15 div:nth-child(1) {
+          background: #292929;
+          margin: 54px 0 0 5px;
+        }
+        .gore-15 div:nth-child(2) {
+          background: #292929;
+          margin: 5px 0 0 -15px;
+          transform: rotate(165deg);
+          width: 8px;
+        }
+        .gore-15 div:nth-child(3) {
+          background: #292929;
+          margin: 11px 0 0 -16px;
+        }
+        .gore-15 div:nth-child(4) {
+          background: #292929;
+          margin: -12px 0 0 3px;
+          transform: rotate(132deg);
+          width: 10px;
+        }
+        .gore-15 div:nth-child(5) {
+          background: #292929;
+          margin: -26px 0 0 17px;
+        }
+        .gore-15 div:nth-child(6) {
+          background: #181818;
+          margin: -13px 0 0 -11px;
+          transform: rotate(0deg);
+          width: 6px;
+        }
+        .gore-15 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: -2px 0 0 -23px;
+          transform: rotate(91deg);
+          width: 8px;
+        }
+        .gore-15 div:nth-child(8) {
+          background: #555;
+          margin: 17px 0 0 28px;
+          transform: rotate(174deg);
+          width: 10px;
+        }
+        .gore-15 div:nth-child(9) {
+          background: #292929;
+          margin: -18px 0 0 -12px;
+          transform: rotate(143deg);
+          width: 6px;
+        }
+      .hidden {
+        display: none;
+      }
+      .pieces {
+        z-index: 1;
+      }
+        .pieces div {
+          background: #444;
+          border-radius: 10px;
+          height: 4px;
+          position: absolute;
+          transition: background-color 0.3s ease,
+            margin 0.1s ease;
+          width: 4px;
+        }
+        .pieces-0 div:nth-child(1) {
+          background: #444;
+          margin: 39px 0 0 9px;
+        }
+        .pieces-0 div:nth-child(2) {
+          background: #444;
+          margin: 4px 0 0 2px;
+          transform: rotate(154deg);
+          width: 8px;
+        }
+        .pieces-0 div:nth-child(3) {
+          background: #222;
+          margin: -21px 0 0 23px;
+        }
+        .pieces-0 div:nth-child(4) {
+          background: #222;
+          margin: -11px 0 0 -29px;
+          transform: rotate(175deg);
+          width: 10px;
+        }
+        .pieces-0 div:nth-child(5) {
+          background: #333;
+          margin: -35px 0 0 -18px;
+        }
+        .pieces-0 div:nth-child(6) {
+          background: #333;
+          margin: 31px 0 0 -20px;
+          transform: rotate(28deg);
+          width: 6px;
+        }
+        .pieces-1 div:nth-child(1) {
+          background: #333;
+          margin: 1px 0 0 35px;
+        }
+        .pieces-1 div:nth-child(2) {
+          background: #333;
+          margin: 22px 0 0 39px;
+          transform: rotate(113deg);
+          width: 8px;
+        }
+        .pieces-1 div:nth-child(3) {
+          background: #222;
+          margin: 26px 0 0 32px;
+        }
+        .pieces-1 div:nth-child(4) {
+          background: #333;
+          margin: -37px 0 0 15px;
+          transform: rotate(42deg);
+          width: 10px;
+        }
+        .pieces-1 div:nth-child(5) {
+          background: #333;
+          margin: -26px 0 0 31px;
+        }
+        .pieces-1 div:nth-child(6) {
+          background: #222;
+          margin: -8px 0 0 -3px;
+          transform: rotate(113deg);
+          width: 6px;
+        }
+        .pieces-1 div:nth-child(7) {
+          background: #444;
+          margin: 4px 0 0 2px;
+          transform: rotate(154deg);
+          width: 8px;
+        }
+        .pieces-1 div:nth-child(8) {
+          background: #222;
+          margin: -21px 0 0 23px;
+        }
+        .pieces-1 div:nth-child(9) {
+          background: #222;
+          margin: -11px 0 0 -29px;
+          transform: rotate(175deg);
+          width: 10px;
+        }
+        .pieces-2 div:nth-child(1) {
+          background: #222;
+          margin: 8px 0 0 -2px;
+        }
+        .pieces-2 div:nth-child(2) {
+          background: #444;
+          margin: 31px 0 0 40px;
+          transform: rotate(172deg);
+          width: 8px;
+        }
+        .pieces-2 div:nth-child(3) {
+          background: #222;
+          margin: 10px 0 0 -2px;
+        }
+        .pieces-2 div:nth-child(4) {
+          background: #444;
+          margin: 1px 0 0 21px;
+          transform: rotate(93deg);
+          width: 10px;
+        }
+        .pieces-2 div:nth-child(5) {
+          background: #333;
+          margin: 4px 0 0 27px;
+        }
+        .pieces-2 div:nth-child(6) {
+          background: #444;
+          margin: 16px 0 0 34px;
+          transform: rotate(158deg);
+          width: 6px;
+        }
+        .pieces-2 div:nth-child(7) {
+          background: #333;
+          margin: 22px 0 0 39px;
+          transform: rotate(113deg);
+          width: 8px;
+        }
+        .pieces-2 div:nth-child(8) {
+          background: #222;
+          margin: 26px 0 0 32px;
+        }
+        .pieces-2 div:nth-child(9) {
+          background: #333;
+          margin: -37px 0 0 15px;
+          transform: rotate(42deg);
+          width: 10px;
+        }
+        .pieces-3 div:nth-child(1) {
+          background: #444;
+          margin: -6px 0 0 16px;
+        }
+        .pieces-3 div:nth-child(2) {
+          background: #444;
+          margin: 28px 0 0 29px;
+          transform: rotate(112deg);
+          width: 8px;
+        }
+        .pieces-3 div:nth-child(3) {
+          background: #444;
+          margin: -25px 0 0 -24px;
+        }
+        .pieces-3 div:nth-child(4) {
+          background: #222;
+          margin: -25px 0 0 22px;
+          transform: rotate(77deg);
+          width: 10px;
+        }
+        .pieces-3 div:nth-child(5) {
+          background: #222;
+          margin: -21px 0 0 8px;
+        }
+        .pieces-3 div:nth-child(6) {
+          background: #444;
+          margin: -16px 0 0 -17px;
+          transform: rotate(155deg);
+          width: 6px;
+        }
+        .pieces-3 div:nth-child(7) {
+          background: #444;
+          margin: 31px 0 0 40px;
+          transform: rotate(172deg);
+          width: 8px;
+        }
+        .pieces-3 div:nth-child(8) {
+          background: #222;
+          margin: 10px 0 0 -2px;
+        }
+        .pieces-3 div:nth-child(9) {
+          background: #444;
+          margin: 1px 0 0 21px;
+          transform: rotate(93deg);
+          width: 10px;
+        }
+        .pieces-4 div:nth-child(1) {
+          background: #444;
+          margin: -15px 0 0 40px;
+        }
+        .pieces-4 div:nth-child(2) {
+          background: #444;
+          margin: 23px 0 0 23px;
+          transform: rotate(64deg);
+          width: 8px;
+        }
+        .pieces-4 div:nth-child(3) {
+          background: #444;
+          margin: 7px 0 0 24px;
+        }
+        .pieces-4 div:nth-child(4) {
+          background: #333;
+          margin: -28px 0 0 22px;
+          transform: rotate(102deg);
+          width: 10px;
+        }
+        .pieces-4 div:nth-child(5) {
+          background: #222;
+          margin: 26px 0 0 9px;
+        }
+        .pieces-4 div:nth-child(6) {
+          background: #222;
+          margin: -8px 0 0 19px;
+          transform: rotate(132deg);
+          width: 6px;
+        }
+        .pieces-4 div:nth-child(7) {
+          background: #444;
+          margin: -6px 0 0 16px;
+        }
+        .pieces-4 div:nth-child(8) {
+          background: #444;
+          margin: 28px 0 0 29px;
+          transform: rotate(112deg);
+          width: 8px;
+        }
+        .pieces-4 div:nth-child(9) {
+          background: #444;
+          margin: -25px 0 0 -24px;
+        }
+        .pieces-5 div:nth-child(1) {
+          background: #333;
+          margin: -9px 0 0 27px;
+        }
+        .pieces-5 div:nth-child(2) {
+          background: #333;
+          margin: -8px 0 0 2px;
+          transform: rotate(139deg);
+          width: 8px;
+        }
+        .pieces-5 div:nth-child(3) {
+          background: #333;
+          margin: 22px 0 0 16px;
+        }
+        .pieces-5 div:nth-child(4) {
+          background: #333;
+          margin: -6px 0 0 -1px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .pieces-5 div:nth-child(5) {
+          background: #222;
+          margin: -36px 0 0 -33px;
+        }
+        .pieces-5 div:nth-child(6) {
+          background: #333;
+          margin: -36px 0 0 9px;
+          transform: rotate(80deg);
+          width: 6px;
+        }
+        .pieces-5 div:nth-child(7) {
+          background: #444;
+          margin: 23px 0 0 23px;
+          transform: rotate(64deg);
+          width: 8px;
+        }
+        .pieces-5 div:nth-child(8) {
+          background: #444;
+          margin: 7px 0 0 24px;
+        }
+        .pieces-5 div:nth-child(9) {
+          background: #333;
+          margin: -28px 0 0 22px;
+          transform: rotate(102deg);
+          width: 10px;
+        }
+        .pieces-6 div:nth-child(1) {
+          background: #222;
+          margin: -25px 0 0 25px;
+        }
+        .pieces-6 div:nth-child(2) {
+          background: #222;
+          margin: 26px 0 0 -5px;
+          transform: rotate(4deg);
+          width: 8px;
+        }
+        .pieces-6 div:nth-child(3) {
+          background: #444;
+          margin: -12px 0 0 7px;
+        }
+        .pieces-6 div:nth-child(4) {
+          background: #444;
+          margin: -19px 0 0 -7px;
+          transform: rotate(109deg);
+          width: 10px;
+        }
+        .pieces-6 div:nth-child(5) {
+          background: #444;
+          margin: -11px 0 0 -16px;
+        }
+        .pieces-6 div:nth-child(6) {
+          background: #333;
+          margin: -11px 0 0 39px;
+          transform: rotate(25deg);
+          width: 6px;
+        }
+        .pieces-6 div:nth-child(7) {
+          background: #333;
+          margin: 22px 0 0 16px;
+        }
+        .pieces-6 div:nth-child(8) {
+          background: #222;
+          margin: -36px 0 0 -33px;
+        }
+        .pieces-6 div:nth-child(9) {
+          background: #333;
+          margin: -36px 0 0 9px;
+          transform: rotate(80deg);
+          width: 6px;
+        }
+        .pieces-7 div:nth-child(1) {
+          background: #444;
+          margin: 2px 0 0 22px;
+        }
+        .pieces-7 div:nth-child(2) {
+          background: #222;
+          margin: 26px 0 0 -21px;
+          transform: rotate(95deg);
+          width: 8px;
+        }
+        .pieces-7 div:nth-child(3) {
+          background: #333;
+          margin: 35px 0 0 -14px;
+        }
+        .pieces-7 div:nth-child(4) {
+          background: #444;
+          margin: 21px 0 0 -16px;
+          transform: rotate(30deg);
+          width: 10px;
+        }
+        .pieces-7 div:nth-child(5) {
+          background: #444;
+          margin: -26px 0 0 -40px;
+        }
+        .pieces-7 div:nth-child(6) {
+          background: #333;
+          margin: -5px 0 0 33px;
+          transform: rotate(169deg);
+          width: 6px;
+        }
+        .pieces-7 div:nth-child(7) {
+          background: #222;
+          margin: 26px 0 0 -5px;
+          transform: rotate(4deg);
+          width: 8px;
+        }
+        .pieces-7 div:nth-child(8) {
+          background: #444;
+          margin: -19px 0 0 -7px;
+          transform: rotate(109deg);
+          width: 10px;
+        }
+        .pieces-7 div:nth-child(9) {
+          background: #333;
+          margin: -11px 0 0 39px;
+          transform: rotate(25deg);
+          width: 6px;
+        }
+        .pieces-8 div:nth-child(1) {
+          background: #333;
+          margin: 37px 0 0 -4px;
+        }
+        .pieces-8 div:nth-child(2) {
+          background: #333;
+          margin: 25px 0 0 12px;
+          transform: rotate(48deg);
+          width: 8px;
+        }
+        .pieces-8 div:nth-child(3) {
+          background: #222;
+          margin: 36px 0 0 35px;
+        }
+        .pieces-8 div:nth-child(4) {
+          background: #444;
+          margin: 2px 0 0 20px;
+          transform: rotate(96deg);
+          width: 10px;
+        }
+        .pieces-8 div:nth-child(5) {
+          background: #444;
+          margin: -12px 0 0 7px;
+        }
+        .pieces-8 div:nth-child(6) {
+          background: #222;
+          margin: -16px 0 0 18px;
+          transform: rotate(44deg);
+          width: 6px;
+        }
+        .pieces-8 div:nth-child(7) {
+          background: #444;
+          margin: 2px 0 0 22px;
+        }
+        .pieces-8 div:nth-child(8) {
+          background: #222;
+          margin: 26px 0 0 -21px;
+          transform: rotate(95deg);
+          width: 8px;
+        }
+        .pieces-8 div:nth-child(9) {
+          background: #333;
+          margin: 35px 0 0 -14px;
+        }
+        .pieces-9 div:nth-child(1) {
+          background: #333;
+          margin: 2px 0 0 26px;
+        }
+        .pieces-9 div:nth-child(2) {
+          background: #222;
+          margin: -31px 0 0 25px;
+          transform: rotate(69deg);
+          width: 8px;
+        }
+        .pieces-9 div:nth-child(3) {
+          background: #444;
+          margin: -27px 0 0 -11px;
+        }
+        .pieces-9 div:nth-child(4) {
+          background: #333;
+          margin: 5px 0 0 -27px;
+          transform: rotate(129deg);
+          width: 10px;
+        }
+        .pieces-9 div:nth-child(5) {
+          background: #444;
+          margin: -29px 0 0 15px;
+        }
+        .pieces-9 div:nth-child(6) {
+          background: #222;
+          margin: 28px 0 0 -6px;
+          transform: rotate(159deg);
+          width: 6px;
+        }
+        .pieces-9 div:nth-child(7) {
+          background: #333;
+          margin: 37px 0 0 -4px;
+        }
+        .pieces-9 div:nth-child(8) {
+          background: #333;
+          margin: 25px 0 0 12px;
+          transform: rotate(48deg);
+          width: 8px;
+        }
+        .pieces-9 div:nth-child(9) {
+          background: #222;
+          margin: 36px 0 0 35px;
+        }
+        .pieces-10 div:nth-child(1) {
+          background: #444;
+          margin: -32px 0 0 -38px;
+        }
+        .pieces-10 div:nth-child(2) {
+          background: #333;
+          margin: -15px 0 0 -27px;
+          transform: rotate(105deg);
+          width: 8px;
+        }
+        .pieces-10 div:nth-child(3) {
+          background: #444;
+          margin: 17px 0 0 9px;
+        }
+        .pieces-10 div:nth-child(4) {
+          background: #444;
+          margin: 38px 0 0 40px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .pieces-10 div:nth-child(5) {
+          background: #222;
+          margin: -35px 0 0 13px;
+        }
+        .pieces-10 div:nth-child(6) {
+          background: #222;
+          margin: -10px 0 0 2px;
+          transform: rotate(172deg);
+          width: 6px;
+        }
+        .pieces-10 div:nth-child(7) {
+          background: #333;
+          margin: 2px 0 0 26px;
+        }
+        .pieces-10 div:nth-child(8) {
+          background: #444;
+          margin: -27px 0 0 -11px;
+        }
+        .pieces-10 div:nth-child(9) {
+          background: #333;
+          margin: 5px 0 0 -27px;
+          transform: rotate(129deg);
+          width: 10px;
+        }
+        .pieces-11 div:nth-child(1) {
+          background: #444;
+          margin: -30px 0 0 34px;
+        }
+        .pieces-11 div:nth-child(2) {
+          background: #333;
+          margin: 30px 0 0 8px;
+          transform: rotate(35deg);
+          width: 8px;
+        }
+        .pieces-11 div:nth-child(3) {
+          background: #222;
+          margin: 37px 0 0 25px;
+        }
+        .pieces-11 div:nth-child(4) {
+          background: #444;
+          margin: 39px 0 0 -28px;
+          transform: rotate(4deg);
+          width: 10px;
+        }
+        .pieces-11 div:nth-child(5) {
+          background: #333;
+          margin: -28px 0 0 -40px;
+        }
+        .pieces-11 div:nth-child(6) {
+          background: #333;
+          margin: -32px 0 0 -7px;
+          transform: rotate(106deg);
+          width: 6px;
+        }
+        .pieces-11 div:nth-child(7) {
+          background: #444;
+          margin: 38px 0 0 40px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .pieces-11 div:nth-child(8) {
+          background: #222;
+          margin: -35px 0 0 13px;
+        }
+        .pieces-11 div:nth-child(9) {
+          background: #222;
+          margin: -10px 0 0 2px;
+          transform: rotate(172deg);
+          width: 6px;
+        }
+        .pieces-12 div:nth-child(1) {
+          background: #222;
+          margin: -13px 0 0 -18px;
+        }
+        .pieces-12 div:nth-child(2) {
+          background: #444;
+          margin: -40px 0 0 -13px;
+          transform: rotate(116deg);
+          width: 8px;
+        }
+        .pieces-12 div:nth-child(3) {
+          background: #444;
+          margin: 4px 0 0 -20px;
+        }
+        .pieces-12 div:nth-child(4) {
+          background: #333;
+          margin: 20px 0 0 -37px;
+          transform: rotate(58deg);
+          width: 10px;
+        }
+        .pieces-12 div:nth-child(5) {
+          background: #333;
+          margin: 12px 0 0 16px;
+        }
+        .pieces-12 div:nth-child(6) {
+          background: #222;
+          margin: 24px 0 0 4px;
+          transform: rotate(59deg);
+          width: 6px;
+        }
+        .pieces-12 div:nth-child(7) {
+          background: #333;
+          margin: 30px 0 0 8px;
+          transform: rotate(35deg);
+          width: 8px;
+        }
+        .pieces-12 div:nth-child(8) {
+          background: #222;
+          margin: 37px 0 0 25px;
+        }
+        .pieces-12 div:nth-child(9) {
+          background: #444;
+          margin: 39px 0 0 -28px;
+          transform: rotate(4deg);
+          width: 10px;
+        }
+        .pieces-13 div:nth-child(1) {
+          background: #444;
+          margin: -27px 0 0 -18px;
+        }
+        .pieces-13 div:nth-child(2) {
+          background: #222;
+          margin: 26px 0 0 -35px;
+          transform: rotate(78deg);
+          width: 8px;
+        }
+        .pieces-13 div:nth-child(3) {
+          background: #333;
+          margin: -13px 0 0 5px;
+        }
+        .pieces-13 div:nth-child(4) {
+          background: #222;
+          margin: -29px 0 0 -15px;
+          transform: rotate(108deg);
+          width: 10px;
+        }
+        .pieces-13 div:nth-child(5) {
+          background: #333;
+          margin: 24px 0 0 34px;
+        }
+        .pieces-13 div:nth-child(6) {
+          background: #333;
+          margin: -32px 0 0 3px;
+          transform: rotate(139deg);
+          width: 6px;
+        }
+        .pieces-13 div:nth-child(7) {
+          background: #222;
+          margin: -13px 0 0 -18px;
+        }
+        .pieces-13 div:nth-child(8) {
+          background: #444;
+          margin: 4px 0 0 -20px;
+        }
+        .pieces-13 div:nth-child(9) {
+          background: #333;
+          margin: 12px 0 0 16px;
+        }
+        .pieces-14 div:nth-child(1) {
+          background: #333;
+          margin: -27px 0 0 15px;
+        }
+        .pieces-14 div:nth-child(2) {
+          background: #333;
+          margin: -2px 0 0 -23px;
+          transform: rotate(91deg);
+          width: 8px;
+        }
+        .pieces-14 div:nth-child(3) {
+          background: #222;
+          margin: 29px 0 0 26px;
+        }
+        .pieces-14 div:nth-child(4) {
+          background: #333;
+          margin: 37px 0 0 28px;
+          transform: rotate(174deg);
+          width: 10px;
+        }
+        .pieces-14 div:nth-child(5) {
+          background: #333;
+          margin: 16px 0 0 39px;
+        }
+        .pieces-14 div:nth-child(6) {
+          background: #444;
+          margin: -38px 0 0 -12px;
+          transform: rotate(143deg);
+          width: 6px;
+        }
+        .pieces-14 div:nth-child(7) {
+          background: #444;
+          margin: -27px 0 0 -18px;
+        }
+        .pieces-14 div:nth-child(8) {
+          background: #222;
+          margin: 26px 0 0 -35px;
+          transform: rotate(78deg);
+          width: 8px;
+        }
+        .pieces-14 div:nth-child(9) {
+          background: #333;
+          margin: -13px 0 0 5px;
+        }
+        .pieces-15 div:nth-child(1) {
+          background: #444;
+          margin: 24px 0 0 5px;
+        }
+        .pieces-15 div:nth-child(2) {
+          background: #444;
+          margin: 5px 0 0 -35px;
+          transform: rotate(165deg);
+          width: 8px;
+        }
+        .pieces-15 div:nth-child(3) {
+          background: #444;
+          margin: 11px 0 0 -36px;
+        }
+        .pieces-15 div:nth-child(4) {
+          background: #444;
+          margin: -32px 0 0 3px;
+          transform: rotate(132deg);
+          width: 10px;
+        }
+        .pieces-15 div:nth-child(5) {
+          background: #444;
+          margin: -26px 0 0 17px;
+        }
+        .pieces-15 div:nth-child(6) {
+          background: #222;
+          margin: -33px 0 0 -11px;
+          transform: rotate(0deg);
+          width: 6px;
+        }
+        .pieces-15 div:nth-child(7) {
+          background: #333;
+          margin: -2px 0 0 -23px;
+          transform: rotate(91deg);
+          width: 8px;
+        }
+        .pieces-15 div:nth-child(8) {
+          background: #333;
+          margin: 37px 0 0 28px;
+          transform: rotate(174deg);
+          width: 10px;
+        }
+        .pieces-15 div:nth-child(9) {
+          background: #444;
+          margin: -38px 0 0 -12px;
+          transform: rotate(143deg);
+          width: 6px;
+        }
+        .pieces-hidden div {
+          background-color: #bbb;
+        }
+      .player {
+        border: 4px solid #fff;
+        border-radius: 20px;
+        height: 20px;
+        width: 20px;
+      }
+        .player[recoil="0"] {
+          margin-top: -1px;
+        }
+        .player[recoil="1"] {
+          margin-top: 1px;
+        }
+        .player[recoil="2"] {
+          margin-left: -2px;
+        }
+        .player[recoil="3"] {
+          margin-left: 2px;
+        }
+      .player,
+      .player-weapon {
+        background-color: #000;
+        z-index: 6;
+      }
+      .player-weapon {
+        border: 4px solid #fff;
+        border-radius: 8px;
+        height: 4px;
+        left: -12px;
+        transition: margin 0.05s ease;
+        width: 4px;
+      }
+      .player-weapon-muzzle-flash {
+        background-color: #444;
+        border: none;
+        border-radius: 128px;
+        height: 0;
+        width: 0;
+        z-index: 4;
+      }
+      .player-weapon-projectile {
+        background-color: #fff;
+        border: none;
+        border-radius: 16px;
+        height: 8px;
+        width: 8px;
+        z-index: 5;
+      }
+      .player-weapon-projectile.flamethrower {
+        border-radius: 300px;
+      }
+      .player-weapon-spark {
+        background-color: #ddd;
+        border: none;
+        border-radius: 8px;
+        height: 4px;
+        margin: 2px 0 0 2px;
+        transition: left 0.05s ease-out,
+          top 0.05s ease-out;
+        width: 4px;
+        z-index: 5;
+      }
+      .title-screen {
+        cursor: default;
+      }
+        .title-screen a {
+          color: #fff;
+          font-weight: bold;
+          letter-spacing: -0.1px;
+          text-decoration: none;
+        }
+        .title-screen p {
+          color: #999;
+          font-size: 12px;
+          position: absolute;
+          z-index: 7;
+        }
+        .title-screen .advertisement {
+          bottom: 25px;
+          text-align: center;
+          transition: bottom 0.5s ease;
+          width: 100%;
+        }
+        .title-screen .copyright {
+          left: 25px;
+          top: 25px;
+        }
+          .title-screen .copyright span {
+            color: #f02222;
+            font-weight: bold;
+            letter-spacing: -0.1px;
+          }
+        .title-screen .prompt {
+          color: #fff;
+          font-weight: bold;
+          letter-spacing: -0.1px;
+          text-align: center;
+          text-transform: uppercase;
+          top: 182px;
+          width: 100%;
+        }
+        .title-screen .version {
+          color: #555;
+          right: 25px;
+          top: 25px;
+        }
+      .wave-cleanup {
+        background-color: #000;
+        border-right: 4px solid #444;
+        left: -10px;
+        transition: width 0.1s ease;
+        z-index: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bounds">
+      <div class="title-screen">
+        <p class="advertisement"><a href="https://www.patreon.com/eightomic" target="_blank">Subscribe to Eightomic on Patreon</a> to download offline-playable game copies without this in-game advertisement.</p>
+        <p class="copyright"><span>Contrivity</span> &copy; 2024 <a href="https://eightomic.com" target="_blank">Eightomic</a></p>
+        <p class="prompt">Press an Arrow Key To Play</p>
+        <p class="version">v1.0.0</p>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    let enemies_count = 0
+    let enemy_gore_randomized_scatter = 0
+    let enemy_move_delay_maximum = 26
+    let enemy_offsets_map = Array(50)
+    let player_move_id
+    let player_move_speed = 3
+    let player_offset_left
+    let player_offset_top
+    let player_weapon_delay
+    let player_weapon_delay_maximum
+    let player_weapon_equipped
+    let player_weapon_offset_increment_left = -17
+    let player_weapon_offset_increment_top = -17
+    let player_weapon_use_id
+    let randomized_state = Date.now() >>> 1
+    let wave_cleanup_element = document.createElement("div")
+    let wave_cleanup_id = 0
+    const advertisement_element = document.querySelector(".advertisement")
+    const bounds_element = document.querySelector(".bounds")
+    const enemy_elements = Array(50)
+    const enemy_gore_elements = Array(50)
+    const enemy_health = Array(50)
+    const enemy_health_elements = Array(50)
+
+    const enemy_hit = function(
+      enemy_damage,
+      enemy_id,
+      enemy_knockback_offset_increment_left,
+      enemy_knockback_offset_increment_top
+    ) {
+      if (
+        enemy_knockback_offset_increment_left != 0 ||
+        enemy_knockback_offset_increment_top != 0
+      ) {
+        has_enemy_knockback_states[enemy_id] = true
+      }
+
+      enemy_elements[enemy_id].classList.add("hit")
+
+      if (enemy_move_delay_maximum == 26) {
+        setTimeout(function() {
+          enemy_elements[enemy_id].classList.remove("hit")
+        }, 40)
+      } else {
+        setTimeout(function() {
+          enemy_elements[enemy_id].classList.remove("hit")
+        }, 80)
+      }
+
+      enemy_health[enemy_id] -= enemy_damage
+
+      if (enemy_health[enemy_id] > 0) {
+        let enemy_offset_previous_left = enemy_offsets_left[enemy_id]
+        let enemy_offset_next_left = enemy_offset_previous_left
+          + enemy_knockback_offset_increment_left
+        let enemy_offset_top = enemy_offsets_top[enemy_id]
+          + enemy_knockback_offset_increment_top
+
+        enemy_offset_next_left += (randomized_state & 3)
+          - ((randomized_state >> 2) & 3)
+        enemy_offset_top += ((randomized_state >> 4) & 3)
+          - ((randomized_state >> 6) & 3)
+        enemy_elements[enemy_id].setAttribute(
+          "style",
+          "left: " + enemy_offset_next_left + "px; top: "
+            + enemy_offset_top + "px;"
+        )
+        enemy_offsets_left[enemy_id] = enemy_offset_next_left
+        enemy_offsets_top[enemy_id] = enemy_offset_top
+
+        if (enemy_offset_previous_left > 0) {
+          enemy_offset_previous_left >>= 4
+        } else {
+          enemy_offset_previous_left = 0
+        }
+
+        if (enemy_offset_next_left > 0) {
+          enemy_offset_next_left >>= 4
+        } else {
+          enemy_offset_next_left = 0
+        }
+
+        if (enemy_offset_previous_left != enemy_offset_next_left) {
+          if (enemy_offset_previous_left == 0) {
+            enemy_offsets_map[enemy_offset_next_left - 1][enemy_id] = null
+            enemy_offsets_map[enemy_offset_next_left][enemy_id] = null
+            enemy_offsets_map[enemy_offset_next_left + 1][enemy_id] = null
+
+            if (
+              enemy_offset_previous_left != (enemy_offset_next_left - 1) &&
+              enemy_offset_previous_left != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left][enemy_id]
+            }
+
+            if (
+              (enemy_offset_previous_left + 1) != (enemy_offset_next_left - 1) &&
+              (enemy_offset_previous_left + 1) != enemy_offset_next_left &&
+              (enemy_offset_previous_left + 1) != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left + 1][enemy_id]
+            }
+          } else {
+            if (enemy_offset_next_left == 0) {
+              enemy_offsets_map[enemy_offset_next_left][enemy_id] = enemy_id
+              enemy_offsets_map[enemy_offset_next_left + 1][enemy_id] = enemy_id
+
+              if (
+                (enemy_offset_previous_left - 1) != enemy_offset_next_left &&
+                (enemy_offset_previous_left - 1) != (enemy_offset_next_left + 1)
+              ) {
+                delete enemy_offsets_map[enemy_offset_previous_left - 1][enemy_id]
+              }
+
+              if (enemy_offset_previous_left != (enemy_offset_next_left + 1)) {
+                delete enemy_offsets_map[enemy_offset_previous_left][enemy_id]
+              }
+
+              if (
+                (enemy_offset_previous_left + 1) != enemy_offset_next_left &&
+                (enemy_offset_previous_left + 1) != (enemy_offset_next_left + 1)
+              ) {
+                delete enemy_offsets_map[enemy_offset_previous_left + 1][enemy_id]
+              }
+            } else {
+              enemy_offsets_map[enemy_offset_next_left - 1][enemy_id] = enemy_id
+              enemy_offsets_map[enemy_offset_next_left][enemy_id] = enemy_id
+              enemy_offsets_map[enemy_offset_next_left + 1][enemy_id] = enemy_id
+
+              if (
+                (enemy_offset_previous_left - 1) != enemy_offset_next_left &&
+                (enemy_offset_previous_left - 1) != (enemy_offset_next_left + 1)
+              ) {
+                delete enemy_offsets_map[enemy_offset_previous_left - 1][enemy_id]
+              }
+
+              if (
+                enemy_offset_previous_left != (enemy_offset_next_left - 1) &&
+                enemy_offset_previous_left != (enemy_offset_next_left + 1)
+              ) {
+                delete enemy_offsets_map[enemy_offset_previous_left][enemy_id]
+              }
+
+              if (
+                (enemy_offset_previous_left + 1) != (enemy_offset_next_left - 1) &&
+                (enemy_offset_previous_left + 1) != enemy_offset_next_left &&
+                (enemy_offset_previous_left + 1) != (enemy_offset_next_left + 1)
+              ) {
+                delete enemy_offsets_map[enemy_offset_previous_left + 1][enemy_id]
+              }
+            }
+          }
+        }
+
+        enemy_health_elements[enemy_id].setAttribute(
+          "style",
+          "width: " + enemy_health[enemy_id] + "%;"
+        )
+      } else {
+        const enemy_offset_left = enemy_offsets_left[enemy_id]
+        const enemy_offset_top = enemy_offsets_top[enemy_id]
+        const enemy_gore_element = enemy_gore_elements.pop()
+        const enemy_pieces_element = enemy_pieces_elements.pop()
+        const enemy_pieces_randomized_scatter = enemy_id & 15
+
+        clearInterval(enemy_move_ids[enemy_id])
+
+        if (enemy_offset_left > 0) {
+          const enemy_segment_horizontal = enemy_offset_left >> 4
+
+          if (enemy_segment_horizontal != 0) {
+            delete enemy_offsets_map[enemy_segment_horizontal - 1][enemy_id]
+          }
+
+          delete enemy_offsets_map[enemy_segment_horizontal][enemy_id]
+          delete enemy_offsets_map[enemy_segment_horizontal + 1][enemy_id]
+        } else {
+          delete enemy_offsets_map[0][enemy_id]
+          delete enemy_offsets_map[1][enemy_id]
+        }
+
+        enemy_elements[enemy_id].setAttribute(
+          "style",
+          "display: none; left: -50px; top: -50px;"
+        )
+        enemy_ids_available.push(enemy_id)
+        enemies_count--
+        enemy_health[enemy_id] = 0
+        enemy_gore_element.setAttribute(
+          "style",
+          "left: " + enemy_offset_left + "px; top: "
+            + enemy_offset_top + "px;"
+        )
+        enemy_gore_element.setAttribute(
+          "class",
+          "element gore gore-" + enemy_gore_randomized_scatter
+        )
+        enemy_pieces_element.setAttribute(
+          "style",
+          "left: " + enemy_offset_left + "px; top: "
+            + enemy_offset_top + "px;"
+        )
+        enemy_pieces_element.setAttribute(
+          "class",
+          "element pieces pieces-" + enemy_pieces_randomized_scatter
+        )
+        enemy_gore_randomized_scatter
+          = (enemy_gore_randomized_scatter + 1) & 15
+      }
+
+      clearTimeout(has_enemy_knockback_state_ids[enemy_id])
+
+      has_enemy_knockback_state_ids[enemy_id] = setTimeout(function() {
+        has_enemy_knockback_states[enemy_id] = false
+      }, 100)
+    }
+
+    const enemy_ids_available = Array(50)
+
+    const enemy_move = function(enemy_id) {
+      if (
+        enemy_move_delays[enemy_id] < enemy_move_delay_maximum ||
+        has_enemy_knockback_states[enemy_id] == true
+      ) {
+        enemy_move_delays[enemy_id]++
+        return
+      }
+
+      let enemy_offset_previous_left = enemy_offsets_left[enemy_id]
+      let enemy_offset_next_left = enemy_offset_previous_left
+      let enemy_offset_top = enemy_offsets_top[enemy_id]
+
+      enemy_move_delays[enemy_id] = 0
+
+      if (enemy_offset_next_left < player_offset_left) {
+        enemy_offset_next_left += enemy_move_speeds[enemy_id]
+          + (randomized_state & 15)
+      } else {
+        enemy_offset_next_left -= enemy_move_speeds[enemy_id]
+          + (randomized_state & 15)
+      }
+
+      if (enemy_offset_top < player_offset_top) {
+        enemy_offset_top += enemy_move_speeds[enemy_id]
+          + ((randomized_state >> 4) & 15)
+      } else {
+        enemy_offset_top -= enemy_move_speeds[enemy_id]
+          + ((randomized_state >> 4) & 15)
+      }
+
+      enemy_elements[enemy_id].setAttribute(
+        "style",
+        "left: " + enemy_offset_next_left + "px; top: "
+          + enemy_offset_top + "px;"
+      )
+      enemy_offsets_left[enemy_id] = enemy_offset_next_left
+      enemy_offsets_top[enemy_id] = enemy_offset_top
+
+      if (enemy_offset_previous_left > 0) {
+        enemy_offset_previous_left >>= 4
+      } else {
+        enemy_offset_previous_left = 0
+      }
+
+      if (enemy_offset_next_left > 0) {
+        enemy_offset_next_left >>= 4
+      } else {
+        enemy_offset_next_left = 0
+      }
+
+      if (enemy_offset_previous_left != enemy_offset_next_left) {
+        if (enemy_offset_previous_left == 0) {
+          enemy_offsets_map[enemy_offset_next_left - 1][enemy_id] = null
+          enemy_offsets_map[enemy_offset_next_left][enemy_id] = null
+          enemy_offsets_map[enemy_offset_next_left + 1][enemy_id] = null
+
+          if (
+            enemy_offset_previous_left != (enemy_offset_next_left - 1) &&
+            enemy_offset_previous_left != (enemy_offset_next_left + 1)
+          ) {
+            delete enemy_offsets_map[enemy_offset_previous_left][enemy_id]
+          }
+
+          if (
+            (enemy_offset_previous_left + 1) != (enemy_offset_next_left - 1) &&
+            (enemy_offset_previous_left + 1) != enemy_offset_next_left &&
+            (enemy_offset_previous_left + 1) != (enemy_offset_next_left + 1)
+          ) {
+            delete enemy_offsets_map[enemy_offset_previous_left + 1][enemy_id]
+          }
+        } else {
+          if (enemy_offset_next_left == 0) {
+            enemy_offsets_map[enemy_offset_next_left][enemy_id] = enemy_id
+            enemy_offsets_map[enemy_offset_next_left + 1][enemy_id] = enemy_id
+
+            if (
+              (enemy_offset_previous_left - 1) != enemy_offset_next_left &&
+              (enemy_offset_previous_left - 1) != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left - 1][enemy_id]
+            }
+
+            if (enemy_offset_previous_left != (enemy_offset_next_left + 1)) {
+              delete enemy_offsets_map[enemy_offset_previous_left][enemy_id]
+            }
+
+            if (
+              (enemy_offset_previous_left + 1) != enemy_offset_next_left &&
+              (enemy_offset_previous_left + 1) != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left + 1][enemy_id]
+            }
+          } else {
+            enemy_offsets_map[enemy_offset_next_left - 1][enemy_id] = enemy_id
+            enemy_offsets_map[enemy_offset_next_left][enemy_id] = enemy_id
+            enemy_offsets_map[enemy_offset_next_left + 1][enemy_id] = enemy_id
+
+            if (
+              (enemy_offset_previous_left - 1) != enemy_offset_next_left &&
+              (enemy_offset_previous_left - 1) != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left - 1][enemy_id]
+            }
+
+            if (
+              enemy_offset_previous_left != (enemy_offset_next_left - 1) &&
+              enemy_offset_previous_left != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left][enemy_id]
+            }
+
+            if (
+              (enemy_offset_previous_left + 1) != (enemy_offset_next_left - 1) &&
+              (enemy_offset_previous_left + 1) != enemy_offset_next_left &&
+              (enemy_offset_previous_left + 1) != (enemy_offset_next_left + 1)
+            ) {
+              delete enemy_offsets_map[enemy_offset_previous_left + 1][enemy_id]
+            }
+          }
+        }
+      }
+    }
+
+    const enemy_move_delays = Array(50)
+    const enemy_move_ids = Array(50)
+    const enemy_move_speeds = Array(50)
+    const enemy_offsets_left = Array(50)
+    const enemy_offsets_top = Array(50)
+    const enemy_pieces_elements = Array(50)
+    const has_enemy_knockback_state_ids = Array(50)
+    const has_enemy_knockback_states = Array(50)
+    const player_element = document.createElement("div")
+    const player_inputs = Array(151)
+    const player_weapon_element = document.createElement("div")
+    const player_weapons = [
+      {
+        "delay_maximum": 0,
+        "destroy": function() {
+          let i = 0
+
+          player_weapon_muzzle_flash_element.remove()
+
+          while (i != 90) {
+            player_weapon_projectile_elements[i].remove()
+            i++
+          }
+
+          i = 0
+
+          while (i != 5) {
+            player_weapon_spark_elements[i].remove()
+            i++
+          }
+        },
+        "initialize": function() {
+          let i = 0
+          player_weapon_element.setAttribute(
+            "class",
+            "element minigun player-weapon"
+          )
+          player_weapon_muzzle_flash_element = document.createElement("div")
+          player_weapon_muzzle_flash_element.setAttribute(
+            "class",
+            "element minigun player-weapon-muzzle-flash"
+          )
+          player_weapon_muzzle_flash_element = bounds_element.appendChild(
+            player_weapon_muzzle_flash_element
+          )
+          player_weapon_projectile_elements = Array(90)
+          player_weapon_spark_elements = Array(5)
+
+          while (i != 90) {
+            player_weapon_projectile_elements[i] = document.createElement("div")
+            player_weapon_projectile_elements[i].setAttribute(
+              "class",
+              "element minigun player-weapon-projectile"
+            )
+            player_weapon_projectile_elements[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            player_weapon_projectile_elements[i] = bounds_element.appendChild(
+              player_weapon_projectile_elements[i]
+            )
+            i++
+          }
+
+          i = 0
+
+          while (i != 5) {
+            player_weapon_spark_elements[i] = document.createElement("div")
+            player_weapon_spark_elements[i].setAttribute(
+              "class",
+              "element minigun player-weapon-spark"
+            )
+            player_weapon_spark_elements[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            player_weapon_spark_elements[i] = bounds_element.appendChild(
+              player_weapon_spark_elements[i]
+            )
+            i++
+          }
+        },
+        "name": "Minigun",
+        "use": function() {
+          const player_weapon_projectile_move = function(
+            enemy_knockback_offset_increment_left,
+            enemy_knockback_offset_increment_top,
+            player_weapon_projectile_element,
+            player_weapon_projectile_id,
+            player_weapon_projectile_offset_left,
+            player_weapon_projectile_offset_top
+          ) {
+            player_weapon_projectile_element.setAttribute(
+              "style",
+              "left: " + player_weapon_projectile_offset_left + "px; top: "
+                + player_weapon_projectile_offset_top + "px;"
+            )
+
+            if (
+              player_weapon_projectile_offset_left >= 0 &&
+              player_weapon_projectile_offset_top >= 0
+            ) {
+              const player_weapon_projectile_segment_horizontal
+                = player_weapon_projectile_offset_left >> 4
+
+              if (enemy_offsets_map[
+                player_weapon_projectile_segment_horizontal
+              ].length != 0) {
+                for (const enemy_id in enemy_offsets_map[
+                  player_weapon_projectile_segment_horizontal
+                ]) {
+                  if (
+                    player_weapon_projectile_offset_left
+                      <= (enemy_offsets_left[enemy_id] + 28) &&
+                    (player_weapon_projectile_offset_left + 8)
+                      >= enemy_offsets_left[enemy_id] &&
+                    player_weapon_projectile_offset_top
+                      <= (enemy_offsets_top[enemy_id] + 28) &&
+                    (player_weapon_projectile_offset_top + 8)
+                      >= enemy_offsets_top[enemy_id]
+                  ) {
+                    let player_weapon_projectile_offset_decrement = 5
+                    let player_weapon_projectile_opacity = 60
+                    let player_weapon_projectile_opacity_decrement = 20
+                    let player_weapon_projectile_height = 8
+                    let player_weapon_projectile_size_increment = 10
+                    let player_weapon_projectile_width = 8
+
+                    enemy_hit(
+                      10,
+                      enemy_id,
+                      enemy_knockback_offset_increment_left,
+                      enemy_knockback_offset_increment_top
+                    )
+
+                    if (enemy_move_delay_maximum != 28) {
+                      player_weapon_projectile_offset_decrement = 2.5
+                      player_weapon_projectile_opacity_decrement = 10
+                      player_weapon_projectile_size_increment = 5
+                    }
+
+                    const player_weapon_projectile_impact_id = setInterval(function() {
+                      if (player_weapon_projectile_opacity != 0) {
+                        player_weapon_projectile_opacity -= player_weapon_projectile_opacity_decrement
+                        player_weapon_projectile_width += player_weapon_projectile_size_increment
+                        player_weapon_projectile_height += player_weapon_projectile_size_increment
+                        player_weapon_projectile_offset_left -= player_weapon_projectile_offset_decrement
+                        player_weapon_projectile_offset_top -= player_weapon_projectile_offset_decrement
+                        player_weapon_projectile_element.setAttribute(
+                          "style",
+                          "height: " + player_weapon_projectile_height + "px; left: "
+                            + player_weapon_projectile_offset_left + "px; opacity: 0."
+                            + player_weapon_projectile_opacity + "; top: "
+                            + player_weapon_projectile_offset_top + "px; width: "
+                            + player_weapon_projectile_width + "px;"
+                        )
+                      } else {
+                        player_weapon_projectile_element.setAttribute(
+                          "style",
+                          "display: none;"
+                        )
+                        player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                        clearInterval(player_weapon_projectile_impact_id)
+                      }
+                    }, 20)
+
+                    clearInterval(player_weapon_projectile_id)
+                    break
+                  }
+                }
+              }
+            }
+          }
+
+          player_weapon_position()
+
+          if (
+            player_weapon_delay < player_weapon_delay_maximum ||
+            wave_cleanup_id != 0
+          ) {
+            player_weapon_delay++
+            return
+          }
+
+          player_weapon_delay = 0
+
+          if (player_element.hasAttribute("recoil")) {
+            player_element.removeAttribute("recoil")
+            player_weapon_element.removeAttribute("recoil")
+          }
+
+
+          if ((player_inputs[133] + player_inputs[141]
+            + player_inputs[147] + player_inputs[150]) == 0) {
+            return
+          }
+
+          let player_weapon_projectile_impact_interval = 40
+          const player_weapon_recoil = randomized_state & 3
+          let player_weapon_projectile_offset_increment_left = (
+            player_weapon_offset_increment_left
+            + (player_weapon_recoil - ((randomized_state >> 2) & 3))
+          ) / 2.3
+          let player_weapon_projectile_offset_increment_top = (
+            player_weapon_offset_increment_top
+            + (player_weapon_recoil - ((randomized_state >> 4) & 3))
+          ) / 2.3
+          let enemy_knockback_offset_increment_left
+            = player_weapon_projectile_offset_increment_left / 4
+          let enemy_knockback_offset_increment_top
+            = player_weapon_projectile_offset_increment_top / 4
+          let player_weapon_projectile_offset_left = player_weapon_offset_left
+          let player_weapon_projectile_offset_top = player_weapon_offset_top
+          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
+
+          player_element.setAttribute(
+            "recoil",
+            player_weapon_recoil
+          )
+          player_weapon_delay = 0
+          player_weapon_element.setAttribute(
+            "recoil",
+            player_weapon_recoil
+          )
+          player_weapon_projectile_element.setAttribute(
+            "recoil",
+            player_weapon_recoil
+          )
+
+          if (player_weapon_projectile_offset_increment_left < 0) {
+            if (player_weapon_projectile_offset_increment_top < 0) {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_top > -50 &&
+                  player_weapon_projectile_offset_left > -50
+                ) {
+                  if (enemy_move_delay_maximum == 26) {
+                    if (player_weapon_projectile_impact_interval == 20) {
+                      enemy_knockback_offset_increment_left *= 2
+                      enemy_knockback_offset_increment_top *= 2
+                      player_weapon_projectile_impact_interval = 40
+                      player_weapon_projectile_offset_increment_left *= 2
+                      player_weapon_projectile_offset_increment_top *= 2
+                    }
+                  } else {
+                    if (player_weapon_projectile_impact_interval == 40) {
+                      enemy_knockback_offset_increment_left /= 2
+                      enemy_knockback_offset_increment_top /= 2
+                      player_weapon_projectile_impact_interval = 20
+                      player_weapon_projectile_offset_increment_left /= 2
+                      player_weapon_projectile_offset_increment_top /= 2
+                    }
+                  }
+
+                  player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
+                  player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+                  player_weapon_projectile_move(
+                    enemy_knockback_offset_increment_left,
+                    enemy_knockback_offset_increment_top,
+                    player_weapon_projectile_element,
+                    player_weapon_projectile_id,
+                    player_weapon_projectile_offset_left,
+                    player_weapon_projectile_offset_top
+                  )
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            } else {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_left > -50 &&
+                  player_weapon_projectile_offset_top < 428
+                ) {
+                  if (enemy_move_delay_maximum == 26) {
+                    if (player_weapon_projectile_impact_interval == 20) {
+                      enemy_knockback_offset_increment_left *= 2
+                      enemy_knockback_offset_increment_top *= 2
+                      player_weapon_projectile_impact_interval = 40
+                      player_weapon_projectile_offset_increment_left *= 2
+                      player_weapon_projectile_offset_increment_top *= 2
+                    }
+                  } else {
+                    if (player_weapon_projectile_impact_interval == 40) {
+                      enemy_knockback_offset_increment_left /= 2
+                      enemy_knockback_offset_increment_top /= 2
+                      player_weapon_projectile_impact_interval = 20
+                      player_weapon_projectile_offset_increment_left /= 2
+                      player_weapon_projectile_offset_increment_top /= 2
+                    }
+                  }
+
+                  player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
+                  player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+                  player_weapon_projectile_move(
+                    enemy_knockback_offset_increment_left,
+                    enemy_knockback_offset_increment_top,
+                    player_weapon_projectile_element,
+                    player_weapon_projectile_id,
+                    player_weapon_projectile_offset_left,
+                    player_weapon_projectile_offset_top
+                  )
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            }
+          } else {
+            if (player_weapon_projectile_offset_increment_top < 0) {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_left < 722 &&
+                  player_weapon_projectile_offset_top > -50
+                ) {
+                  if (enemy_move_delay_maximum == 26) {
+                    if (player_weapon_projectile_impact_interval == 20) {
+                      enemy_knockback_offset_increment_left *= 2
+                      enemy_knockback_offset_increment_top *= 2
+                      player_weapon_projectile_impact_interval = 40
+                      player_weapon_projectile_offset_increment_left *= 2
+                      player_weapon_projectile_offset_increment_top *= 2
+                    }
+                  } else {
+                    if (player_weapon_projectile_impact_interval == 40) {
+                      enemy_knockback_offset_increment_left /= 2
+                      enemy_knockback_offset_increment_top /= 2
+                      player_weapon_projectile_impact_interval = 20
+                      player_weapon_projectile_offset_increment_left /= 2
+                      player_weapon_projectile_offset_increment_top /= 2
+                    }
+                  }
+
+                  player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
+                  player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+                  player_weapon_projectile_move(
+                    enemy_knockback_offset_increment_left,
+                    enemy_knockback_offset_increment_top,
+                    player_weapon_projectile_element,
+                    player_weapon_projectile_id,
+                    player_weapon_projectile_offset_left,
+                    player_weapon_projectile_offset_top
+                  )
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            } else {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_left < 722 &&
+                  player_weapon_projectile_offset_top < 428
+                ) {
+                  if (enemy_move_delay_maximum == 26) {
+                    if (player_weapon_projectile_impact_interval == 20) {
+                      enemy_knockback_offset_increment_left *= 2
+                      enemy_knockback_offset_increment_top *= 2
+                      player_weapon_projectile_impact_interval = 40
+                      player_weapon_projectile_offset_increment_left *= 2
+                      player_weapon_projectile_offset_increment_top *= 2
+                    }
+                  } else {
+                    if (player_weapon_projectile_impact_interval == 40) {
+                      enemy_knockback_offset_increment_left /= 2
+                      enemy_knockback_offset_increment_top /= 2
+                      player_weapon_projectile_impact_interval = 20
+                      player_weapon_projectile_offset_increment_left /= 2
+                      player_weapon_projectile_offset_increment_top /= 2
+                    }
+                  }
+
+                  player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
+                  player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+                  player_weapon_projectile_move(
+                    enemy_knockback_offset_increment_left,
+                    enemy_knockback_offset_increment_top,
+                    player_weapon_projectile_element,
+                    player_weapon_projectile_id,
+                    player_weapon_projectile_offset_left,
+                    player_weapon_projectile_offset_top
+                  )
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            }
+          }
+
+          if (player_weapon_recoil == 0) {
+            let player_weapon_muzzle_flash_interval = 10
+            let player_weapon_muzzle_flash_margin = 0
+            let player_weapon_muzzle_flash_size = 8
+            const player_weapon_muzzle_flash_offset_left = player_weapon_projectile_offset_left
+            const player_weapon_muzzle_flash_offset_top = player_weapon_projectile_offset_top
+
+            if (enemy_move_delay_maximum != 26) {
+              player_weapon_muzzle_flash_interval = 20
+            }
+
+            player_weapon_muzzle_flash_element.setAttribute(
+              "style",
+              "left: " + player_weapon_muzzle_flash_offset_left + "px; top:"
+                + player_weapon_muzzle_flash_offset_top + "px;"
+            )
+
+            const player_weapon_muzzle_flash_id = setInterval(function() {
+              if (player_weapon_muzzle_flash_size != 64) {
+                player_weapon_muzzle_flash_margin -= 4
+                player_weapon_muzzle_flash_size += 8
+                player_weapon_muzzle_flash_element.setAttribute(
+                  "style",
+                  "height: " + player_weapon_muzzle_flash_size + "px; left: "
+                    + player_weapon_muzzle_flash_offset_left + "px; margin: "
+                    + player_weapon_muzzle_flash_margin + "px 0 0 "
+                    + player_weapon_muzzle_flash_margin + "px; top: "
+                    + player_weapon_muzzle_flash_offset_top + "px; width: "
+                    + player_weapon_muzzle_flash_size + "px;"
+                )
+              } else {
+                player_weapon_muzzle_flash_element.setAttribute(
+                  "style",
+                  "display: none;"
+                )
+                clearInterval(player_weapon_muzzle_flash_id)
+              }
+            }, player_weapon_muzzle_flash_interval)
+          }
+
+          if (player_weapon_spark_elements.length != 0) {
+            let player_weapon_spark_offset_increment_left = (randomized_state & 15)
+              - ((randomized_state >> 4) & 15)
+            let player_weapon_spark_offset_increment_top = ((randomized_state >> 8) & 15)
+              - ((randomized_state >> 12) & 15)
+            let player_weapon_spark_offset_left
+            let player_weapon_spark_offset_top
+            let player_weapon_spark_opacity = 100
+            let player_weapon_spark_opacity_decrement = 15
+            const player_weapon_spark_element = player_weapon_spark_elements.pop()
+
+            if (enemy_move_delay_maximum != 26) {
+              player_weapon_spark_offset_increment_left /= 2
+              player_weapon_spark_offset_increment_top /= 2
+              player_weapon_spark_opacity_decrement = 7.5
+            }
+
+            player_weapon_spark_offset_left = player_weapon_projectile_offset_left
+            player_weapon_spark_offset_top = player_weapon_projectile_offset_top
+            player_weapon_spark_element.setAttribute(
+              "style",
+              "left: " + player_weapon_spark_offset_left + "px; top: "
+                + player_weapon_spark_offset_top + "px;"
+            )
+
+            const player_weapon_spark_id = setInterval(function() {
+              if (player_weapon_spark_opacity != 40) {
+                player_weapon_spark_offset_left += player_weapon_spark_offset_increment_left
+                player_weapon_spark_offset_top += player_weapon_spark_offset_increment_top
+                player_weapon_spark_opacity -= player_weapon_spark_opacity_decrement
+
+                if (player_weapon_spark_opacity < 0) {
+                  player_weapon_spark_opacity = 0
+                }
+
+                player_weapon_spark_element.setAttribute(
+                  "style",
+                  "left: " + player_weapon_spark_offset_left + "px; opacity: 0."
+                    + player_weapon_spark_opacity + "; top: "
+                    + player_weapon_spark_offset_top + "px;"
+                )
+              } else {
+                player_weapon_spark_element.setAttribute(
+                  "style",
+                  "display: none;"
+                )
+                player_weapon_spark_elements.push(player_weapon_spark_element)
+                clearInterval(player_weapon_spark_id)
+              }
+            }, 40)
+          }
+        }
+      }
+    ]
+
+    const on_document_ready = function(callback) {
+      if (document.readyState != "complete") {
+        setTimeout(function() {
+          on_document_ready(callback)
+        }, 10)
+      } else {
+        callback()
+      }
+    }
+
+    const player_move = function() {
+      if ((player_inputs[97] + player_inputs[100]
+        + player_inputs[115] + player_inputs[119]) == 0) {
+        return
+      }
+
+      if (
+        player_inputs[119] == true &&
+        player_offset_top > 0
+      ) {
+        player_offset_top -= player_move_speed
+
+        if (player_offset_top < 0) {
+          player_offset_top = 0
+        }
+      }
+
+      if (
+        player_inputs[97] == true &&
+        player_offset_left > 0
+      ) {
+        player_offset_left -= player_move_speed
+
+        if (player_offset_left < 0) {
+          player_offset_left = 0
+        }
+      }
+
+      if (
+        player_inputs[115] == true &&
+        player_offset_top < 378
+      ) {
+        player_offset_top += player_move_speed
+
+        if (player_offset_top > 350) {
+          player_offset_top = 350
+        }
+      }
+
+      if (
+        player_inputs[100] == true &&
+        player_offset_left < 672
+      ) {
+        player_offset_left += player_move_speed
+
+        if (player_offset_left > 644) {
+          player_offset_left = 644
+        }
+      }
+
+      player_offset_left = player_offset_left
+      player_offset_top = player_offset_top
+      player_element.setAttribute(
+        "style",
+        "left: " + player_offset_left + "px; top: "
+          + player_offset_top + "px;"
+      )
+    }
+
+    const player_weapon_position = function() {
+      let player_weapon_offset_left = player_offset_left + 8
+      let player_weapon_offset_top = player_offset_top + 8
+      let player_weapon_position_left = 0
+      let player_weapon_position_top = 0
+
+      if (player_inputs[150] == true) {
+        player_weapon_position_top = -23
+
+        if (player_inputs[141] == true) {
+          player_weapon_position_left = -17
+          player_weapon_position_top = -17
+        } else {
+          if (player_inputs[147] == true) {
+            player_weapon_position_left = 17
+            player_weapon_position_top = -17
+          }
+        }
+
+        player_weapon_offset_increment_left = player_weapon_position_left
+        player_weapon_offset_increment_top = player_weapon_position_top
+      } else {
+        if (player_inputs[141] == true) {
+          player_weapon_position_left = -23
+
+          if (player_inputs[150] == true) {
+            player_weapon_position_left = -17
+            player_weapon_position_top = -17
+          } else {
+            if (player_inputs[133] == true) {
+              player_weapon_position_left = -17
+              player_weapon_position_top = 17
+            }
+          }
+
+          player_weapon_offset_increment_left = player_weapon_position_left
+          player_weapon_offset_increment_top = player_weapon_position_top
+        } else {
+          if (player_inputs[133] == true) {
+            player_weapon_position_top = 23
+
+            if (player_inputs[141] == true) {
+              player_weapon_position_left = -17
+              player_weapon_position_top = 17
+            } else {
+              if (player_inputs[147] == true) {
+                player_weapon_position_left = 17
+                player_weapon_position_top = 17
+              }
+            }
+
+            player_weapon_offset_increment_left = player_weapon_position_left
+            player_weapon_offset_increment_top = player_weapon_position_top
+          } else {
+            if (player_inputs[147] == true) {
+              player_weapon_position_left = 23
+
+              if (player_inputs[150] == true) {
+                player_weapon_position_left = 17
+                player_weapon_position_top = -17
+              } else {
+                if (player_inputs[133] == true) {
+                  player_weapon_position_left = 17
+                  player_weapon_position_top = 17
+                }
+              }
+
+              player_weapon_offset_increment_left = player_weapon_position_left
+              player_weapon_offset_increment_top = player_weapon_position_top
+            }
+          }
+        }
+      }
+
+      window.player_weapon_offset_left = player_weapon_offset_left
+        + player_weapon_offset_increment_left
+      window.player_weapon_offset_top = player_weapon_offset_top
+        + player_weapon_offset_increment_top
+      player_weapon_element.setAttribute(
+        "style",
+        "left: " + window.player_weapon_offset_left + "px; top: "
+          + window.player_weapon_offset_top + "px;"
+      )
+    }
+
+    const select_elements = function(selector, callback) {
+      const selected_elements = document.querySelectorAll(selector)
+
+      if (selected_elements.length) {
+        for (const selected_element_key in selected_elements) {
+          if (selected_elements.hasOwnProperty(selected_element_key)) {
+            callback(selected_elements[selected_element_key])
+          }
+        }
+      }
+    }
+
+    const wave_initialize = function() {
+      const randomized_advertisement = (randomized_state & 31)
+      const randomized_enemy = ((randomized_state >> 5) & 15) + 20
+      let i = 0
+
+      player_weapon_delay = 0
+      player_weapon_delay_maximum = player_weapons[
+        player_weapon_equipped
+      ].delay_maximum
+      player_weapon_projectile_delay_maximum = player_weapons[
+        player_weapon_equipped
+      ].projectile_delay_maximum
+      player_weapon_delay_maximum = player_weapons[
+        player_weapon_equipped
+      ].delay_maximum
+      player_weapon_projectile_delay_maximum = player_weapons[
+        player_weapon_equipped
+      ].projectile_delay_maximum
+      player_weapons[player_weapon_equipped].initialize()
+      player_weapon_use_id = setInterval(
+        player_weapons[player_weapon_equipped].use,
+        10
+      )
+
+      const enemies_initialize_id = setInterval(function() {
+        if (
+          enemies_count != 17 &&
+          i != 50
+        ) {
+          let enemy_id = enemy_ids_available.pop()
+          let enemy_offset_left
+          let enemy_offset_top
+
+          if (i == randomized_advertisement) {
+            advertisement_element.setAttribute(
+              "style",
+              "bottom: 181px;"
+            )
+
+            setTimeout(function() {
+              advertisement_element.removeAttribute("style")
+            }, 5000)
+          }
+
+          if (i == randomized_enemy) {
+            bounds_element.classList.add("bullet-time")
+            enemy_move_delay_maximum = 52
+            player_move_speed = 1.5
+            player_weapon_delay_maximum = (player_weapon_delay_maximum + 1) * 2
+            player_weapon_projectile_delay_maximum *= 2
+
+            setTimeout(function() {
+              let j = 0
+
+              bounds_element.classList.remove("bullet-time")
+              enemy_move_delay_maximum = 26
+
+              while (j != 50) {
+                enemy_move_delays[j] = j & 15
+                j++
+              }
+
+              player_move_speed = 3
+              player_weapon_delay_maximum = (player_weapon_delay_maximum / 2) - 1
+              player_weapon_projectile_delay_maximum /= 2
+            }, 5000)
+          }
+
+          if ((randomized_state & 1) == 0) {
+            if (((randomized_state >> 1) & 1) == 0) {
+              enemy_offset_left = -50
+            } else {
+              enemy_offset_left = 722
+            }
+
+            enemy_offset_top = randomized_state % 378
+          } else {
+            if (((randomized_state >> 2) & 1) == 0) {
+              enemy_offset_top = -50
+            } else {
+              enemy_offset_top = 428
+            }
+
+            enemy_offset_left = randomized_state % 672
+          }
+
+          enemy_elements[enemy_id].setAttribute(
+            "style",
+            "left: " + enemy_offset_left + "px; top: "
+              + enemy_offset_top + "px; transition: none;"
+          )
+          enemy_elements[enemy_id].setAttribute(
+            "class",
+            "element enemy"
+          )
+          enemy_health[enemy_id] = 100
+          enemy_health_elements[enemy_id].setAttribute(
+            "style",
+            "width: 24px;"
+          )
+          enemy_move_speeds[enemy_id] = randomized_state & 7
+          enemy_offsets_left[enemy_id] = enemy_offset_left
+          enemy_offsets_top[enemy_id] = enemy_offset_top
+
+          if (enemy_offset_left > 0) {
+            enemy_offset_left >>= 4
+
+            if (enemy_offset_left != 0) {
+              enemy_offsets_map[enemy_offset_left - 1][enemy_id] = enemy_id
+            }
+          } else {
+            enemy_offset_left = 0
+          }
+
+          enemy_offsets_map[enemy_offset_left][enemy_id] = enemy_id
+          enemy_offsets_map[enemy_offset_left + 1][enemy_id] = enemy_id
+          enemies_count++
+          enemy_move_ids[enemy_id] = setInterval(
+            enemy_move,
+            10,
+            enemy_id
+          )
+          i++
+        } else {
+          if (enemies_count == 0) {
+            let wave_cleanup_width = 0
+
+            clearInterval(enemies_initialize_id)
+
+            wave_cleanup_id = setInterval(function() {
+              if (wave_cleanup_width != 672) {
+                wave_cleanup_element.setAttribute(
+                  "style",
+                  "height: 378px; width: " + wave_cleanup_width + "px;"
+                )
+                wave_cleanup_width += 3
+              } else {
+                clearInterval(wave_cleanup_id)
+                wave_cleanup_id = 0
+
+                select_elements(".gore", function(selected_element) {
+                  selected_element.removeAttribute("class")
+                  selected_element.removeAttribute("style")
+                  enemy_gore_elements.push(selected_element)
+                })
+
+                select_elements(".pieces", function(selected_element) {
+                  selected_element.setAttribute(
+                    "class",
+                    "pieces-hidden"
+                  )
+                  selected_element.removeAttribute("style")
+                  enemy_pieces_elements.push(selected_element)
+                })
+
+                wave_cleanup_element.setAttribute(
+                  "style",
+                  "height: 378px; width: 0;"
+                )
+                clearInterval(player_weapon_use_id)
+                player_weapons[player_weapon_equipped].destroy()
+                player_weapon_equipped = randomized_state % player_weapons.length
+                wave_initialize()
+              }
+            }, 10)
+          }
+        }
+      }, 150)
+    }
+
+    const title_screen_prompt_element = document.querySelector(".prompt")
+
+    onload = function() {
+      on_document_ready(function() {
+        bounds_element.setAttribute(
+          "style",
+          "left: " + ((innerWidth >> 1) - 336) + "px; top: "
+            + ((innerHeight >> 1) - 189) + "px;"
+        )
+        player_inputs[133] = 0
+        player_inputs[141] = 0
+        player_inputs[147] = 0
+        player_inputs[150] = 0
+
+        document.querySelector("body").addEventListener(
+          "keydown",
+          function(event) {
+            let player_input = event.key.charCodeAt(0)
+
+            if (
+              event.key[0] == "A" &&
+              event.key[1] == "r"
+            ) {
+              event.preventDefault()
+              player_input += event.key.charCodeAt(5)
+            }
+
+            player_inputs[player_input] = 1
+          }
+        )
+
+        document.querySelector("body").addEventListener(
+          "keyup",
+          function(event) {
+            let player_input = event.key.charCodeAt(0)
+
+            if (
+              event.key[0] == "A" &&
+              event.key[1] == "r"
+            ) {
+              event.preventDefault()
+              player_input += event.key.charCodeAt(5)
+            }
+
+            player_inputs[player_input] = 0
+          }
+        )
+
+        const play_initialize_id = setInterval(function() {
+          if ((player_inputs[133] + player_inputs[141]
+            + player_inputs[147] + player_inputs[150]) != 0) {
+            let i = 0
+            let j
+
+            clearInterval(play_initialize_id)
+            clearInterval(title_screen_id)
+            title_screen_prompt_element.classList.add("hidden")
+            wave_cleanup_element.setAttribute(
+              "class",
+              "element wave-cleanup"
+            )
+            wave_cleanup_element = bounds_element.appendChild(
+              wave_cleanup_element
+            )
+            player_element.setAttribute("class", "element player")
+            player_offset_left = 322
+            player_offset_top = 175
+            player_element.setAttribute(
+              "style",
+              "left: " + player_offset_left + "px; top: "
+                + player_offset_top + "px;"
+            )
+            bounds_element.append(player_element)
+            player_inputs[97] = 0
+            player_inputs[100] = 0
+            player_inputs[115] = 0
+            player_inputs[119] = 0
+            player_inputs[133] = 0
+            player_inputs[141] = 0
+            player_inputs[147] = 0
+            player_inputs[150] = 0
+            player_move_id = setInterval(player_move, 20)
+            player_weapon_equipped = Date.now() % player_weapons.length
+            bounds_element.appendChild(player_weapon_element)
+
+            setInterval(function() {
+              randomized_state ^= ((randomized_state & 255) << 8)
+                | (Date.now() & 255)
+            }, 10)
+
+            while (i != 50) {
+              const enemy_health_container_element = document.createElement("div")
+              const enemy_health_element = document.createElement("div")
+
+              enemy_elements[i] = bounds_element.appendChild(
+                document.createElement("div")
+              )
+              enemy_gore_elements[i] = document.createElement("div")
+              enemy_health_container_element.setAttribute(
+                "class",
+                "health-container"
+              )
+              enemy_health_element.setAttribute(
+                "class",
+                "health"
+              )
+              enemy_health_container_element.appendChild(
+                enemy_health_element
+              )
+              enemy_health_elements[i] = enemy_health_element
+              enemy_elements[i].appendChild(
+                enemy_health_container_element
+              )
+              enemy_ids_available[i] = i
+              enemy_move_delays[i] = 0
+              enemy_offsets_map[i] = {}
+              enemy_pieces_elements[i] = document.createElement("div")
+              j = 0
+
+              while (j != 10) {
+                enemy_gore_elements[i].appendChild(
+                  document.createElement("div")
+                )
+                enemy_pieces_elements[i].appendChild(
+                  document.createElement("div")
+                )
+                j++
+              }
+
+              enemy_gore_elements[i] = bounds_element.appendChild(
+                enemy_gore_elements[i]
+              )
+              enemy_pieces_elements[i].setAttribute(
+                "class",
+                "pieces-hidden"
+              )
+              enemy_pieces_elements[i] = bounds_element.appendChild(
+                enemy_pieces_elements[i]
+              )
+              has_enemy_knockback_state_ids[i] = 0
+              has_enemy_knockback_states[i] = false
+              i++
+            }
+
+            wave_initialize()
+          }
+        }, 10)
+
+        const title_screen_id = setInterval(function() {
+          title_screen_prompt_element.classList.toggle("hidden")
+        }, 500)
+      })
+    }
+
+    onresize = function() {
+      bounds_element.setAttribute(
+        "style",
+        "left: " + ((innerWidth >> 1) - 336) + "px; top:"
+          + ((innerHeight >> 1) - 189) + "px;"
+      )
+    }
+  </script>
+</html>
