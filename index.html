@@ -1713,7 +1713,7 @@
       <div class="title-screen">
         <p class="copyright"><span>Contrivity</span> &copy; 2024 <a href="https://eightomic.com" target="_blank">Eightomic</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">v1.0.9</p>
+        <p class="version">v1.0.10</p>
       </div>
     </div>
   </body>
@@ -2125,7 +2125,7 @@
       if (enemy_offset_next_top > 0) {
         enemy_offset_next_top >>= 3
 
-        if (enemy_offset_next_top > 49) { 
+        if (enemy_offset_next_top > 49) {
           enemy_offset_next_top = 49
         }
       } else {
@@ -2189,7 +2189,7 @@
 
               if (
                 (enemy_offset_previous_left + 1) != (enemy_offset_next_left - 1) &&
-                (enemy_offset_previous_left + 1) != enemy_offset_next_left   
+                (enemy_offset_previous_left + 1) != enemy_offset_next_left
               ) {
                 delete enemy_offsets_map_horizontal[enemy_offset_previous_left + 1][enemy_id]
               }
@@ -2468,7 +2468,13 @@
               }, player_weapon_reload_delay)
 
               player_weapon_ammunition = 30
-              player_weapon_delay = -70
+
+              if (enemy_move_delay_maximum == 26) {
+                player_weapon_delay = -70
+              } else {
+                player_weapon_delay = -140
+              }
+
               return
             }
           }
@@ -2516,8 +2522,8 @@
           let player_weapon_recoil_interval = 25
           const player_weapon_muzzle_flash_offset_left = player_weapon_projectile_offset_left
           const player_weapon_muzzle_flash_offset_top = player_weapon_projectile_offset_top
-          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
           const player_weapon_projectile_casing_element = player_weapon_projectile_effect_elements.pop()
+          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
 
           const player_weapon_projectile_move = function(player_weapon_projectile_id) {
             if (has_player_weapon_projectile_move_state == true) {
@@ -3109,7 +3115,13 @@
             }, player_weapon_reload_delay)
 
             player_weapon_ammunition = 20
-            player_weapon_delay = -100
+
+            if (enemy_move_delay_maximum == 26) {
+              player_weapon_delay = -100
+            } else {
+              player_weapon_delay = -200
+            }
+
             return
           }
 
@@ -3948,9 +3960,13 @@
           }, player_weapon_recoil_interval)
 
           if (player_weapon_ammunition == 1) {
-            let player_weapon_reload_delay = 230
+            let player_weapon_reload_delay
 
-            if (enemy_move_delay_maximum != 26) {
+            if (enemy_move_delay_maximum == 26) {
+              player_weapon_delay = -70
+              player_weapon_reload_delay = 230
+            } else {
+              player_weapon_delay = -140
               player_weapon_reload_delay = 460
             }
 
@@ -4038,8 +4054,6 @@
                 player_weapon_ammunition = 2
               }
             }, 10)
-
-            player_weapon_delay = -70
           } else {
             player_weapon_ammunition = 1
             player_weapon_delay = 0
@@ -4418,9 +4432,9 @@
             return
           }
 
-          if (player_element.hasAttribute("recoil_light")) {
-            player_element.removeAttribute("recoil_light")
-            player_weapon_element.removeAttribute("recoil_light")
+          if (player_element.hasAttribute("recoil_heavy")) {
+            player_element.removeAttribute("recoil_heavy")
+            player_weapon_element.removeAttribute("recoil_heavy")
           }
 
           if ((player_inputs[133] + player_inputs[141]
@@ -4437,11 +4451,11 @@
 
           setTimeout(function() {
             player_element.setAttribute(
-              "recoil_light",
+              "recoil_heavy",
               player_weapon_recoil
             )
             player_weapon_element.setAttribute(
-              "recoil_light",
+              "recoil_heavy",
               player_weapon_recoil
             )
           }, player_weapon_recoil_delay)
@@ -4657,7 +4671,7 @@
           }
 
           player_weapon_projectile_element.setAttribute(
-            "recoil_light",
+            "recoil_heavy",
             player_weapon_recoil
           )
 
@@ -4814,6 +4828,613 @@
         }
       },
       {
+        "delay_maximum": 50,
+        "destroy": function() {
+          let i = 0
+
+          player_weapon_muzzle_flash_element.remove()
+
+          while (i != 12) {
+            player_weapon_projectile_elements[i].remove()
+            i++
+          }
+
+          i = 0
+
+          while (i != 4) {
+            player_weapon_projectile_effect_elements[i].remove()
+            i++
+          }
+        },
+        "initialize": function() {
+          let i = 0
+
+          player_weapon_ammunition = 12
+          player_weapon_delay = 50
+          player_weapon_element.setAttribute(
+            "class",
+            "element lever-action-rifle player-weapon"
+          )
+          player_weapon_muzzle_flash_element = document.createElement("div")
+          player_weapon_muzzle_flash_element.setAttribute(
+            "class",
+            "element lever-action-rifle player-weapon-muzzle-flash"
+          )
+          player_weapon_muzzle_flash_element = bounds_element.appendChild(
+            player_weapon_muzzle_flash_element
+          )
+          player_weapon_projectile_elements = Array(12)
+          player_weapon_projectile_effect_elements = Array(4)
+
+          while (i != 12) {
+            player_weapon_projectile_elements[i] = document.createElement("div")
+            player_weapon_projectile_elements[i].setAttribute(
+              "class",
+              "element lever-action-rifle player-weapon-projectile"
+            )
+            player_weapon_projectile_elements[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            player_weapon_projectile_elements[i] = bounds_element.appendChild(
+              player_weapon_projectile_elements[i]
+            )
+            i++
+          }
+
+          i = 0
+
+          while (i != 4) {
+            player_weapon_projectile_effect_elements[i] = document.createElement("div")
+            player_weapon_projectile_effect_elements[i].setAttribute(
+              "class",
+              "element lever-action-rifle player-weapon-projectile-effect"
+            )
+            player_weapon_projectile_effect_elements[i].setAttribute(
+              "style",
+              "display: none;"
+            )
+            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
+              player_weapon_projectile_effect_elements[i]
+            )
+            i++
+          }
+        },
+        "use": function() {
+          player_weapon_position()
+
+          if (
+            player_weapon_delay < player_weapon_delay_maximum ||
+            wave_cleanup_id != 0
+          ) {
+            player_weapon_delay++
+            return
+          }
+
+          let player_weapon_recoil = randomized_state & 3
+
+          if (player_weapon_ammunition == 0) {
+            let player_weapon_reload_delay
+
+            const player_weapon_reload = function(i) {
+              if (enemy_move_delay_maximum == 26) {
+                player_weapon_reload_delay = 60
+              } else {
+                player_weapon_reload_delay = 120
+              }
+
+              if (i != 10) {
+                i++
+
+                setTimeout(function(i) {
+                  if ((i & 1) == 1) {
+                    player_weapon_element.setAttribute(
+                      "recoil_heavy",
+                      (player_weapon_recoil + (i & 1)) & 3
+                    )
+                  } else {
+                    player_weapon_element.removeAttribute("recoil_heavy")
+                  }
+
+                  player_weapon_reload(i)
+                }, player_weapon_reload_delay, i)
+              } else {
+                player_weapon_element.removeAttribute("recoil_heavy")
+              }
+            }
+
+            player_weapon_ammunition = 12
+
+            if (enemy_move_delay_maximum == 26) {
+              player_weapon_delay = -35
+            } else {
+              player_weapon_delay = -70
+            }
+
+            player_weapon_reload(0)
+            return
+          }
+
+          if ((player_inputs[133] + player_inputs[141]
+            + player_inputs[147] + player_inputs[150]) == 0) {
+            return
+          }
+
+          let has_player_weapon_projectile_move_horizontal_state = false
+          let has_player_weapon_projectile_move_state = false
+          let i = 0
+          let player_weapon_muzzle_flash_interval = 10
+          let player_weapon_muzzle_flash_margin = 0
+          let player_weapon_muzzle_flash_size = 8
+          let player_weapon_projectile_casing_delay = 240
+          let player_weapon_projectile_casing_offset_increment_left
+            = (player_offset_left & 7) - (randomized_state & 7)
+          let player_weapon_projectile_casing_offset_increment_top
+            = (player_offset_top & 7) - ((randomized_state >> 3) & 7)
+          let player_weapon_projectile_casing_offset_left
+          let player_weapon_projectile_casing_offset_top
+          let player_weapon_projectile_casing_opacity = 100
+          let player_weapon_projectile_casing_opacity_decrement = 2
+          let player_weapon_projectile_casing_rotation = randomized_state & 255
+          let player_weapon_projectile_casing_rotation_decrement = 3
+          let player_weapon_projectile_impact_interval = 40
+          let player_weapon_projectile_offset_increment_left
+            = player_weapon_offset_increment_left * 0.43
+          let player_weapon_projectile_offset_increment_top
+            = player_weapon_offset_increment_top * 0.43
+          let enemy_knockback_offset_increment_left
+            = (player_weapon_projectile_offset_increment_left * 2)
+            + (player_weapon_offset_left & 7) - (randomized_state & 7)
+          let enemy_knockback_offset_increment_top
+            = (player_weapon_projectile_offset_increment_top * 2)
+            + (player_weapon_offset_top & 7) - ((randomized_state >> 3) & 7)
+          let player_weapon_projectile_offset_left = player_weapon_offset_left
+          let player_weapon_projectile_offset_top = player_weapon_offset_top
+          let player_weapon_projectile_penetration = 7
+          let player_weapon_recoil_interval = 25
+          let player_weapon_reload_delay = 230
+          const player_weapon_muzzle_flash_offset_left = player_weapon_projectile_offset_left
+          const player_weapon_muzzle_flash_offset_top = player_weapon_projectile_offset_top
+          const player_weapon_projectile_casing_element = player_weapon_projectile_effect_elements.pop()
+          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
+
+          const player_weapon_projectile_move = function(player_weapon_projectile_id) {
+            if (has_player_weapon_projectile_move_state == true) {
+              return
+            }
+
+            has_player_weapon_projectile_move_state = true
+
+            if (enemy_move_delay_maximum == 26) {
+              if (player_weapon_projectile_impact_interval == 20) {
+                enemy_knockback_offset_increment_left *= 2
+                enemy_knockback_offset_increment_top *= 2
+                player_weapon_projectile_impact_interval = 40
+                player_weapon_projectile_offset_increment_left *= 2
+                player_weapon_projectile_offset_increment_top *= 2
+              }
+            } else {
+              if (player_weapon_projectile_impact_interval == 40) {
+                enemy_knockback_offset_increment_left *= 0.5
+                enemy_knockback_offset_increment_top *= 0.5
+                player_weapon_projectile_impact_interval = 20
+                player_weapon_projectile_offset_increment_left *= 0.5
+                player_weapon_projectile_offset_increment_top *= 0.5
+              }
+            }
+
+            player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
+            player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+            player_weapon_projectile_element.setAttribute(
+              "style",
+              "left: " + player_weapon_projectile_offset_left + "px; top: "
+                + player_weapon_projectile_offset_top + "px;"
+            )
+
+            if (
+              player_weapon_projectile_offset_left >= 0 &&
+              player_weapon_projectile_offset_left <= 672 &&
+              player_weapon_projectile_offset_top >= 0 &&
+              player_weapon_projectile_offset_top <= 378
+            ) {
+              if (has_player_weapon_projectile_move_horizontal_state == true) {
+                const player_weapon_projectile_segment
+                  = player_weapon_projectile_offset_left >> 4
+
+                for (const enemy_id in enemy_offsets_map_horizontal[
+                  player_weapon_projectile_segment
+                ]) {
+                  if (
+                    player_weapon_projectile_offset_left
+                      <= (enemy_offsets_left[enemy_id] + 28) &&
+                    (player_weapon_projectile_offset_left + 8)
+                      >= enemy_offsets_left[enemy_id] &&
+                    player_weapon_projectile_offset_top
+                      <= (enemy_offsets_top[enemy_id] + 28) &&
+                    (player_weapon_projectile_offset_top + 8)
+                      >= enemy_offsets_top[enemy_id]
+                  ) {
+                    let player_weapon_projectile_impact_element
+                    let player_weapon_projectile_offset_decrement = 5
+                    let player_weapon_projectile_opacity = 60
+                    let player_weapon_projectile_opacity_decrement = 20
+                    let player_weapon_projectile_height = 8
+                    let player_weapon_projectile_size_increment = 10
+                    let player_weapon_projectile_width = 8
+
+                    enemy_hit(
+                      45,
+                      enemy_id,
+                      enemy_knockback_offset_increment_left,
+                      enemy_knockback_offset_increment_top
+                    )
+
+                    if (enemy_move_delay_maximum != 28) {
+                      player_weapon_projectile_offset_decrement = 2.5
+                      player_weapon_projectile_opacity_decrement = 10
+                      player_weapon_projectile_size_increment = 5
+                    }
+
+                    player_weapon_projectile_penetration--
+
+                    if (player_weapon_projectile_penetration != 0) {
+                      let player_weapon_projectile_impact_offset_left = player_weapon_projectile_offset_left
+                      let player_weapon_projectile_impact_offset_top = player_weapon_projectile_offset_top
+
+                      player_weapon_projectile_impact_element = player_weapon_projectile_elements.pop()
+
+                      const player_weapon_projectile_impact_id = setInterval(function() {
+                        if (player_weapon_projectile_opacity > 0) {
+                          player_weapon_projectile_height += player_weapon_projectile_size_increment
+                          player_weapon_projectile_impact_offset_left -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_impact_offset_top -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_width += player_weapon_projectile_size_increment
+                          player_weapon_projectile_impact_element.setAttribute(
+                            "style",
+                            "height: " + player_weapon_projectile_height + "px; left: "
+                              + player_weapon_projectile_impact_offset_left + "px; opacity: 0."
+                              + player_weapon_projectile_opacity + "; top: "
+                              + player_weapon_projectile_impact_offset_top + "px; width: "
+                              + player_weapon_projectile_width + "px;"
+                          )
+                          player_weapon_projectile_opacity -= player_weapon_projectile_opacity_decrement
+                        } else {
+                          player_weapon_projectile_impact_element.setAttribute(
+                            "style",
+                            "display: none;"
+                          )
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
+                          clearInterval(player_weapon_projectile_impact_id)
+                        }
+                      }, 20)
+                    } else {
+                      const player_weapon_projectile_impact_id = setInterval(function() {
+                        if (player_weapon_projectile_opacity > 0) {
+                          player_weapon_projectile_height += player_weapon_projectile_size_increment
+                          player_weapon_projectile_offset_left -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_offset_top -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_width += player_weapon_projectile_size_increment
+                          player_weapon_projectile_element.setAttribute(
+                            "style",
+                            "height: " + player_weapon_projectile_height + "px; left: "
+                              + player_weapon_projectile_offset_left + "px; opacity: 0."
+                              + player_weapon_projectile_opacity + "; top: "
+                              + player_weapon_projectile_offset_top + "px; width: "
+                              + player_weapon_projectile_width + "px;"
+                          )
+                          player_weapon_projectile_opacity -= player_weapon_projectile_opacity_decrement
+                        } else {
+                          player_weapon_projectile_element.setAttribute(
+                            "style",
+                            "display: none;"
+                          )
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                          clearInterval(player_weapon_projectile_impact_id)
+                        }
+                      }, 20)
+
+                      clearInterval(player_weapon_projectile_id)
+                      break
+                    }
+                  }
+                }
+              } else {
+                const player_weapon_projectile_segment
+                  = player_weapon_projectile_offset_top >> 3
+
+                for (const enemy_id in enemy_offsets_map_vertical[
+                  player_weapon_projectile_segment
+                ]) {
+                  if (
+                    player_weapon_projectile_offset_left
+                      <= (enemy_offsets_left[enemy_id] + 28) &&
+                    (player_weapon_projectile_offset_left + 8)
+                      >= enemy_offsets_left[enemy_id] &&
+                    player_weapon_projectile_offset_top
+                      <= (enemy_offsets_top[enemy_id] + 28) &&
+                    (player_weapon_projectile_offset_top + 8)
+                      >= enemy_offsets_top[enemy_id]
+                  ) {
+                    let player_weapon_projectile_impact_element
+                    let player_weapon_projectile_offset_decrement = 5
+                    let player_weapon_projectile_opacity = 60
+                    let player_weapon_projectile_opacity_decrement = 20
+                    let player_weapon_projectile_height = 8
+                    let player_weapon_projectile_size_increment = 10
+                    let player_weapon_projectile_width = 8
+
+                    enemy_hit(
+                      45,
+                      enemy_id,
+                      enemy_knockback_offset_increment_left,
+                      enemy_knockback_offset_increment_top
+                    )
+
+                    if (enemy_move_delay_maximum != 28) {
+                      player_weapon_projectile_offset_decrement = 2.5
+                      player_weapon_projectile_opacity_decrement = 10
+                      player_weapon_projectile_size_increment = 5
+                    }
+
+                    player_weapon_projectile_penetration--
+
+                    if (player_weapon_projectile_penetration != 0) {
+                      let player_weapon_projectile_impact_offset_left = player_weapon_projectile_offset_left
+                      let player_weapon_projectile_impact_offset_top = player_weapon_projectile_offset_top
+
+                      player_weapon_projectile_impact_element = player_weapon_projectile_elements.pop()
+
+                      const player_weapon_projectile_impact_id = setInterval(function() {
+                        if (player_weapon_projectile_opacity > 0) {
+                          player_weapon_projectile_height += player_weapon_projectile_size_increment
+                          player_weapon_projectile_impact_offset_left -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_impact_offset_top -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_width += player_weapon_projectile_size_increment
+                          player_weapon_projectile_impact_element.setAttribute(
+                            "style",
+                            "height: " + player_weapon_projectile_height + "px; left: "
+                              + player_weapon_projectile_impact_offset_left + "px; opacity: 0."
+                              + player_weapon_projectile_opacity + "; top: "
+                              + player_weapon_projectile_impact_offset_top + "px; width: "
+                              + player_weapon_projectile_width + "px;"
+                          )
+                          player_weapon_projectile_opacity -= player_weapon_projectile_opacity_decrement
+                        } else {
+                          player_weapon_projectile_impact_element.setAttribute(
+                            "style",
+                            "display: none;"
+                          )
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
+                          clearInterval(player_weapon_projectile_impact_id)
+                        }
+                      }, 20)
+                    } else {
+                      const player_weapon_projectile_impact_id = setInterval(function() {
+                        if (player_weapon_projectile_opacity > 0) {
+                          player_weapon_projectile_height += player_weapon_projectile_size_increment
+                          player_weapon_projectile_offset_left -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_offset_top -= player_weapon_projectile_offset_decrement
+                          player_weapon_projectile_width += player_weapon_projectile_size_increment
+                          player_weapon_projectile_element.setAttribute(
+                            "style",
+                            "height: " + player_weapon_projectile_height + "px; left: "
+                              + player_weapon_projectile_offset_left + "px; opacity: 0."
+                              + player_weapon_projectile_opacity + "; top: "
+                              + player_weapon_projectile_offset_top + "px; width: "
+                              + player_weapon_projectile_width + "px;"
+                          )
+                          player_weapon_projectile_opacity -= player_weapon_projectile_opacity_decrement
+                        } else {
+                          player_weapon_projectile_element.setAttribute(
+                            "style",
+                            "display: none;"
+                          )
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                          clearInterval(player_weapon_projectile_impact_id)
+                        }
+                      }, 20)
+
+                      clearInterval(player_weapon_projectile_id)
+                      break
+                    }
+                  }
+                }
+              }
+            }
+
+            has_player_weapon_projectile_move_state = false
+          }
+
+          if (enemy_move_delay_maximum != 26) {
+            player_weapon_muzzle_flash_interval = 20
+            player_weapon_projectile_casing_offset_increment_left *= 0.5
+            player_weapon_projectile_casing_offset_increment_top *= 0.5
+            player_weapon_projectile_casing_opacity_decrement = 1
+            player_weapon_projectile_casing_rotation_decrement = 1.5
+            player_weapon_recoil_interval = 50
+            player_weapon_reload_delay = 460
+          }
+
+          const player_weapon_muzzle_flash_id = setInterval(function() {
+            if (player_weapon_muzzle_flash_size != 64) {
+              player_weapon_muzzle_flash_margin -= 4
+              player_weapon_muzzle_flash_size += 8
+              player_weapon_muzzle_flash_element.setAttribute(
+                "style",
+                "height: " + player_weapon_muzzle_flash_size + "px; left: "
+                  + player_weapon_offset_left + "px; margin: "
+                  + player_weapon_muzzle_flash_margin + "px 0 0 "
+                  + player_weapon_muzzle_flash_margin + "px; top: "
+                  + player_weapon_offset_top + "px; width: "
+                  + player_weapon_muzzle_flash_size + "px;"
+              )
+            } else {
+              player_weapon_muzzle_flash_element.setAttribute(
+                "style",
+                "display: none;"
+              )
+              clearInterval(player_weapon_muzzle_flash_id)
+            }
+          }, player_weapon_muzzle_flash_interval)
+
+          if (
+            player_inputs[141] != 0 ||
+            player_inputs[147] != 0
+          ) {
+            has_player_weapon_projectile_move_horizontal_state = true
+          }
+
+          if (player_weapon_projectile_offset_increment_left < 0) {
+            if (player_weapon_projectile_offset_increment_top < 0) {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_top > -50 &&
+                  player_weapon_projectile_offset_left > -50
+                ) {
+                  player_weapon_projectile_move(player_weapon_projectile_id)
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            } else {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_left > -50 &&
+                  player_weapon_projectile_offset_top < 428
+                ) {
+                  player_weapon_projectile_move(player_weapon_projectile_id)
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            }
+          } else {
+            if (player_weapon_projectile_offset_increment_top < 0) {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_left < 722 &&
+                  player_weapon_projectile_offset_top > -50
+                ) {
+                  player_weapon_projectile_move(player_weapon_projectile_id)
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            } else {
+              const player_weapon_projectile_id = setInterval(function() {
+                if (
+                  player_weapon_projectile_offset_left < 722 &&
+                  player_weapon_projectile_offset_top < 428
+                ) {
+                  player_weapon_projectile_move(player_weapon_projectile_id)
+                } else {
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
+                  clearInterval(player_weapon_projectile_id)
+                }
+              }, 10)
+            }
+          }
+
+          const player_weapon_recoil_id = setInterval(function() {
+            player_element.setAttribute(
+              "recoil_heavy",
+              player_weapon_recoil
+            )
+            player_weapon_element.setAttribute(
+              "recoil_heavy",
+              player_weapon_recoil
+            )
+            i++
+
+            if (i < 5) {
+              player_weapon_recoil = (player_weapon_recoil + 1) & 3
+            } else {
+              player_element.removeAttribute("recoil_heavy")
+              player_weapon_element.removeAttribute("recoil_heavy")
+              clearInterval(player_weapon_recoil_id)
+            }
+          }, player_weapon_recoil_interval)
+
+          setTimeout(function() {
+            player_weapon_projectile_casing_offset_left = player_weapon_offset_left
+            player_weapon_projectile_casing_offset_top = player_weapon_offset_top
+            player_weapon_projectile_casing_element.setAttribute(
+              "style",
+              "left: " + player_weapon_projectile_casing_offset_left + "px; top: "
+                + player_weapon_projectile_casing_offset_top + "px; transform: rotate("
+                + player_weapon_projectile_casing_rotation + "deg); transition: none; width: 9px;"
+            )
+
+            const player_weapon_projectile_casing_id = setInterval(function() {
+              if (player_weapon_projectile_casing_opacity > 70) {
+                player_weapon_projectile_casing_offset_left += player_weapon_projectile_casing_offset_increment_left
+                player_weapon_projectile_casing_offset_top += player_weapon_projectile_casing_offset_increment_top
+                player_weapon_projectile_casing_rotation -= player_weapon_projectile_casing_rotation_decrement
+                player_weapon_projectile_casing_element.setAttribute(
+                  "style",
+                  "left: " + player_weapon_projectile_casing_offset_left + "px; opacity: 0."
+                    + player_weapon_projectile_casing_opacity + "; top: "
+                    + player_weapon_projectile_casing_offset_top + "px; transform: rotate("
+                    + player_weapon_projectile_casing_rotation + "deg); width: 9px;"
+                )
+                player_weapon_projectile_casing_opacity -= player_weapon_projectile_casing_opacity_decrement
+              } else {
+                player_weapon_projectile_casing_element.setAttribute(
+                  "style",
+                  "display: none;"
+                )
+                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
+                clearInterval(player_weapon_projectile_casing_id)
+              }
+            }, 50)
+
+            if (enemy_move_delay_maximum == 26) {
+              player_weapon_reload_delay = 75
+            } else {
+              player_weapon_reload_delay = 150
+            }
+
+            player_weapon_element.setAttribute(
+              "reload",
+              player_weapon_recoil
+            )
+
+            setTimeout(function() {
+              if (enemy_move_delay_maximum == 26) {
+                player_weapon_reload_delay = 15
+              } else {
+                player_weapon_reload_delay = 30
+              }
+
+              player_weapon_element.removeAttribute("reload")
+
+              setTimeout(function() {
+                if (enemy_move_delay_maximum == 26) {
+                  player_weapon_reload_delay = 90
+                } else {
+                  player_weapon_reload_delay = 180
+                }
+
+                player_weapon_element.setAttribute(
+                  "reload",
+                  (player_weapon_recoil + 1) & 3
+                )
+
+                setTimeout(function() {
+                  player_weapon_element.removeAttribute("reload")
+                }, player_weapon_reload_delay)
+              }, player_weapon_reload_delay)
+            }, player_weapon_reload_delay)
+          }, player_weapon_reload_delay)
+
+          player_weapon_ammunition--
+          player_weapon_delay = 0
+        }
+      },
+      {
         "delay_maximum": 0,
         "destroy": function() {
           let i = 0
@@ -4894,9 +5515,9 @@
             return
           }
 
-          if (player_element.hasAttribute("recoil_light")) {
-            player_element.removeAttribute("recoil_light")
-            player_weapon_element.removeAttribute("recoil_light")
+          if (player_element.hasAttribute("recoil_heavy")) {
+            player_element.removeAttribute("recoil_heavy")
+            player_weapon_element.removeAttribute("recoil_heavy")
           }
 
           if ((player_inputs[133] + player_inputs[141]
@@ -5252,11 +5873,11 @@
 
           setTimeout(function() {
             player_element.setAttribute(
-              "recoil_light",
+              "recoil_heavy",
               player_weapon_recoil
             )
             player_weapon_element.setAttribute(
-              "recoil_light",
+              "recoil_heavy",
               player_weapon_recoil
             )
           }, player_weapon_recoil_delay)
@@ -5389,8 +6010,8 @@
           let player_weapon_recoil_interval = 25
           const player_weapon_muzzle_flash_offset_left = player_weapon_projectile_offset_left
           const player_weapon_muzzle_flash_offset_top = player_weapon_projectile_offset_top
-          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
           const player_weapon_projectile_casing_element = player_weapon_projectile_effect_elements.pop()
+          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
 
           const player_weapon_projectile_move = function(player_weapon_projectile_id) {
             if (has_player_weapon_projectile_move_state == true) {
@@ -6184,7 +6805,7 @@
             player_weapon_projectile_casing_offset_increment_top *= 0.5
             player_weapon_projectile_casing_opacity_decrement = 1
             player_weapon_projectile_casing_rotation_decrement = 1.5
-            player_weapon_recoil_interval = 50  
+            player_weapon_recoil_interval = 50
             player_weapon_reload_delay = 460
           }
 
@@ -6218,6 +6839,26 @@
             player_weapon_projectile_delay += 5
           }
 
+          const player_weapon_recoil_id = setInterval(function() {
+            player_element.setAttribute(
+              "recoil_heavy",
+              player_weapon_recoil
+            )
+            player_weapon_element.setAttribute(
+              "recoil_heavy",
+              player_weapon_recoil
+            )
+            i++
+
+            if (i < 5) {
+              player_weapon_recoil = (player_weapon_recoil + 1) & 3
+            } else {
+              player_element.removeAttribute("recoil_heavy")
+              player_weapon_element.removeAttribute("recoil_heavy")
+              clearInterval(player_weapon_recoil_id)
+            }
+          }, player_weapon_recoil_interval)
+
           setTimeout(function() {
             player_weapon_projectile_casing_offset_left = player_weapon_offset_left
             player_weapon_projectile_casing_offset_top = player_weapon_offset_top
@@ -6250,29 +6891,7 @@
                 clearInterval(player_weapon_projectile_casing_id)
               }
             }, 50)
-          }, 240)
 
-          const player_weapon_recoil_id = setInterval(function() {
-            player_element.setAttribute(
-              "recoil_heavy",
-              player_weapon_recoil
-            )
-            player_weapon_element.setAttribute(
-              "recoil_heavy",
-              player_weapon_recoil
-            )
-            i++
-
-            if (i < 5) {
-              player_weapon_recoil = (player_weapon_recoil + 1) & 3
-            } else {
-              player_element.removeAttribute("recoil_heavy")
-              player_weapon_element.removeAttribute("recoil_heavy")
-              clearInterval(player_weapon_recoil_id)
-            }
-          }, player_weapon_recoil_interval)
-
-          setTimeout(function() {
             if (enemy_move_delay_maximum == 26) {
               player_weapon_reload_delay = 100
             } else {
@@ -6285,29 +6904,19 @@
             )
 
             setTimeout(function() {
-              if (enemy_move_delay_maximum == 26) { 
-                player_weapon_reload_delay = 30
+              if (enemy_move_delay_maximum == 26) {
+                player_weapon_reload_delay = 40
               } else {
-                player_weapon_reload_delay = 60
+                player_weapon_reload_delay = 80
               }
 
-              player_weapon_element.removeAttribute("reload")
+              player_weapon_element.setAttribute(
+                "reload",
+                (player_weapon_recoil + 1) & 3
+              )
 
               setTimeout(function() {
-                if (enemy_move_delay_maximum == 26) {
-                  player_weapon_reload_delay = 130
-                } else {
-                  player_weapon_reload_delay = 260
-                }
-
-                player_weapon_element.setAttribute(
-                  "reload",
-                  player_weapon_recoil
-                )
-
-                setTimeout(function() {
-                  player_weapon_element.removeAttribute("reload")
-                }, player_weapon_reload_delay)
+                player_weapon_element.removeAttribute("reload")
               }, player_weapon_reload_delay)
             }, player_weapon_reload_delay)
           }, player_weapon_reload_delay)
@@ -6351,7 +6960,7 @@
             player_weapon_muzzle_flash_element
           )
           player_weapon_projectile_elements = Array(20)
-          player_weapon_projectile_effect_elements = Array(5)
+          player_weapon_projectile_effect_elements = Array(6)
 
           while (i != 20) {
             player_weapon_projectile_elements[i] = document.createElement("div")
@@ -6390,7 +6999,10 @@
         "use": function() {
           player_weapon_position()
 
-          if (player_weapon_delay < -34) {
+          if (
+            player_weapon_delay < 0 &&
+            player_weapon_ammunition < 6
+          ) {
             let player_weapon_projectile_casing_offset_increment_left
               = (player_offset_left & 3) - (randomized_state & 3)
             let player_weapon_projectile_casing_offset_increment_top
@@ -6399,20 +7011,13 @@
             let player_weapon_projectile_casing_offset_top
             let player_weapon_projectile_casing_opacity = 96
             let player_weapon_projectile_casing_opacity_decrement = 4
-            let player_weapon_reload_delay = 100
             const player_weapon_projectile_casing_element = player_weapon_projectile_effect_elements.pop()
-
-            player_weapon_element.setAttribute(
-              "reload",
-              randomized_state & 3
-            )
 
             if (enemy_move_delay_maximum != 26) {
               player_weapon_projectile_casing_offset_increment_left *= 0.5
               player_weapon_projectile_casing_offset_increment_top *= 0.5
               player_weapon_projectile_casing_opacity = 98
               player_weapon_projectile_casing_opacity_decrement = 2
-              player_weapon_reload_delay = 200
             }
 
             player_weapon_projectile_casing_offset_left = player_weapon_offset_left
@@ -6444,9 +7049,7 @@
               }
             }, 50)
 
-            setTimeout(function() {
-              player_weapon_element.removeAttribute("reload")
-            }, player_weapon_reload_delay)
+            player_weapon_ammunition++
           }
 
           if (
@@ -6458,8 +7061,33 @@
           }
 
           if (player_weapon_ammunition == 0) {
-            player_weapon_ammunition = 6
-            player_weapon_delay = -40
+            let player_weapon_reload_delay
+
+            if (enemy_move_delay_maximum == 26) {
+              player_weapon_delay = -40
+              player_weapon_reload_delay = 40
+            } else {
+              player_weapon_delay = -80
+              player_weapon_reload_delay = 80
+            }
+
+            player_weapon_element.setAttribute(
+              "reload",
+              randomized_state & 3
+            )
+
+            setTimeout(function() {
+              player_weapon_element.removeAttribute("reload")
+              player_weapon_element.setAttribute(
+                "reload",
+                (randomized_state + 1) & 3
+              )
+
+              setTimeout(function() {
+                player_weapon_element.removeAttribute("reload")
+              }, player_weapon_reload_delay)
+            }, player_weapon_reload_delay)
+
             return
           }
 
@@ -6468,9 +7096,9 @@
             return
           }
 
-          let i = 0
           let has_player_weapon_projectile_move_horizontal_state = false
           let has_player_weapon_projectile_move_state = false
+          let i = 0
           let player_weapon_muzzle_flash_interval = 10
           let player_weapon_muzzle_flash_margin = 0
           let player_weapon_muzzle_flash_size = 8
@@ -7041,7 +7669,13 @@
             }, player_weapon_reload_delay)
 
             player_weapon_ammunition = 50
-            player_weapon_delay = -60
+
+            if (enemy_move_delay_maximum == 26) {
+              player_weapon_delay = -60
+            } else {
+              player_weapon_delay = -120
+            }
+
             return
           }
 
@@ -7087,8 +7721,8 @@
           let player_weapon_recoil_interval = 25
           const player_weapon_muzzle_flash_offset_left = player_weapon_projectile_offset_left
           const player_weapon_muzzle_flash_offset_top = player_weapon_projectile_offset_top
-          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
           const player_weapon_projectile_casing_element = player_weapon_projectile_effect_elements.pop()
+          const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
 
           const player_weapon_projectile_move = function(player_weapon_projectile_id) {
             if (has_player_weapon_projectile_move_state == true) {
@@ -7624,13 +8258,15 @@
               bounds_element.classList.remove("bullet-time")
               enemy_move_delay_maximum = 26
 
-              while (j != 51) {
-                enemy_move_delays[j] = j & 15
-                j++
-              }
+              setTimeout(function() {
+                while (j != 51) {
+                  enemy_move_delays[j] = j & 15
+                  j++
+                }
 
-              player_move_speed = 3
-              player_weapon_delay_maximum = (player_weapon_delay_maximum * 0.5) - 1
+                player_move_speed = 3
+                player_weapon_delay_maximum = (player_weapon_delay_maximum * 0.5) - 1
+              }, 460)
             }, 5000)
           }
 
@@ -7676,7 +8312,7 @@
             if (enemy_offset_left > 49) {
               enemy_offset_left = 49
               enemy_offsets_map_horizontal[48][enemy_id] = null
-            } else { 
+            } else {
               if (enemy_offset_left != 0) {
                 enemy_offsets_map_horizontal[enemy_offset_left - 1][enemy_id] = null
               }
@@ -7749,6 +8385,10 @@
                   "height: 378px; width: 0;"
                 )
                 clearInterval(player_weapon_use_id)
+                player_element.removeAttribute("recoil_heavy")
+                player_element.removeAttribute("recoil_light")
+                player_weapon_element.removeAttribute("recoil_heavy")
+                player_weapon_element.removeAttribute("recoil_light")
                 player_weapon_previous_equipped = player_weapon_next_equipped
                 player_weapons[player_weapon_previous_equipped].destroy()
                 player_weapon_next_equipped = randomized_state % player_weapons.length
