@@ -1757,7 +1757,7 @@
       <div class="title-screen">
         <p class="copyright"><span>Contrivity</span> &copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">v1.0.15</p>
+        <p class="version">v1.0.16</p>
       </div>
     </div>
   </body>
@@ -2024,34 +2024,40 @@
         clearInterval(enemy_move_ids[enemy_id])
 
         if (enemy_offset_left > 0) {
-          let enemy_segment = enemy_offset_left >> 4
+          const enemy_segment = enemy_offset_left >> 4
 
           if (enemy_segment > 49) {
-            enemy_segment = 49
             delete enemy_offsets_map_horizontal[48][enemy_id]
+            delete enemy_offsets_map_horizontal[49][enemy_id]
+            delete enemy_offsets_map_horizontal[50][enemy_id]
           } else {
             if (enemy_segment != 0) {
               delete enemy_offsets_map_horizontal[enemy_segment - 1][enemy_id]
             }
-          }
 
-          delete enemy_offsets_map_horizontal[enemy_segment][enemy_id]
-          delete enemy_offsets_map_horizontal[enemy_segment + 1][enemy_id]
+            delete enemy_offsets_map_horizontal[enemy_segment][enemy_id]
+            delete enemy_offsets_map_horizontal[enemy_segment + 1][enemy_id]
+          }
         } else {
           delete enemy_offsets_map_horizontal[0][enemy_id]
           delete enemy_offsets_map_horizontal[1][enemy_id]
         }
 
         if (enemy_offset_top > 0) {
-          let enemy_segment = enemy_offset_top >> 3
+          const enemy_segment = enemy_offset_top >> 3
 
           if (enemy_segment > 49) {
             enemy_segment = 49
             delete enemy_offsets_map_vertical[48][enemy_id]
+            delete enemy_offsets_map_vertical[49][enemy_id]
+            delete enemy_offsets_map_vertical[50][enemy_id]
           } else {
             if (enemy_segment != 0) {
               delete enemy_offsets_map_vertical[enemy_segment - 1][enemy_id]
             }
+
+            delete enemy_offsets_map_vertical[enemy_segment][enemy_id]
+            delete enemy_offsets_map_vertical[enemy_segment + 1][enemy_id]
           }
 
           delete enemy_offsets_map_vertical[enemy_segment][enemy_id]
@@ -2063,9 +2069,8 @@
 
         enemy_elements[enemy_id].setAttribute(
           "style",
-          "display: none; left: -50px; top: -50px;"
+          "display: none;"
         )
-        enemy_ids_available.push(enemy_id)
         enemies_count--
         enemy_health[enemy_id] = 0
         enemy_bits_element.setAttribute(
@@ -2096,8 +2101,6 @@
         has_enemy_knockback_states[enemy_id] = false
       }, 100)
     }
-
-    const enemy_ids_available = Array(51)
 
     const enemy_move = function(enemy_id) {
       if (
@@ -7849,7 +7852,9 @@
     const wave_initialize = function() {
       let i = 0
       let j
-      const randomized_enemy = ((randomized_state >> 5) & 15) + 20
+      let randomized_enemy_offset = randomized_state
+      let randomized_enemy_offset_state = randomized_state & 65535
+      const randomized_enemy_id = ((randomized_state >> 5) & 15) + 20
 
       select_elements(".bits, .pieces", function(selected_element) {
         selected_element.remove()
@@ -7892,7 +7897,6 @@
         enemy_elements[i].appendChild(
           enemy_health_container_element
         )
-        enemy_ids_available[i] = i
         enemy_move_delays[i] = 0
         enemy_offsets_map_horizontal[i] = {}
         enemy_offsets_map_vertical[i] = {}
@@ -7927,6 +7931,39 @@
         has_enemy_knockback_state_ids[i] = 0
         has_enemy_knockback_states[i] = false
         has_enemy_move_states[i] = false
+
+        randomized_enemy_offset = ((randomized_enemy_offset << 13)
+          | (randomized_enemy_offset >> 19)) ^ randomized_enemy_offset_state
+
+        if (randomized_enemy_offset < 0) {
+          randomized_enemy_offset >>>= randomized_enemy_offset_state & 15
+        }
+
+        randomized_enemy_offset_state += 1111111
+
+        if ((randomized_enemy_offset & 1) == 0) {
+          if (((randomized_enemy_offset >> 1) & 1) == 0) {
+            enemy_offsets_left[i] = -50
+          } else {
+            enemy_offsets_left[i] = 722
+          }
+
+          enemy_offsets_top[i] = randomized_enemy_offset % 378
+        } else {
+          if (((randomized_enemy_offset >> 2) & 1) == 0) {
+            enemy_offsets_top[i] = -50
+          } else {
+            enemy_offsets_top[i] = 428
+          }
+
+          enemy_offsets_left[i] = randomized_enemy_offset % 672
+        }
+
+        enemy_elements[i].setAttribute(
+          "style",
+          "left: " + enemy_offsets_left[i] + "px; top: "
+            + enemy_offsets_top[i] + "px; transition: none;"
+        )
         i++
       }
 
@@ -7946,11 +7983,10 @@
           enemies_count != 17 &&
           i != 51
         ) {
-          let enemy_id = enemy_ids_available.pop()
-          let enemy_offset_left
-          let enemy_offset_top
+          let enemy_offset_left = enemy_offsets_left[i]
+          let enemy_offset_top = enemy_offsets_top[i]
 
-          if (i == randomized_enemy) {
+          if (i == randomized_enemy_id) {
             bounds_element.classList.add("bullet-time")
             enemy_move_delay_maximum = 52
             player_move_speed = 1.5
@@ -7986,82 +8022,57 @@
             }, ((randomized_state & 3) + 3) << 10)
           }
 
-          if ((randomized_state & 1) == 0) {
-            if (((randomized_state >> 1) & 1) == 0) {
-              enemy_offset_left = -50
-            } else {
-              enemy_offset_left = 722
-            }
-
-            enemy_offset_top = (randomized_state & 255) + 61
-          } else {
-            if (((randomized_state >> 2) & 1) == 0) {
-              enemy_offset_top = -50
-            } else {
-              enemy_offset_top = 428
-            }
-
-            enemy_offset_left = (randomized_state & 511) + 80
-          }
-
-          enemy_elements[enemy_id].setAttribute(
-            "style",
-            "left: " + enemy_offset_left + "px; top: "
-              + enemy_offset_top + "px; transition: none;"
-          )
-          enemy_elements[enemy_id].setAttribute(
+          enemy_elements[i].setAttribute(
             "class",
             "element enemy"
           )
-          enemy_health[enemy_id] = 100
-          enemy_health_elements[enemy_id].setAttribute(
+          enemy_health[i] = 100
+          enemy_health_elements[i].setAttribute(
             "style",
             "width: 24px;"
           )
-          enemy_move_speeds[enemy_id] = randomized_state & 3
-          enemy_offsets_left[enemy_id] = enemy_offset_left
-          enemy_offsets_top[enemy_id] = enemy_offset_top
+          enemy_move_speeds[i] = randomized_state & 3
+          enemies_count++
 
           if (enemy_offset_left > 0) {
             enemy_offset_left >>= 4
 
             if (enemy_offset_left > 49) {
               enemy_offset_left = 49
-              enemy_offsets_map_horizontal[48][enemy_id] = null
+              enemy_offsets_map_horizontal[48][i] = null
             } else {
               if (enemy_offset_left != 0) {
-                enemy_offsets_map_horizontal[enemy_offset_left - 1][enemy_id] = null
+                enemy_offsets_map_horizontal[enemy_offset_left - 1][i] = null
               }
             }
           } else {
             enemy_offset_left = 0
           }
 
-          enemy_offsets_map_horizontal[enemy_offset_left][enemy_id] = null
-          enemy_offsets_map_horizontal[enemy_offset_left + 1][enemy_id] = null
+          enemy_offsets_map_horizontal[enemy_offset_left][i] = null
+          enemy_offsets_map_horizontal[enemy_offset_left + 1][i] = null
 
           if (enemy_offset_top > 0) {
             enemy_offset_top >>= 3
 
             if (enemy_offset_top > 49) {
               enemy_offset_top = 49
-              enemy_offsets_map_vertical[48][enemy_id] = null
+              enemy_offsets_map_vertical[48][i] = null
             } else {
               if (enemy_offset_top != 0) {
-                enemy_offsets_map_vertical[enemy_offset_top - 1][enemy_id] = null
+                enemy_offsets_map_vertical[enemy_offset_top - 1][i] = null
               }
             }
           } else {
             enemy_offset_top = 0
           }
 
-          enemy_offsets_map_vertical[enemy_offset_top][enemy_id] = null
-          enemy_offsets_map_vertical[enemy_offset_top + 1][enemy_id] = null
-          enemies_count++
-          enemy_move_ids[enemy_id] = setInterval(
+          enemy_offsets_map_vertical[enemy_offset_top][i] = null
+          enemy_offsets_map_vertical[enemy_offset_top + 1][i] = null
+          enemy_move_ids[i] = setInterval(
             enemy_move,
             10,
-            enemy_id
+            i
           )
           i++
         } else {
@@ -8075,7 +8086,7 @@
             player_weapon_element.removeAttribute("recoil_light")
 
             wave_cleanup_id = setInterval(function() {
-              if (wave_cleanup_width != 672) {
+              if (wave_cleanup_width != 680) {
                 wave_cleanup_element.setAttribute(
                   "style",
                   "height: 378px; width: " + wave_cleanup_width + "px;"
@@ -8087,7 +8098,7 @@
                 wave_cleanup_id = 0
                 wave_cleanup_element.setAttribute(
                   "style",
-                  "height: 378px; width: 0;"
+                  "display:none; width: 0;"
                 )
                 clearInterval(player_weapon_use_id)
                 has_player_weapon_reload_state = false
@@ -8160,6 +8171,7 @@
         const play_initialize_id = setInterval(function() {
           if ((player_inputs[133] + player_inputs[141]
             + player_inputs[147] + player_inputs[150]) != 0) {
+            let _randomized_state = 0
             let i = 0
             let j
 
@@ -8193,8 +8205,18 @@
             bounds_element.appendChild(player_weapon_element)
 
             setInterval(function() {
-              randomized_state ^= ((randomized_state & 255) << 8)
-                | (Date.now() & 255)
+              randomized_state = ((randomized_state << 13)
+                | (randomized_state >> 19)) ^ _randomized_state
+
+              if (randomized_state < 0) {
+                randomized_state >>>= _randomized_state & 15
+              }
+
+              if (_randomized_state <= 2146372536) {
+                _randomized_state += 1111111
+              } else {
+                _randomized_state = Date.now() & 65535
+              }
             }, 10)
 
             wave_initialize()
