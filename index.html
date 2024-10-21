@@ -1757,7 +1757,7 @@
       <div class="title-screen">
         <p class="copyright"><span>Contrivity</span> &copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">v1.0.16</p>
+        <p class="version">v1.1.1</p>
       </div>
     </div>
   </body>
@@ -7859,10 +7859,19 @@
         const enemy_health_container_element = document.createElement("div")
         const enemy_health_element = document.createElement("div")
 
+        if (typeof enemy_bits_elements[i] != "undefined") {
+          enemy_bits_elements[i].remove()
+        }
+
+        enemy_bits_elements[i] = document.createElement("div")
+
+        if (typeof enemy_elements[i] != "undefined") {
+          enemy_elements[i].remove()
+        }
+
         enemy_elements[i] = bounds_element.appendChild(
           document.createElement("div")
         )
-        enemy_bits_elements[i] = document.createElement("div")
         enemy_health_container_element.setAttribute(
           "class",
           "health-container"
@@ -7874,6 +7883,11 @@
         enemy_health_container_element.appendChild(
           enemy_health_element
         )
+
+        if (typeof enemy_health_elements[i] != "undefined") {
+          enemy_health_elements[i].remove()
+        }
+
         enemy_health_elements[i] = enemy_health_element
         enemy_elements[i].appendChild(
           enemy_health_container_element
@@ -7882,6 +7896,11 @@
         enemy_move_delays[i] = 0
         enemy_offsets_map_horizontal[i] = {}
         enemy_offsets_map_vertical[i] = {}
+
+        if (typeof enemy_pieces_elements[i] != "undefined") {
+          enemy_pieces_elements[i].remove()
+        }
+
         enemy_pieces_elements[i] = document.createElement("div")
         j = 0
 
@@ -7931,7 +7950,7 @@
           let enemy_offset_left
           let enemy_offset_top
 
-          if (i == randomized_enemy ) {
+          if (i == randomized_enemy) {
             bounds_element.classList.add("bullet-time")
             enemy_move_delay_maximum = 52
             player_move_speed = 1.5
