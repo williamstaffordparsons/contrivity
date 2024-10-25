@@ -815,33 +815,11 @@
         z-index: 4;
       }
         .enemy.hit {
-          border-color: #bbb;
+          border-color: #ccc;
           transition: border-color 0.04s ease,
             left 0.15s ease-out,
             top 0.15s ease-out;
           z-index: 5;
-        }
-          .enemy.hit .health {
-            background-color: #ed4040;
-          }
-        .enemy .health-container {
-          background-color: #780c0c;
-          border-radius: 8px;
-          height: 4px;
-          left: -2px;
-          position: absolute;
-          top: -15px;
-          width: 24px;
-        }
-        .enemy .health {
-          background-color: #f02222;
-          border-radius: 7px;
-          height: 4px;
-          left: 0;
-          position: absolute;
-          top: 0;
-          transition: background-color 0.05s ease,
-            width 0.05s ease-out;
         }
       .hidden {
         display: none;
@@ -1724,11 +1702,6 @@
           left: 25px;
           top: 23px;
         }
-          .title-screen .copyright span {
-            color: #f02222;
-            font-weight: bold;
-            letter-spacing: -0.1px;
-          }
         .title-screen .prompt {
           color: #fff;
           font-weight: bold;
@@ -1755,9 +1728,9 @@
   <body>
     <div class="bounds">
       <div class="title-screen">
-        <p class="copyright"><span>Contrivity</span> &copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
+        <p class="copyright">&copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">v1.0.17</p>
+        <p class="version">Contrivity v1.0.18</p>
       </div>
     </div>
   </body>
@@ -1791,7 +1764,6 @@
     const enemy_bits_elements = Array(51)
     const enemy_elements = Array(51)
     const enemy_health = Array(51)
-    const enemy_health_elements = Array(51)
 
     const enemy_hit = function(
       enemy_damage,
@@ -2009,11 +1981,6 @@
             }
           }
         }
-
-        enemy_health_elements[enemy_id].setAttribute(
-          "style",
-          "width: " + enemy_health[enemy_id] + "%;"
-        )
       } else {
         const enemy_bits_element = enemy_bits_elements.pop()
         const enemy_offset_left = enemy_offsets_left[enemy_id]
@@ -7096,9 +7063,6 @@
       })
 
       while (i != 51) {
-        const enemy_health_container_element = document.createElement("div")
-        const enemy_health_element = document.createElement("div")
-
         if (typeof enemy_bits_elements[i] != "undefined") {
           enemy_bits_elements[i].remove()
         }
@@ -7111,26 +7075,6 @@
 
         enemy_elements[i] = bounds_element.appendChild(
           document.createElement("div")
-        )
-        enemy_health_container_element.setAttribute(
-          "class",
-          "health-container"
-        )
-        enemy_health_element.setAttribute(
-          "class",
-          "health"
-        )
-        enemy_health_container_element.appendChild(
-          enemy_health_element
-        )
-
-        if (typeof enemy_health_elements[i] != "undefined") {
-          enemy_health_elements[i].remove()
-        }
-
-        enemy_health_elements[i] = enemy_health_element
-        enemy_elements[i].appendChild(
-          enemy_health_container_element
         )
         enemy_move_delays[i] = 0
         enemy_offsets_map_horizontal[i] = {}
@@ -7262,10 +7206,6 @@
             "element enemy"
           )
           enemy_health[i] = 100
-          enemy_health_elements[i].setAttribute(
-            "style",
-            "width: 24px;"
-          )
           enemy_move_speeds[i] = randomized_state & 3
           enemies_count++
 
