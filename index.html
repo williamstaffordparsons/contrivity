@@ -1723,7 +1723,7 @@
       <div class="title-screen">
         <p class="copyright">&copy; 2024 <a href="https://williamstaffordparsons.github.io/" target="_blank">William Stafford Parsons</a></p>
         <p class="prompt">Press an Arrow Key To Play</p>
-        <p class="version">Contrivity v1.0.20</p>
+        <p class="version">Contrivity v1.0.21</p>
       </div>
     </div>
   </body>
@@ -2298,14 +2298,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 15) {
+          while (i != 30) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -2326,10 +2326,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(15)
-          player_weapon_projectile_effect_elements = Array(10)
+          player_weapon_projectile_elements = Array(30)
+          player_weapon_projectile_effect_elements = Array(20)
 
-          while (i != 15) {
+          while (i != 30) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -2347,7 +2347,7 @@
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -2954,14 +2954,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 80) {
+          while (i != 120) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 7) {
+          while (i != 15) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -2983,10 +2983,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(80)
-          player_weapon_projectile_effect_elements = Array(7)
+          player_weapon_projectile_elements = Array(120)
+          player_weapon_projectile_effect_elements = Array(15)
 
-          while (i != 80) {
+          while (i != 120) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -3004,7 +3004,7 @@
 
           i = 0
 
-          while (i != 7) {
+          while (i != 15) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -3564,14 +3564,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 45) {
+          while (i != 80) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 3) {
+          while (i != 6) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -3593,10 +3593,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(45)
-          player_weapon_projectile_effect_elements = Array(3)
+          player_weapon_projectile_elements = Array(80)
+          player_weapon_projectile_effect_elements = Array(6)
 
-          while (i != 45) {
+          while (i != 80) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -3614,7 +3614,7 @@
 
           i = 0
 
-          while (i != 4) {
+          while (i != 6) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -4105,14 +4105,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 16) {
+          while (i != 30) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 12) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -4133,10 +4133,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(16)
-          player_weapon_projectile_effect_elements = Array(12)
+          player_weapon_projectile_elements = Array(30)
+          player_weapon_projectile_effect_elements = Array(20)
 
-          while (i != 16) {
+          while (i != 30) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -4154,7 +4154,7 @@
 
           i = 0
 
-          while (i != 12) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -4637,7 +4637,7 @@
         "destroy": function() {
           let i = 0
 
-          while (i != 35) {
+          while (i != 70) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
@@ -4651,10 +4651,10 @@
             "class",
             "element flamethrower player-weapon"
           )
-          player_weapon_projectile_elements = Array(35)
+          player_weapon_projectile_elements = Array(70)
           player_weapon_projectile_effect_elements = Array(2)
 
-          while (i != 35) {
+          while (i != 70) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -5090,14 +5090,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 20) {
+          while (i != 40) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -5118,10 +5118,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(20)
-          player_weapon_projectile_effect_elements = Array(10)
+          player_weapon_projectile_elements = Array(40)
+          player_weapon_projectile_effect_elements = Array(20)
 
-          while (i != 20) {
+          while (i != 40) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -5139,7 +5139,7 @@
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -5787,7 +5787,7 @@
         "destroy": function() {
           let i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
@@ -5800,9 +5800,9 @@
             "class",
             "element hunting-bow player-weapon"
           )
-          player_weapon_projectile_elements = Array(10)
+          player_weapon_projectile_elements = Array(20)
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -6199,14 +6199,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 55) {
+          while (i != 100) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 55) {
+          while (i != 100) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -6225,10 +6225,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(55)
-          player_weapon_projectile_effect_elements = Array(55)
+          player_weapon_projectile_elements = Array(100)
+          player_weapon_projectile_effect_elements = Array(100)
 
-          while (i != 55) {
+          while (i != 100) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -6246,7 +6246,7 @@
 
           i = 0
 
-          while (i != 55) {
+          while (i != 100) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -6647,14 +6647,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 15) {
+          while (i != 30) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 10) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -6674,10 +6674,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(20)
-          player_weapon_projectile_effect_elements = Array(12)
+          player_weapon_projectile_elements = Array(30)
+          player_weapon_projectile_effect_elements = Array(20)
 
-          while (i != 20) {
+          while (i != 30) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -6695,7 +6695,7 @@
 
           i = 0
 
-          while (i != 12) {
+          while (i != 20) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
@@ -7167,14 +7167,14 @@
 
           player_weapon_muzzle_flash_element.remove()
 
-          while (i != 100) {
+          while (i != 150) {
             player_weapon_projectile_elements[i].remove()
             i++
           }
 
           i = 0
 
-          while (i != 30) {
+          while (i != 60) {
             player_weapon_projectile_effect_elements[i].remove()
             i++
           }
@@ -7195,10 +7195,10 @@
           player_weapon_muzzle_flash_element = bounds_element.appendChild(
             player_weapon_muzzle_flash_element
           )
-          player_weapon_projectile_elements = Array(100)
-          player_weapon_projectile_effect_elements = Array(30)
+          player_weapon_projectile_elements = Array(150)
+          player_weapon_projectile_effect_elements = Array(60)
 
-          while (i != 100) {
+          while (i != 150) {
             player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
@@ -7216,7 +7216,7 @@
 
           i = 0
 
-          while (i != 30) {
+          while (i != 60) {
             player_weapon_projectile_effect_elements[i] = document.createElement("div")
             player_weapon_projectile_effect_elements[i].setAttribute(
               "class",
