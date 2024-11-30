@@ -1596,9 +1596,6 @@
         width: 8px;
         z-index: 5;
       }
-        .player-weapon-projectile.flamethrower {
-          border-radius: 300px;
-        }
         .player-weapon-projectile.heavy-machine-gun {
           border-radius: 48px;
           height: 10px;
@@ -2394,8 +2391,8 @@
     let player_weapon_offset_increment_left = -17
     let player_weapon_offset_increment_top = -17
     let player_weapon_previous_equipped
-    let player_weapon_projectile_effect_elements
-    let player_weapon_projectile_elements
+    let player_weapon_projectile_effect_elements = Array(300)
+    let player_weapon_projectile_elements = Array(300)
     let player_weapon_use_id
     let randomized_state = Date.now() >>> 1
     let wave_cleanup_id = 0
@@ -2945,76 +2942,17 @@
     const player_weapons = [
       {
         "delay_maximum": 8,
-        "destroy": function() {
+        "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
-
-          player_weapon_muzzle_flash_element.remove()
-
-          while (i != player_weapon_projectile_elements_count) {
-            player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
 
           player_weapon_ammunition = 30
-          player_weapon_element.setAttribute(
-            "class",
-            "assault-rifle element player-weapon"
-          )
-          player_weapon_muzzle_flash_element = document.createElement("div")
-          player_weapon_muzzle_flash_element.setAttribute(
-            "class",
-            "assault-rifle element player-weapon-muzzle-flash"
-          )
-          player_weapon_muzzle_flash_element = bounds_element.appendChild(
-            player_weapon_muzzle_flash_element
-          )
-          player_weapon_projectile_elements = Array(120)
-          player_weapon_projectile_effect_elements = Array(200)
 
-          while (i != 120) {
-            player_weapon_projectile_elements[i] = document.createElement("div")
+          while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
               "class",
               "assault-rifle element player-weapon-projectile"
-            )
-            player_weapon_projectile_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 200) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "assault-rifle element player-weapon-projectile-effect"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -3107,12 +3045,7 @@
                     "style",
                     "display: none;"
                   )
-
-                  if (enemies_count == 0) {
-                    player_weapon_magazine_element.remove()
-                  } else {
-                    player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
-                  }
+                  player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
                 }
               }, 50)
 
@@ -3248,17 +3181,12 @@
                           )
                           player_weapon_projectile_opacity -= 20
                         } else {
+                          clearInterval(player_weapon_projectile_impact_id)
                           player_weapon_projectile_impact_element.setAttribute(
                             "style",
                             "display: none;"
                           )
-                          clearInterval(player_weapon_projectile_impact_id)
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_impact_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
                         }
                       }, 20)
                     } else {
@@ -3283,12 +3211,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -3354,12 +3277,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_impact_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
                         }
                       }, 20)
                     } else {
@@ -3384,12 +3302,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -3441,12 +3354,7 @@
                 "style",
                 "display: none;"
               )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_casing_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
-              }
+              player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
             }
           }, 50)
 
@@ -3482,12 +3390,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -3499,12 +3402,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -3518,12 +3416,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -3535,12 +3428,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -3571,77 +3459,17 @@
       },
       {
         "delay_maximum": 20,
-        "destroy": function() {
+        "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
-
-          player_weapon_muzzle_flash_element.remove()
-
-          while (i != player_weapon_projectile_elements_count) {
-            player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
 
           player_weapon_ammunition = 20
-          player_weapon_delay = 20
-          player_weapon_element.setAttribute(
-            "class",
-            "automatic-shotgun element player-weapon"
-          )
-          player_weapon_muzzle_flash_element = document.createElement("div")
-          player_weapon_muzzle_flash_element.setAttribute(
-            "class",
-            "automatic-shotgun element player-weapon-muzzle-flash"
-          )
-          player_weapon_muzzle_flash_element = bounds_element.appendChild(
-            player_weapon_muzzle_flash_element
-          )
-          player_weapon_projectile_elements = Array(300)
-          player_weapon_projectile_effect_elements = Array(100)
 
-          while (i != 300) {
-            player_weapon_projectile_elements[i] = document.createElement("div")
+          while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
               "class",
               "automatic-shotgun element player-weapon-projectile"
-            )
-            player_weapon_projectile_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 100) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "automatic-shotgun element player-weapon-projectile-effect"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -3721,12 +3549,7 @@
                     "style",
                     "display: none;"
                   )
-
-                  if (enemies_count == 0) {
-                    player_weapon_magazine_element.remove()
-                  } else {
-                    player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
-                  }
+                  player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
                 }
               }, 50)
 
@@ -3885,12 +3708,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -3950,12 +3768,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -4110,12 +3923,7 @@
                 "style",
                 "display: none;"
               )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_casing_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
-              }
+              player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
             }
           }, 50)
 
@@ -4152,76 +3960,17 @@
       },
       {
         "delay_maximum": 9,
-        "destroy": function() {
+        "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
-
-          player_weapon_muzzle_flash_element.remove()
-
-          while (i != player_weapon_projectile_elements_count) {
-            player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
 
           player_weapon_ammunition = 60
-          player_weapon_element.setAttribute(
-            "class",
-            "element heavy-machine-gun player-weapon"
-          )
-          player_weapon_muzzle_flash_element = document.createElement("div")
-          player_weapon_muzzle_flash_element.setAttribute(
-            "class",
-            "element heavy-machine-gun player-weapon-muzzle-flash"
-          )
-          player_weapon_muzzle_flash_element = bounds_element.appendChild(
-            player_weapon_muzzle_flash_element
-          )
-          player_weapon_projectile_elements = Array(150)
-          player_weapon_projectile_effect_elements = Array(150)
 
-          while (i != 150) {
-            player_weapon_projectile_elements[i] = document.createElement("div")
+          while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
               "class",
               "element heavy-machine-gun player-weapon-projectile"
-            )
-            player_weapon_projectile_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 150) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "element heavy-machine-gun player-weapon-projectile-effect"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -4318,12 +4067,7 @@
                         "style",
                         "display: none;"
                       )
-
-                      if (enemies_count == 0) {
-                        player_weapon_magazine_element.remove()
-                      } else {
-                        player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
-                      }
+                      player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
                     }
                   }, 50)
 
@@ -4491,12 +4235,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_impact_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
                         }
                       }, 20)
                     } else {
@@ -4521,12 +4260,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -4592,12 +4326,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_impact_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
                         }
                       }, 20)
                     } else {
@@ -4622,12 +4351,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -4679,12 +4403,7 @@
                 "style",
                 "display: none;"
               )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_casing_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
-              }
+              player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
             }
           }, 50)
 
@@ -4720,12 +4439,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -4737,12 +4451,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -4756,12 +4465,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -4773,12 +4477,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -4809,74 +4508,15 @@
       },
       {
         "delay_maximum": 1,
-        "destroy": function() {
+        "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
-
-          player_weapon_muzzle_flash_element.remove()
 
           while (i != player_weapon_projectile_elements_count) {
-            player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
-          player_weapon_element.setAttribute(
-            "class",
-            "element minigun player-weapon"
-          )
-          player_weapon_muzzle_flash_element = document.createElement("div")
-          player_weapon_muzzle_flash_element.setAttribute(
-            "class",
-            "element minigun player-weapon-muzzle-flash"
-          )
-          player_weapon_muzzle_flash_element = bounds_element.appendChild(
-            player_weapon_muzzle_flash_element
-          )
-          player_weapon_projectile_elements = Array(200)
-          player_weapon_projectile_effect_elements = Array(300)
-
-          while (i != 200) {
-            player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
               "element minigun player-weapon-projectile"
-            )
-            player_weapon_projectile_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 300) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "element minigun player-weapon-projectile-effect"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -5003,12 +4643,7 @@
                           "style",
                           "display: none;"
                         )
-
-                        if (enemies_count == 0) {
-                          player_weapon_projectile_element.remove()
-                        } else {
-                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                        }
+                        player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       }
                     }, 20)
 
@@ -5065,12 +4700,7 @@
                           "style",
                           "display: none;"
                         )
-
-                        if (enemies_count == 0) {
-                          player_weapon_projectile_element.remove()
-                        } else {
-                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                        }
+                        player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       }
                     }, 20)
 
@@ -5098,12 +4728,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -5115,12 +4740,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -5134,12 +4754,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -5151,12 +4766,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -5224,12 +4834,7 @@
                 "style",
                 "display: none;"
               )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_casing_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
-              }
+              player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
             }
           }, 50)
 
@@ -5247,75 +4852,15 @@
       },
       {
         "delay_maximum": 7,
-        "destroy": function() {
+        "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
-
-          player_weapon_muzzle_flash_element.remove()
 
           while (i != player_weapon_projectile_elements_count) {
-            player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
-
-          player_weapon_element.setAttribute(
-            "class",
-            "element player-weapon pulse-rifle"
-          )
-          player_weapon_muzzle_flash_element = document.createElement("div")
-          player_weapon_muzzle_flash_element.setAttribute(
-            "class",
-            "element player-weapon-muzzle-flash pulse-rifle"
-          )
-          player_weapon_muzzle_flash_element = bounds_element.appendChild(
-            player_weapon_muzzle_flash_element
-          )
-          player_weapon_projectile_elements = Array(150)
-          player_weapon_projectile_effect_elements = Array(100)
-
-          while (i != 150) {
-            player_weapon_projectile_elements[i] = document.createElement("div")
             player_weapon_projectile_elements[i].setAttribute(
               "class",
               "element player-weapon-projectile pulse-rifle"
-            )
-            player_weapon_projectile_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 100) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "element player-weapon-projectile-effect pulse-rifle"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -5451,12 +4996,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_impact_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
                         }
                       }, 20)
                     } else {
@@ -5481,12 +5021,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -5552,12 +5087,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_impact_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_impact_element)
                         }
                       }, 20)
                     } else {
@@ -5582,12 +5112,7 @@
                             "style",
                             "display: none;"
                           )
-
-                          if (enemies_count == 0) {
-                            player_weapon_projectile_element.remove()
-                          } else {
-                            player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                          }
+                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
                         }
                       }, 20)
 
@@ -5632,12 +5157,7 @@
                 "style",
                 "display: none;"
               )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_casing_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
-              }
+              player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
             }
           }, 20)
 
@@ -5673,12 +5193,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -5690,12 +5205,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -5709,12 +5219,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -5726,12 +5231,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -5760,76 +5260,17 @@
       },
       {
         "delay_maximum": 4,
-        "destroy": function() {
+        "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
-
-          player_weapon_muzzle_flash_element.remove()
-
-          while (i != player_weapon_projectile_elements_count) {
-            player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
-            i++
-          }
-        },
-        "initialize": function() {
-          let i = 0
 
           player_weapon_ammunition = 50
-          player_weapon_element.setAttribute(
-            "class",
-            "element player-weapon submachine-gun"
-          )
-          player_weapon_muzzle_flash_element = document.createElement("div")
-          player_weapon_muzzle_flash_element.setAttribute(
-            "class",
-            "element player-weapon-muzzle-flash submachine-gun"
-          )
-          player_weapon_muzzle_flash_element = bounds_element.appendChild(
-            player_weapon_muzzle_flash_element
-          )
-          player_weapon_projectile_elements = Array(230)
-          player_weapon_projectile_effect_elements = Array(200)
 
-          while (i != 230) {
-            player_weapon_projectile_elements[i] = document.createElement("div")
+          while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
               "class",
               "element player-weapon-projectile submachine-gun"
-            )
-            player_weapon_projectile_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 200) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "element player-weapon-projectile-effect submachine-gun"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -5912,12 +5353,7 @@
                     "style",
                     "display: none;"
                   )
-
-                  if (enemies_count == 0) {
-                    player_weapon_magazine_element.remove()
-                  } else {
-                    player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
-                  }
+                  player_weapon_projectile_effect_elements.push(player_weapon_magazine_element)
                 }
               }, 50)
               player_weapon_element.setAttribute(
@@ -6056,18 +5492,12 @@
                         )
                         player_weapon_projectile_opacity -= 20
                       } else {
+                        clearInterval(player_weapon_projectile_impact_id)
                         player_weapon_projectile_element.setAttribute(
                           "style",
                           "display: none;"
                         )
-
-                        if (enemies_count == 0) {
-                          player_weapon_projectile_element.remove()
-                        } else {
-                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                        }
-
-                        clearInterval(player_weapon_projectile_impact_id)
+                        player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       }
                     }, 20)
 
@@ -6120,18 +5550,12 @@
                         )
                         player_weapon_projectile_opacity -= 20
                       } else {
+                        clearInterval(player_weapon_projectile_impact_id)
                         player_weapon_projectile_element.setAttribute(
                           "style",
                           "display: none;"
                         )
-
-                        if (enemies_count == 0) {
-                          player_weapon_projectile_element.remove()
-                        } else {
-                          player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                        }
-
-                        clearInterval(player_weapon_projectile_impact_id)
+                        player_weapon_projectile_elements.push(player_weapon_projectile_element)
                       }
                     }, 20)
 
@@ -6182,12 +5606,7 @@
                 "style",
                 "display: none;"
               )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_casing_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
-              }
+              player_weapon_projectile_effect_elements.push(player_weapon_projectile_casing_element)
             }
           }, 50)
 
@@ -6223,12 +5642,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -6240,12 +5654,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -6259,12 +5668,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             } else {
@@ -6276,12 +5680,7 @@
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
                   clearInterval(player_weapon_projectile_id)
-
-                  if (enemies_count == 0) {
-                    player_weapon_projectile_element.remove()
-                  } else {
-                    player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }
+                  player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
               }, 10)
             }
@@ -6672,7 +6071,7 @@
             player_weapon_element.removeAttribute("recoil_light")
 
             wave_cleanup_id = setInterval(function() {
-              if (wave_cleanup_width != 688) {
+              if (wave_cleanup_width != 704) {
                 wave_cleanup_element.setAttribute(
                   "style",
                   "height: 378px; width: " + wave_cleanup_width + "px;"
@@ -6689,7 +6088,6 @@
                 clearInterval(player_weapon_use_id)
                 has_player_weapon_reload_state = false
                 player_weapon_previous_equipped = player_weapon_next_equipped
-                player_weapons[player_weapon_previous_equipped].destroy()
                 player_weapon_next_equipped = randomized_state % player_weapons.length
 
                 if (player_weapon_next_equipped == player_weapon_previous_equipped) {
@@ -6787,8 +6185,54 @@
             player_inputs[147] = 0
             player_inputs[150] = 0
             player_move_id = setInterval(player_move, 20)
-            player_weapon_next_equipped = Date.now() % player_weapons.length
+            player_weapon_element.setAttribute(
+              "class",
+              "element player-weapon"
+            )
             bounds_element.appendChild(player_weapon_element)
+            player_weapon_muzzle_flash_element = document.createElement("div")
+            player_weapon_muzzle_flash_element.setAttribute(
+              "class",
+              "element player-weapon-muzzle-flash"
+            )
+            player_weapon_muzzle_flash_element = bounds_element.appendChild(
+              player_weapon_muzzle_flash_element
+            )
+            player_weapon_next_equipped = Date.now() % player_weapons.length
+
+            while (i != 300) {
+              player_weapon_projectile_elements[i] = document.createElement("div")
+              player_weapon_projectile_elements[i].setAttribute(
+                "class",
+                "element player-weapon-projectile"
+              )
+              player_weapon_projectile_elements[i].setAttribute(
+                "style",
+                "display: none;"
+              )
+              player_weapon_projectile_elements[i] = bounds_element.appendChild(
+                player_weapon_projectile_elements[i]
+              )
+              i++
+            }
+
+            i = 0
+
+            while (i != 300) {
+              player_weapon_projectile_effect_elements[i] = document.createElement("div")
+              player_weapon_projectile_effect_elements[i].setAttribute(
+                "class",
+                "element player-weapon-projectile-effect"
+              )
+              player_weapon_projectile_effect_elements[i].setAttribute(
+                "style",
+                "display: none;"
+              )
+              player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
+                player_weapon_projectile_effect_elements[i]
+              )
+              i++
+            }
 
             setInterval(function() {
               randomized_state = ((randomized_state << 13)
