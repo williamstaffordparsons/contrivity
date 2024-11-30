@@ -761,6 +761,9 @@
           transform: rotate(143deg);
           width: 6px;
         }
+        .bit-hidden div {
+          background-color: #ddd;
+        }
       .bounds {
         background-color: #000;
         border-radius: 5px;
@@ -768,36 +771,6 @@
         overflow: hidden;
         position: absolute;
         width: 672px;
-      }
-      .bullet-time .enemy {
-        transition: border-color 0.06s ease,
-          left 0.5s ease-out,
-          top 0.5s ease-out;
-      }
-        .bullet-time .enemy.hit {
-          transition: border-color 0.04s ease,
-            left 0.3s ease-out,
-            top 0.3s ease-out;
-        }
-        .bullet-time .enemy .health {
-          transition: width 0.1s ease-out;
-        }
-      .bullet-time .bits div {
-        transition: margin 0.08s ease;
-      }
-      .bullet-time .pieces div {
-        transition: background-color 0.6s ease,
-          margin 0.2s ease;
-      }
-      .bullet-time .player {
-        transition: margin 0.02s ease-out;
-      }
-      .bullet-time .player-weapon {
-        transition: margin 0.1s ease-out;
-      }
-      .bullet-time .player-weapon-projectile-effect {
-        transition: left 0.1s ease-out,
-          top 0.1s ease-out;
       }
       .element {
         display: block;
@@ -1545,7 +1518,7 @@
           width: 6px;
         }
         .pieces-hidden div {
-          background-color: #bbb;
+          background-color: #eee;
         }
       .player {
         border: 4px solid #fff;
@@ -1622,11 +1595,6 @@
         width: 8px;
         z-index: 5;
       }
-        .player-weapon-projectile.pulse-rifle {
-          border-radius: 64px;
-          height: 12px;
-          width: 12px;
-        }
         .player-weapon-projectile.flamethrower {
           border-radius: 300px;
         }
@@ -1634,6 +1602,11 @@
           border-radius: 48px;
           height: 10px;
           width: 10px;
+        }
+        .player-weapon-projectile.pulse-rifle {
+          border-radius: 64px;
+          height: 12px;
+          width: 12px;
         }
       .player-weapon-projectile-effect {
         background-color: #ddd;
@@ -1646,6 +1619,728 @@
         width: 4px;
         z-index: 5;
       }
+      .splatter {
+        z-index: 2;
+      }
+        .splatter div {
+          background: #222;
+          border-radius: 10px;
+          height: 4px;
+          position: absolute;
+          transition: margin 0.1s ease;
+          width: 4px;
+        }
+        .splatter-0 div:nth-child(1) {
+          background: #111;
+          margin: 38px 0 0 18px;
+        }
+        .splatter-0 div:nth-child(2) {
+          background: #222;
+          margin: 8px 0 0 4px;
+          transform: rotate(154deg);
+          width: 8px;
+        }
+        .splatter-0 div:nth-child(3) {
+          background: #181818;
+          margin: -22px 0 0 46px;
+        }
+        .splatter-0 div:nth-child(4) {
+          background: #181818;
+          margin: -22px 0 0 -58px;
+          transform: rotate(175deg);
+          width: 10px;
+        }
+        .splatter-0 div:nth-child(5) {
+          background: #111;
+          margin: -30px 0 0 -58px;
+        }
+        .splatter-0 div:nth-child(6) {
+          background: #222;
+          margin: 22px 0 0 -40px;
+          transform: rotate(28deg);
+          width: 6px;
+        }
+        .splatter-1 div:nth-child(1) {
+          background: #222;
+          margin: 22px 0 0 65px;
+        }
+        .splatter-1 div:nth-child(2) {
+          background: #111;
+          margin: 62px 0 0 39px;
+          transform: rotate(113deg);
+          width: 8px;
+        }
+        .splatter-1 div:nth-child(3) {
+          background: #181818;
+          margin: 112px 0 0 24px;
+        }
+        .splatter-1 div:nth-child(4) {
+          background: #222;
+          margin: -47px 0 0 55px;
+          transform: rotate(42deg);
+          width: 10px;
+        }
+        .splatter-1 div:nth-child(5) {
+          background: #111;
+          margin: -16px 0 0 81px;
+        }
+        .splatter-1 div:nth-child(6) {
+          background: #222;
+          margin: -18px 0 0 -31px;
+          transform: rotate(113deg);
+          width: 6px;
+        }
+        .splatter-1 div:nth-child(7) {
+          background: #292929;
+          margin: 74px 0 0 20px;
+          transform: rotate(154deg);
+          width: 8px;
+        }
+        .splatter-1 div:nth-child(8) {
+          background: #181818;
+          margin: -21px 0 0 53px;
+        }
+        .splatter-1 div:nth-child(9) {
+          background: #181818;
+          margin: -111px 0 0 -29px;
+          transform: rotate(175deg);
+          width: 10px;
+        }
+        .splatter-2 div:nth-child(1) {
+          background: #181818;
+          margin: 8px 0 0 -2px;
+        }
+        .splatter-2 div:nth-child(2) {
+          background: #292929;
+          margin: 11px 0 0 10px;
+          transform: rotate(172deg);
+          width: 8px;
+        }
+        .splatter-2 div:nth-child(3) {
+          background: #181818;
+          margin: 10px 0 0 -2px;
+        }
+        .splatter-2 div:nth-child(4) {
+          background: #292929;
+          margin: 1px 0 0 21px;
+          transform: rotate(93deg);
+          width: 10px;
+        }
+        .splatter-2 div:nth-child(5) {
+          background: #111;
+          margin: 4px 0 0 20px;
+        }
+        .splatter-2 div:nth-child(6) {
+          background: #292929;
+          margin: 16px 0 0 14px;
+          transform: rotate(158deg);
+          width: 6px;
+        }
+        .splatter-2 div:nth-child(7) {
+          background: #111;
+          margin: 42px 0 0 19px;
+          transform: rotate(113deg);
+          width: 8px;
+        }
+        .splatter-2 div:nth-child(8) {
+          background: #222;
+          margin: 26px 0 0 12px;
+        }
+        .splatter-2 div:nth-child(9) {
+          background: #222;
+          margin: -17px 0 0 15px;
+          transform: rotate(42deg);
+          width: 10px;
+        }
+        .splatter-3 div:nth-child(1) {
+          background: #292929;
+          margin: -6px 0 0 16px;
+        }
+        .splatter-3 div:nth-child(2) {
+          background: #292929;
+          margin: 18px 0 0 19px;
+          transform: rotate(112deg);
+          width: 8px;
+        }
+        .splatter-3 div:nth-child(3) {
+          background: #292929;
+          margin: -25px 0 0 -24px;
+        }
+        .splatter-3 div:nth-child(4) {
+          background: #111;
+          margin: -55px 0 0 22px;
+          transform: rotate(77deg);
+          width: 10px;
+        }
+        .splatter-3 div:nth-child(5) {
+          background: #181818;
+          margin: -21px 0 0 8px;
+        }
+        .splatter-3 div:nth-child(6) {
+          background: #292929;
+          margin: -16px 0 0 -17px;
+          transform: rotate(155deg);
+          width: 6px;
+        }
+        .splatter-3 div:nth-child(7) {
+          background: #292929;
+          margin: 11px 0 0 10px;
+          transform: rotate(172deg);
+          width: 8px;
+        }
+        .splatter-3 div:nth-child(8) {
+          background: #181818;
+          margin: 10px 0 0 -2px;
+        }
+        .splatter-3 div:nth-child(9) {
+          background: #292929;
+          margin: 1px 0 0 21px;
+          transform: rotate(93deg);
+          width: 10px;
+        }
+        .splatter-4 div:nth-child(1) {
+          background: #292929;
+          margin: -15px 0 0 10px;
+        }
+        .splatter-4 div:nth-child(2) {
+          background: #111;
+          margin: 23px 0 0 23px;
+          transform: rotate(64deg);
+          width: 8px;
+        }
+        .splatter-4 div:nth-child(3) {
+          background: #292929;
+          margin: 7px 0 0 24px;
+        }
+        .splatter-4 div:nth-child(4) {
+          background: #222;
+          margin: -28px 0 0 22px;
+          transform: rotate(102deg);
+          width: 10px;
+        }
+        .splatter-4 div:nth-child(5) {
+          background: #181818;
+          margin: 16px 0 0 9px;
+        }
+        .splatter-4 div:nth-child(6) {
+          background: #181818;
+          margin: -8px 0 0 19px;
+          transform: rotate(132deg);
+          width: 6px;
+        }
+        .splatter-4 div:nth-child(7) {
+          background: #292929;
+          margin: -96px 0 0 16px;
+        }
+        .splatter-4 div:nth-child(8) {
+          background: #292929;
+          margin: 58px 0 0 29px;
+          transform: rotate(112deg);
+          width: 8px;
+        }
+        .splatter-4 div:nth-child(9) {
+          background: #292929;
+          margin: -145px 0 0 -24px;
+        }
+        .splatter-5 div:nth-child(1) {
+          background: #111;
+          margin: -9px 0 0 27px;
+        }
+        .splatter-5 div:nth-child(2) {
+          background: #111;
+          margin: -8px 0 0 2px;
+          transform: rotate(139deg);
+          width: 8px;
+        }
+        .splatter-5 div:nth-child(3) {
+          background: #222;
+          margin: 22px 0 0 16px;
+        }
+        .splatter-5 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: -6px 0 0 -1px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .splatter-5 div:nth-child(5) {
+          background: #181818;
+          margin: -46px 0 0 -13px;
+        }
+        .splatter-5 div:nth-child(6) {
+          background: #222;
+          margin: -16px 0 0 9px;
+          transform: rotate(80deg);
+          width: 6px;
+        }
+        .splatter-5 div:nth-child(7) {
+          background: #111;
+          margin: 23px 0 0 23px;
+          transform: rotate(64deg);
+          width: 8px;
+        }
+        .splatter-5 div:nth-child(8) {
+          background: #292929;
+          margin: 7px 0 0 24px;
+        }
+        .splatter-5 div:nth-child(9) {
+          background: #111;
+          margin: -28px 0 0 22px;
+          transform: rotate(102deg);
+          width: 10px;
+        }
+        .splatter-6 div:nth-child(1) {
+          background: #181818;
+          margin: -25px 0 0 25px;
+        }
+        .splatter-6 div:nth-child(2) {
+          background: #181818;
+          margin: 26px 0 0 -5px;
+          transform: rotate(4deg);
+          width: 8px;
+        }
+        .splatter-6 div:nth-child(3) {
+          background: #292929;
+          margin: -72px 0 0 7px;
+        }
+        .splatter-6 div:nth-child(4) {
+          background: #222;
+          margin: -19px 0 0 -7px;
+          transform: rotate(109deg);
+          width: 10px;
+        }
+        .splatter-6 div:nth-child(5) {
+          background: #292929;
+          margin: -11px 0 0 -16px;
+        }
+        .splatter-6 div:nth-child(6) {
+          background: #111;
+          margin: -11px 0 0 149px;
+          transform: rotate(25deg);
+          width: 6px;
+        }
+        .splatter-6 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 82px 0 0 56px;
+        }
+        .splatter-6 div:nth-child(8) {
+          background: #181818;
+          margin: -16px 0 0 -33px;
+        }
+        .splatter-6 div:nth-child(9) {
+          background: #3a3a3a;
+          margin: -116px 0 0 99px;
+          transform: rotate(80deg);
+          width: 6px;
+        }
+        .splatter-7 div:nth-child(1) {
+          background: #292929;
+          margin: 2px 0 0 222px;
+        }
+        .splatter-7 div:nth-child(2) {
+          background: #181818;
+          margin: 26px 0 0 -51px;
+          transform: rotate(95deg);
+          width: 8px;
+        }
+        .splatter-7 div:nth-child(3) {
+          background: #3a3a3a;
+          margin: 25px 0 0 -14px;
+        }
+        .splatter-7 div:nth-child(4) {
+          background: #292929;
+          margin: 21px 0 0 -16px;
+          transform: rotate(30deg);
+          width: 10px;
+        }
+        .splatter-7 div:nth-child(5) {
+          background: #292929;
+          margin: -26px 0 0 -10px;
+        }
+        .splatter-7 div:nth-child(6) {
+          background: #555;
+          margin: -5px 0 0 13px;
+          transform: rotate(169deg);
+          width: 6px;
+        }
+        .splatter-7 div:nth-child(7) {
+          background: #181818;
+          margin: 26px 0 0 -5px;
+          transform: rotate(4deg);
+          width: 8px;
+        }
+        .splatter-7 div:nth-child(8) {
+          background: #292929;
+          margin: -19px 0 0 -7px;
+          transform: rotate(109deg);
+          width: 10px;
+        }
+        .splatter-7 div:nth-child(9) {
+          background: #222;
+          margin: -11px 0 0 19px;
+          transform: rotate(25deg);
+          width: 6px;
+        }
+        .splatter-8 div:nth-child(1) {
+          background: #222;
+          margin: 17px 0 0 -74px;
+        }
+        .splatter-8 div:nth-child(2) {
+          background: #111;
+          margin: 125px 0 0 52px;
+          transform: rotate(48deg);
+          width: 8px;
+        }
+        .splatter-8 div:nth-child(3) {
+          background: #181818;
+          margin: 16px 0 0 15px;
+        }
+        .splatter-8 div:nth-child(4) {
+          background: #292929;
+          margin: 2px 0 0 20px;
+          transform: rotate(96deg);
+          width: 10px;
+        }
+        .splatter-8 div:nth-child(5) {
+          background: #292929;
+          margin: -12px 0 0 77px;
+        }
+        .splatter-8 div:nth-child(6) {
+          background: #181818;
+          margin: -16px 0 0 98px;
+          transform: rotate(44deg);
+          width: 6px;
+        }
+        .splatter-8 div:nth-child(7) {
+          background: #292929;
+          margin: 112px 0 0 22px;
+        }
+        .splatter-8 div:nth-child(8) {
+          background: #181818;
+          margin: 66px 0 0 -21px;
+          transform: rotate(95deg);
+          width: 8px;
+        }
+        .splatter-8 div:nth-child(9) {
+          background: #111;
+          margin: 15px 0 0 -114px;
+        }
+        .splatter-9 div:nth-child(1) {
+          background: #222;
+          margin: 92px 0 0 26px;
+        }
+        .splatter-9 div:nth-child(2) {
+          background: #181818;
+          margin: -11px 0 0 25px;
+          transform: rotate(69deg);
+          width: 8px;
+        }
+        .splatter-9 div:nth-child(3) {
+          background: #292929;
+          margin: -27px 0 0 -11px;
+        }
+        .splatter-9 div:nth-child(4) {
+          background: #3a3a3a;
+          margin: 5px 0 0 -27px;
+          transform: rotate(129deg);
+          width: 10px;
+        }
+        .splatter-9 div:nth-child(5) {
+          background: #292929;
+          margin: -29px 0 0 15px;
+        }
+        .splatter-9 div:nth-child(6) {
+          background: #181818;
+          margin: 28px 0 0 -6px;
+          transform: rotate(159deg);
+          width: 6px;
+        }
+        .splatter-9 div:nth-child(7) {
+          background: #111;
+          margin: 87px 0 0 -4px;
+        }
+        .splatter-9 div:nth-child(8) {
+          background: #222;
+          margin: 25px 0 0 12px;
+          transform: rotate(48deg);
+          width: 8px;
+        }
+        .splatter-9 div:nth-child(9) {
+          background: #181818;
+          margin: 16px 0 0 115px;
+        }
+        .splatter-10 div:nth-child(1) {
+          background: #111;
+          margin: -42px 0 0 -18px;
+        }
+        .splatter-10 div:nth-child(2) {
+          background: #222;
+          margin: -15px 0 0 -57px;
+          transform: rotate(105deg);
+          width: 8px;
+        }
+        .splatter-10 div:nth-child(3) {
+          background: #292929;
+          margin: 47px 0 0 9px;
+        }
+        .splatter-10 div:nth-child(4) {
+          background: #292929;
+          margin: 18px 0 0 100px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .splatter-10 div:nth-child(5) {
+          background: #181818;
+          margin: -15px 0 0 13px;
+        }
+        .splatter-10 div:nth-child(6) {
+          background: #111;
+          margin: -10px 0 0 2px;
+          transform: rotate(172deg);
+          width: 6px;
+        }
+        .splatter-10 div:nth-child(7) {
+          background: #222;
+          margin: 2px 0 0 26px;
+        }
+        .splatter-10 div:nth-child(8) {
+          background: #292929;
+          margin: -27px 0 0 -11px;
+        }
+        .splatter-10 div:nth-child(9) {
+          background: #222;
+          margin: 5px 0 0 -27px;
+          transform: rotate(129deg);
+          width: 10px;
+        }
+        .splatter-11 div:nth-child(1) {
+          background: #292929;
+          margin: -3px 0 0 14px;
+        }
+        .splatter-11 div:nth-child(2) {
+          background: #111;
+          margin: 10px 0 0 8px;
+          transform: rotate(35deg);
+          width: 8px;
+        }
+        .splatter-11 div:nth-child(3) {
+          background: #181818;
+          margin: 17px 0 0 25px;
+        }
+        .splatter-11 div:nth-child(4) {
+          background: #292929;
+          margin: 19px 0 0 -28px;
+          transform: rotate(4deg);
+          width: 10px;
+        }
+        .splatter-11 div:nth-child(5) {
+          background: #111;
+          margin: -28px 0 0 -110px;
+        }
+        .splatter-11 div:nth-child(6) {
+          background: #111;
+          margin: -112px 0 0 -17px;
+          transform: rotate(106deg);
+          width: 6px;
+        }
+        .splatter-11 div:nth-child(7) {
+          background: #222;
+          margin: 48px 0 0 34px;
+          transform: rotate(138deg);
+          width: 10px;
+        }
+        .splatter-11 div:nth-child(8) {
+          background: #181818;
+          margin: -115px 0 0 13px;
+        }
+        .splatter-11 div:nth-child(9) {
+          background: #181818;
+          margin: -10px 0 0 2px;
+          transform: rotate(172deg);
+          width: 6px;
+        }
+        .splatter-12 div:nth-child(1) {
+          background: #181818;
+          margin: -13px 0 0 -18px;
+        }
+        .splatter-12 div:nth-child(2) {
+          background: #292929;
+          margin: -10px 0 0 -13px;
+          transform: rotate(116deg);
+          width: 8px;
+        }
+        .splatter-12 div:nth-child(3) {
+          background: #292929;
+          margin: 14px 0 0 -200px;
+        }
+        .splatter-12 div:nth-child(4) {
+          background: #555;
+          margin: 20px 0 0 -57px;
+          transform: rotate(58deg);
+          width: 10px;
+        }
+        .splatter-12 div:nth-child(5) {
+          background: #3a3a3a;
+          margin: 92px 0 0 16px;
+        }
+        .splatter-12 div:nth-child(6) {
+          background: #181818;
+          margin: 14px 0 0 64px;
+          transform: rotate(59deg);
+          width: 6px;
+        }
+        .splatter-12 div:nth-child(7) {
+          background: #3a3a3a;
+          margin: 0 0 0 18px;
+          transform: rotate(35deg);
+          width: 8px;
+        }
+        .splatter-12 div:nth-child(8) {
+          background: #181818;
+          margin: 117px 0 0 25px;
+        }
+        .splatter-12 div:nth-child(9) {
+          background: #292929;
+          margin: 19px 0 0 -28px;
+          transform: rotate(4deg);
+          width: 10px;
+        }
+        .splatter-13 div:nth-child(1) {
+          background: #292929;
+          margin: -27px 0 0 -18px;
+        }
+        .splatter-13 div:nth-child(2) {
+          background: #111;
+          margin: 26px 0 0 -15px;
+          transform: rotate(78deg);
+          width: 8px;
+        }
+        .splatter-13 div:nth-child(3) {
+          background: #222;
+          margin: -13px 0 0 75px;
+        }
+        .splatter-13 div:nth-child(4) {
+          background: #181818;
+          margin: -29px 0 0 -85px;
+          transform: rotate(108deg);
+          width: 10px;
+        }
+        .splatter-13 div:nth-child(5) {
+          background: #222;
+          margin: 74px 0 0 74px;
+        }
+        .splatter-13 div:nth-child(6) {
+          background: #111;
+          margin: -12px 0 0 63px;
+          transform: rotate(139deg);
+          width: 6px;
+        }
+        .splatter-13 div:nth-child(7) {
+          background: #181818;
+          margin: -73px 0 0 -118px;
+        }
+        .splatter-13 div:nth-child(8) {
+          background: #292929;
+          margin: 114px 0 0 -20px;
+        }
+        .splatter-13 div:nth-child(9) {
+          background: #222;
+          margin: 112px 0 0 116px;
+        }
+        .splatter-14 div:nth-child(1) {
+          background: #111;
+          margin: -27px 0 0 35px;
+        }
+        .splatter-14 div:nth-child(2) {
+          background: #222;
+          margin: -32px 0 0 -123px;
+          transform: rotate(91deg);
+          width: 8px;
+        }
+        .splatter-14 div:nth-child(3) {
+          background: #181818;
+          margin: 129px 0 0 76px;
+        }
+        .splatter-14 div:nth-child(4) {
+          background: #111;
+          margin: 57px 0 0 28px;
+          transform: rotate(174deg);
+          width: 10px;
+        }
+        .splatter-14 div:nth-child(5) {
+          background: #111;
+          margin: 160px 0 0 89px;
+        }
+        .splatter-14 div:nth-child(6) {
+          background: #222;
+          margin: -58px 0 0 -12px;
+          transform: rotate(143deg);
+          width: 6px;
+        }
+        .splatter-14 div:nth-child(7) {
+          background: #292929;
+          margin: -27px 0 0 -118px;
+        }
+        .splatter-14 div:nth-child(8) {
+          background: #181818;
+          margin: 26px 0 0 -15px;
+          transform: rotate(78deg);
+          width: 8px;
+        }
+        .splatter-14 div:nth-child(9) {
+          background: #111;
+          margin: -53px 0 0 5px;
+        }
+        .splatter-15 div:nth-child(1) {
+          background: #292929;
+          margin: 54px 0 0 25px;
+        }
+        .splatter-15 div:nth-child(2) {
+          background: #292929;
+          margin: 5px 0 0 -45px;
+          transform: rotate(165deg);
+          width: 8px;
+        }
+        .splatter-15 div:nth-child(3) {
+          background: #292929;
+          margin: 41px 0 0 -36px;
+        }
+        .splatter-15 div:nth-child(4) {
+          background: #292929;
+          margin: -82px 0 0 3px;
+          transform: rotate(132deg);
+          width: 10px;
+        }
+        .splatter-15 div:nth-child(5) {
+          background: #292929;
+          margin: -66px 0 0 17px;
+        }
+        .splatter-15 div:nth-child(6) {
+          background: #181818;
+          margin: -13px 0 0 -61px;
+          transform: rotate(0deg);
+          width: 6px;
+        }
+        .splatter-15 div:nth-child(7) {
+          background: #111;
+          margin: -72px 0 0 -23px;
+          transform: rotate(91deg);
+          width: 8px;
+        }
+        .splatter-15 div:nth-child(8) {
+          background: #222;
+          margin: 97px 0 0 28px;
+          transform: rotate(174deg);
+          width: 10px;
+        }
+        .splatter-15 div:nth-child(9) {
+          background: #292929;
+          margin: -48px 0 0 -68px;
+          transform: rotate(143deg);
+          width: 6px;
+        }
+        .splatter-hidden div {
+          background-color: #ccc;
+        }
       .title-screen {
         cursor: default;
       }
@@ -1923,6 +2618,8 @@
         const enemy_offset_top = enemy_offsets_top[enemy_id]
         const enemy_pieces_element = enemy_pieces_elements.pop()
         const enemy_pieces_randomized_scatter = enemy_id & 15
+        const enemy_splatter_element = enemy_splatter_elements.pop()
+        const enemy_splatter_randomized_scatter = enemy_pieces_randomized_scatter + 1
 
         clearInterval(enemy_move_ids[enemy_id])
 
@@ -1981,6 +2678,8 @@
           "class",
           "element bits bits-" + enemy_bits_randomized_scatter
         )
+        enemy_bits_randomized_scatter
+          = (enemy_bits_randomized_scatter + 1) & 15
         enemy_pieces_element.setAttribute(
           "style",
           "left: " + enemy_offset_left + "px; top: "
@@ -1990,8 +2689,15 @@
           "class",
           "element pieces pieces-" + enemy_pieces_randomized_scatter
         )
-        enemy_bits_randomized_scatter
-          = (enemy_bits_randomized_scatter + 1) & 15
+        enemy_splatter_element.setAttribute(
+          "style",
+          "left: " + enemy_offset_left + "px; top: "
+            + enemy_offset_top + "px;"
+        )
+        enemy_splatter_element.setAttribute(
+          "class",
+          "element splatter splatter-" + enemy_splatter_randomized_scatter
+        )
       }
 
       clearTimeout(has_enemy_knockback_state_ids[enemy_id])
@@ -2227,6 +2933,7 @@
     const enemy_offsets_left = Array(51)
     const enemy_offsets_top = Array(51)
     const enemy_pieces_elements = Array(51)
+    const enemy_splatter_elements = Array(51)
     const has_enemy_knockback_state_ids = Array(51)
     const has_enemy_knockback_states = Array(51)
     const has_enemy_move_states = Array(51)
@@ -3447,18 +4154,9 @@
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
-          const player_weapon_projectile_effect_elements_count
-            = player_weapon_projectile_effect_elements.length
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].remove()
-            i++
-          }
-
-          i = 0
-
-          while (i != player_weapon_projectile_effect_elements_count) {
-            player_weapon_projectile_effect_elements[i].remove()
             i++
           }
         },
@@ -3469,7 +4167,6 @@
             "element flamethrower player-weapon"
           )
           player_weapon_projectile_elements = Array(100)
-          player_weapon_projectile_effect_elements = Array(100)
 
           while (i != 100) {
             player_weapon_projectile_elements[i] = document.createElement("div")
@@ -3483,24 +4180,6 @@
             )
             player_weapon_projectile_elements[i] = bounds_element.appendChild(
               player_weapon_projectile_elements[i]
-            )
-            i++
-          }
-
-          i = 0
-
-          while (i != 100) {
-            player_weapon_projectile_effect_elements[i] = document.createElement("div")
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "class",
-              "element flamethrower player-weapon-projectile-effect"
-            )
-            player_weapon_projectile_effect_elements[i].setAttribute(
-              "style",
-              "display: none;"
-            )
-            player_weapon_projectile_effect_elements[i] = bounds_element.appendChild(
-              player_weapon_projectile_effect_elements[i]
             )
             i++
           }
@@ -3551,9 +4230,6 @@
           let player_weapon_projectile_offset_margin = 0
           let player_weapon_projectile_offset_randomized_mask = 15
           let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
-          let player_weapon_projectile_spark_offset_left
-          let player_weapon_projectile_spark_offset_top
-          let player_weapon_projectile_spark_opacity = 80
           let player_weapon_projectile_width = 8
           const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
           const player_weapon_projectile_offset_increment_left = (
@@ -3568,11 +4244,6 @@
             = player_weapon_projectile_offset_increment_left * 0.1
           const enemy_knockback_offset_increment_top
             = player_weapon_projectile_offset_increment_top * 0.1
-          const player_weapon_projectile_spark_element = player_weapon_projectile_effect_elements.pop()
-          const player_weapon_projectile_spark_offset_increment_left = (randomized_state & 15)
-            - ((randomized_state >> 4) & 15)
-          const player_weapon_projectile_spark_offset_increment_top = ((randomized_state >> 8) & 15)
-            - ((randomized_state >> 12) & 15)
 
           const player_weapon_projectile_finalize = function() {
             let player_weapon_projectile_opacity = 100
@@ -3723,13 +4394,13 @@
             if (player_weapon_projectile_offset_increment_top < 0) {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
-                  player_weapon_projectile_height < 56 &&
+                  player_weapon_projectile_height < 58 &&
                   player_weapon_projectile_offset_left > -50 &&
                   player_weapon_projectile_offset_top > -50
                 ) {
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
-                  if (player_weapon_projectile_height >= 56) {
+                  if (player_weapon_projectile_height >= 58) {
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_finalize()
                   } else {
@@ -3750,13 +4421,13 @@
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
-                  player_weapon_projectile_height < 56 &&
+                  player_weapon_projectile_height < 58 &&
                   player_weapon_projectile_offset_left > -50 &&
                   player_weapon_projectile_offset_top < 428
                 ) {
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
-                  if (player_weapon_projectile_height >= 56) {
+                  if (player_weapon_projectile_height >= 58) {
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_finalize()
                   } else {
@@ -3779,13 +4450,13 @@
             if (player_weapon_projectile_offset_increment_top < 0) {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
-                  player_weapon_projectile_height < 56 &&
+                  player_weapon_projectile_height < 58 &&
                   player_weapon_projectile_offset_left < 722 &&
                   player_weapon_projectile_offset_top > -50
                 ) {
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
-                  if (player_weapon_projectile_height >= 56) {
+                  if (player_weapon_projectile_height >= 58) {
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_finalize()
                   } else {
@@ -3806,13 +4477,13 @@
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
-                  player_weapon_projectile_height < 56 &&
+                  player_weapon_projectile_height < 58 &&
                   player_weapon_projectile_offset_left < 722 &&
                   player_weapon_projectile_offset_top < 428
                 ) {
                   player_weapon_projectile_move(player_weapon_projectile_id)
                 } else {
-                  if (player_weapon_projectile_height >= 56) {
+                  if (player_weapon_projectile_height >= 58) {
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_finalize()
                   } else {
@@ -3832,40 +4503,6 @@
               }, 10)
             }
           }
-
-          player_weapon_projectile_spark_offset_left = player_weapon_projectile_offset_left
-          player_weapon_projectile_spark_offset_top = player_weapon_projectile_offset_top
-          player_weapon_projectile_spark_element.setAttribute(
-            "style",
-            "left: " + player_weapon_projectile_spark_offset_left + "px; top: "
-              + player_weapon_projectile_spark_offset_top + "px;"
-          )
-
-          const player_weapon_projectile_spark_id = setInterval(function() {
-            if (player_weapon_projectile_spark_opacity > 40) {
-              player_weapon_projectile_spark_offset_left += player_weapon_projectile_spark_offset_increment_left
-              player_weapon_projectile_spark_offset_top += player_weapon_projectile_spark_offset_increment_top
-              player_weapon_projectile_spark_element.setAttribute(
-                "style",
-                "left: " + player_weapon_projectile_spark_offset_left + "px; opacity: 0."
-                  + player_weapon_projectile_spark_opacity + "; top: "
-                  + player_weapon_projectile_spark_offset_top + "px;"
-              )
-              player_weapon_projectile_spark_opacity -= 10
-            } else {
-              clearInterval(player_weapon_projectile_spark_id)
-              player_weapon_projectile_spark_element.setAttribute(
-                "style",
-                "display: none;"
-              )
-
-              if (enemies_count == 0) {
-                player_weapon_projectile_spark_element.remove()
-              } else {
-                player_weapon_projectile_effect_elements.push(player_weapon_projectile_spark_element)
-              }
-            }
-          }, 40)
         }
       },
       {
@@ -6203,7 +6840,7 @@
       let randomized_enemy_offset_state = randomized_state & 65535
       const randomized_enemy_id = (randomized_state & 15) + 25
 
-      select_elements(".bits, .pieces", function(selected_element) {
+      select_elements(".bits, .pieces, .splatter", function(selected_element) {
         selected_element.remove()
       })
 
@@ -6213,6 +6850,10 @@
         }
 
         enemy_bits_elements[i] = document.createElement("div")
+        enemy_bits_elements[i].setAttribute(
+          "class",
+          "bits-hidden"
+        )
 
         if (typeof enemy_elements[i] != "undefined") {
           enemy_elements[i].remove()
@@ -6230,6 +6871,20 @@
         }
 
         enemy_pieces_elements[i] = document.createElement("div")
+        enemy_pieces_elements[i].setAttribute(
+          "class",
+          "pieces-hidden"
+        )
+
+        if (typeof enemy_splatter_elements[i] != "undefined") {
+          enemy_splatter_elements[i].remove()
+        }
+
+        enemy_splatter_elements[i] = document.createElement("div")
+        enemy_splatter_elements[i].setAttribute(
+          "class",
+          "splatter-hidden"
+        )
         j = 0
 
         while (j != 10) {
@@ -6239,18 +6894,20 @@
           enemy_pieces_elements[i].appendChild(
             document.createElement("div")
           )
+          enemy_splatter_elements[i].appendChild(
+            document.createElement("div")
+          )
           j++
         }
 
         enemy_bits_elements[i] = bounds_element.appendChild(
           enemy_bits_elements[i]
         )
-        enemy_pieces_elements[i].setAttribute(
-          "class",
-          "pieces-hidden"
-        )
         enemy_pieces_elements[i] = bounds_element.appendChild(
           enemy_pieces_elements[i]
+        )
+        enemy_splatter_elements[i] = bounds_element.appendChild(
+          enemy_splatter_elements[i]
         )
         has_enemy_knockback_state_ids[i] = 0
         has_enemy_knockback_states[i] = false
