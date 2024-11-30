@@ -2941,13 +2941,13 @@
     const player_weapon_element = document.createElement("div")
     const player_weapons = [
       {
-        "delay_maximum": 8,
         "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 30
+          player_weapon_delay_maximum = 8
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -3458,13 +3458,13 @@
         }
       },
       {
-        "delay_maximum": 20,
         "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 20
+          player_weapon_delay_maximum = 20
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -3959,13 +3959,13 @@
         }
       },
       {
-        "delay_maximum": 9,
         "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 60
+          player_weapon_delay_maximum = 9
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -4507,11 +4507,12 @@
         }
       },
       {
-        "delay_maximum": 1,
         "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
+
+          player_weapon_delay_maximum = 1
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -4851,11 +4852,12 @@
         }
       },
       {
-        "delay_maximum": 7,
         "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
+
+          player_weapon_delay_maximum = 7
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -5259,13 +5261,13 @@
         }
       },
       {
-        "delay_maximum": 4,
         "initialize": function() {
           let i = 0
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 50
+          player_weapon_delay_maximum = 4
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -5994,9 +5996,6 @@
 
       i = 0
       player_weapon_delay = 0
-      player_weapon_delay_maximum = player_weapons[
-        player_weapon_next_equipped
-      ].delay_maximum
       player_weapons[player_weapon_next_equipped].initialize()
       player_weapon_use_id = setInterval(
         player_weapons[player_weapon_next_equipped].use,
