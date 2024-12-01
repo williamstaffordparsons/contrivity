@@ -765,13 +765,16 @@
         .bit-hidden div {
           background-color: #ddd;
         }
-      .bounds {
-        background-color: #000;
-        border-radius: 5px;
+      .bounds,
+      .bounds-container {
         height: 378px;
-        overflow: hidden;
         position: absolute;
         width: 672px;
+      }
+      .bounds-container {
+        background-color: #000;
+        border-radius: 5px;
+        overflow: hidden;
       }
       .element {
         display: block;
@@ -2365,9 +2368,11 @@
     </style>
   </head>
   <body>
-    <div class="bounds">
-      <div class="title-screen">
-        <p class="prompt">Press an Arrow Key To Play</p>
+    <div class="bounds-container">
+      <div class="bounds">
+        <div class="title-screen">
+          <p class="prompt">Press an Arrow Key To Play Contrivity</p>
+        </div>
       </div>
     </div>
   </body>
@@ -2391,12 +2396,11 @@
     let player_weapon_offset_increment_left = -17
     let player_weapon_offset_increment_top = -17
     let player_weapon_previous_equipped
-    let player_weapon_projectile_effect_elements = Array(300)
-    let player_weapon_projectile_elements = Array(300)
     let player_weapon_use_id
     let randomized_state = Date.now() >>> 1
     let wave_cleanup_id = 0
     const bounds_element = document.querySelector(".bounds")
+    const bounds_container_element = document.querySelector(".bounds-container")
     const enemy_bits_elements = Array(51)
     const enemy_elements = Array(51)
     const enemy_health = Array(51)
@@ -2612,6 +2616,8 @@
           }
         }
       } else {
+        let bounds_recoil = randomized_state & 3
+        let i = 0
         const enemy_bits_element = enemy_bits_elements.pop()
         const enemy_offset_left = enemy_offsets_left[enemy_id]
         const enemy_offset_top = enemy_offsets_top[enemy_id]
@@ -2619,6 +2625,22 @@
         const enemy_pieces_randomized_scatter = enemy_id & 15
         const enemy_splatter_element = enemy_splatter_elements.pop()
         const enemy_splatter_randomized_scatter = enemy_pieces_randomized_scatter + 1
+
+        const bounds_recoil_id = setInterval(function() {
+          bounds_element.setAttribute(
+            "recoil_light",
+            bounds_recoil
+          )
+
+          i++
+
+          if (i < 3) {
+            bounds_recoil = (bounds_recoil + 1) & 3
+          } else {
+            clearInterval(bounds_recoil_id)
+            bounds_element.removeAttribute("recoil_light")
+          }
+        }, 15)
 
         clearInterval(enemy_move_ids[enemy_id])
 
@@ -2939,6 +2961,8 @@
     const player_element = document.createElement("div")
     const player_inputs = Array(151)
     const player_weapon_element = document.createElement("div")
+    const player_weapon_projectile_effect_elements = Array(300)
+    const player_weapon_projectile_elements = Array(300)
     const player_weapons = [
       {
         "initialize": function() {
@@ -6107,7 +6131,7 @@
 
     onload = function() {
       on_document_ready(function() {
-        bounds_element.setAttribute(
+        bounds_container_element.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: "
             + ((innerHeight >> 1) - 189) + "px;"
@@ -6259,7 +6283,7 @@
     }
 
     onresize = function() {
-      bounds_element.setAttribute(
+      bounds_container_element.setAttribute(
         "style",
         "left: " + ((innerWidth >> 1) - 336) + "px; top:"
           + ((innerHeight >> 1) - 189) + "px;"
