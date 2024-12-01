@@ -2402,9 +2402,9 @@
     let wave_cleanup_id = 0
     const bounds_element = document.querySelector(".bounds")
     const bounds_container_element = document.querySelector(".bounds-container")
-    const enemy_bits_elements = Array(51)
-    const enemy_elements = Array(51)
-    const enemy_health = Array(51)
+    const enemy_bits_elements = Array(42)
+    const enemy_elements = Array(42)
+    const enemy_health = Array(42)
 
     const enemy_hit = function(
       enemy_damage,
@@ -2954,21 +2954,21 @@
       has_enemy_move_states[enemy_id] = false
     }
 
-    const enemy_move_delays = Array(51)
-    const enemy_move_ids = Array(51)
-    const enemy_move_speeds = Array(51)
-    const enemy_offsets_left = Array(51)
-    const enemy_offsets_top = Array(51)
-    const enemy_pieces_elements = Array(51)
-    const enemy_splatter_elements = Array(51)
-    const has_enemy_knockback_state_ids = Array(51)
-    const has_enemy_knockback_states = Array(51)
-    const has_enemy_move_states = Array(51)
+    const enemy_move_delays = Array(42)
+    const enemy_move_ids = Array(42)
+    const enemy_move_speeds = Array(42)
+    const enemy_offsets_left = Array(42)
+    const enemy_offsets_top = Array(42)
+    const enemy_pieces_elements = Array(42)
+    const enemy_splatter_elements = Array(42)
+    const has_enemy_knockback_state_ids = Array(42)
+    const has_enemy_knockback_states = Array(42)
+    const has_enemy_move_states = Array(42)
     const player_element = document.createElement("div")
     const player_inputs = Array(151)
     const player_weapon_element = document.createElement("div")
-    const player_weapon_projectile_effect_elements = Array(250)
-    const player_weapon_projectile_elements = Array(250)
+    const player_weapon_projectile_effect_elements = Array(150)
+    const player_weapon_projectile_elements = Array(200)
     const player_weapons = [
       {
         "initialize": function() {
@@ -2977,7 +2977,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 30
-          player_weapon_delay_maximum = 6
+          player_weapon_delay_maximum = 7
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -5572,7 +5572,7 @@
         selected_element.remove()
       })
 
-      while (i != 51) {
+      while (i != 42) {
         if (typeof enemy_bits_elements[i] != "undefined") {
           enemy_bits_elements[i].remove()
         }
@@ -5676,6 +5676,12 @@
         i++
       }
 
+      while (i != 51) {
+        enemy_offsets_map_horizontal[i] = {}
+        enemy_offsets_map_vertical[i] = {}
+        i++
+      }
+
       i = 0
       player_weapon_delay = 0
       player_weapons[player_weapon_next_equipped].initialize()
@@ -5687,7 +5693,7 @@
       const enemies_initialize_id = setInterval(function() {
         if (
           enemies_count != 26 &&
-          i != 51
+          i != 42
         ) {
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
@@ -5881,7 +5887,7 @@
             )
             player_weapon_next_equipped = Date.now() % player_weapons.length
 
-            while (i != 250) {
+            while (i != 150) {
               player_weapon_projectile_effect_elements[i] = document.createElement("div")
               player_weapon_projectile_effect_elements[i].setAttribute(
                 "class",
@@ -5899,7 +5905,7 @@
 
             i = 0
 
-            while (i != 250) {
+            while (i != 200) {
               player_weapon_projectile_elements[i] = document.createElement("div")
               player_weapon_projectile_elements[i].setAttribute(
                 "class",
