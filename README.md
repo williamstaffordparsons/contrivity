@@ -1,5 +1,5 @@
 # Contrivity
-[![Contrivity Logo](https://repository-images.githubusercontent.com/860707653/153f7283-b4ef-4c13-b3e1-a1a61c78bf2a)](https://williamstaffordparsons.github.io/contrivity/)
+© 2024 William Stafford Parsons
 
 ## About
 Spawn into the hostile quantum laboratory and destroy wave after wave of oscillations in this endless, top-down arena shooting game with a variety of randomly-selected weapons.
