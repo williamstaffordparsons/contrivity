@@ -3693,13 +3693,13 @@
     let _15 = -17
     let _16 = -17
     let _17
-    let _18 = Date.now() >>> 1
+    let _18 = Date.now() & 65535
     let _19 = 0
-    const _20 = document.querySelector(".bounds")
-    const _21 = document.querySelector(".bounds-container")
-    const _22 = Array(45)
-    const _23 = Array(45)
-    const _24 = Array(45)
+    const _20 = document.querySelector(".bounds-container")
+    const _21 = document.querySelector(".bounds")
+    const _22 = Array(42)
+    const _23 = Array(42)
+    const _24 = Array(42)
 
     const _25 = function(
       enemy_damage,
@@ -3926,7 +3926,7 @@
           _4 = true
 
           const _38 = setInterval(function() {
-            _20.setAttribute(
+            _21.setAttribute(
               "recoil_light",
               _30
             )
@@ -3937,7 +3937,7 @@
               _30 = (_30 + 1) & 3
             } else {
               clearInterval(_38)
-              _20.removeAttribute("recoil_light")
+              _21.removeAttribute("recoil_light")
               _4 = false
             }
           }, 15)
@@ -4249,21 +4249,21 @@
       _50[_94] = false
     }
 
-    const _41 = Array(45)
-    const _42 = Array(45)
-    const _43 = Array(45)
-    const _44 = Array(45)
-    const _45 = Array(45)
-    const _46 = Array(45)
-    const _47 = Array(45)
-    const _48 = Array(45)
-    const _49 = Array(45)
-    const _50 = Array(45)
+    const _41 = Array(42)
+    const _42 = Array(42)
+    const _43 = Array(42)
+    const _44 = Array(42)
+    const _45 = Array(42)
+    const _46 = Array(42)
+    const _47 = Array(42)
+    const _48 = Array(42)
+    const _49 = Array(42)
+    const _50 = Array(42)
     const _51 = document.createElement("div")
     const _52 = Array(151)
     const _53 = Array(150)
     const _54 = document.createElement("div")
-    const _55 = Array(200)
+    const _55 = Array(150)
     const _56 = [
       {
         "initialize": function() {
@@ -6868,7 +6868,7 @@
         selected_element.remove()
       })
 
-      while (i != 45) {
+      while (i != 42) {
         if (typeof _22[i] != "undefined") {
           _22[i].remove()
         }
@@ -6883,7 +6883,7 @@
           _23[i].remove()
         }
 
-        _23[i] = _20.appendChild(
+        _23[i] = _21.appendChild(
           document.createElement("div")
         )
         _41[i] = 0
@@ -6924,13 +6924,13 @@
           j++
         }
 
-        _22[i] = _20.appendChild(
+        _22[i] = _21.appendChild(
           _22[i]
         )
-        _46[i] = _20.appendChild(
+        _46[i] = _21.appendChild(
           _46[i]
         )
-        _47[i] = _20.appendChild(
+        _47[i] = _21.appendChild(
           _47[i]
         )
         _48[i] = 0
@@ -6978,21 +6978,18 @@
         i++
       }
 
-      _11 = 0
-
       if (_113.length == 0) {
         i = 0
 
         while (i != 5) {
-          _113[i] = i
+          _113.push(i)
           i++
         }
 
         i = 1
-        j = 0
 
         while (i != 5) {
-          j = (Date.now() >>> i) % i
+          j = (_18 >> i) % i
           _13 = _113[j]
           _113[j] = _113[i]
           _113[i] = _13
@@ -7001,6 +6998,7 @@
       }
 
       i = 0
+      _11 = 0
       _13 = _113.pop()
       _56[_13].initialize()
       _17 = setInterval(
@@ -7011,7 +7009,7 @@
       const _128 = setInterval(function() {
         if (
           _0 != 34 &&
-          i != 45
+          i != 42
         ) {
           let _32 = _44[i]
           let _33 = _45[i]
@@ -7083,6 +7081,7 @@
                 )
                 _129 += 8
               } else {
+                clearInterval(_17)
                 clearInterval(_19)
                 i = 0
                 _19 = 0
@@ -7090,7 +7089,6 @@
                   "style",
                   "display:none; width: 0;"
                 )
-                clearInterval(_17)
                 _5 = false
                 _124()
               }
@@ -7105,7 +7103,7 @@
 
     onload = function() {
       _114(function() {
-        _21.setAttribute(
+        _20.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: "
             + ((innerHeight >> 1) - 189) + "px;"
@@ -7162,7 +7160,7 @@
               "class",
               "element wave-cleanup"
             )
-            _20.append(_131)
+            _21.append(_131)
             _51.setAttribute("class", "element player")
             _8 = 322
             _9 = 175
@@ -7171,7 +7169,7 @@
               "left: " + _8 + "px; top: "
                 + _9 + "px;"
             )
-            _20.append(_51)
+            _21.append(_51)
             _52[97] = 0
             _52[100] = 0
             _52[115] = 0
@@ -7185,13 +7183,13 @@
               "class",
               "element player-weapon"
             )
-            _20.appendChild(_54)
+            _21.appendChild(_54)
             _14 = document.createElement("div")
             _14.setAttribute(
               "class",
               "element player-weapon-muzzle-flash"
             )
-            _14 = _20.appendChild(
+            _14 = _21.appendChild(
               _14
             )
 
@@ -7205,7 +7203,7 @@
                 "style",
                 "display: none;"
               )
-              _53[i] = _20.appendChild(
+              _53[i] = _21.appendChild(
                 _53[i]
               )
               i++
@@ -7213,7 +7211,7 @@
 
             i = 0
 
-            while (i != 200) {
+            while (i != 150) {
               _55[i] = document.createElement("div")
               _55[i].setAttribute(
                 "class",
@@ -7223,7 +7221,7 @@
                 "style",
                 "display: none;"
               )
-              _55[i] = _20.appendChild(
+              _55[i] = _21.appendChild(
                 _55[i]
               )
               i++
@@ -7244,7 +7242,7 @@
               if (_134 <= 2146372536) {
                 _134 += 1111111
               } else {
-                _134 = Date.now() & 65535
+                _134 &= 65535
               }
             }, 10)
 
@@ -7259,7 +7257,7 @@
     }
 
     onresize = function() {
-      _21.setAttribute(
+      _20.setAttribute(
         "style",
         "left: " + ((innerWidth >> 1) - 336) + "px; top:"
           + ((innerHeight >> 1) - 189) + "px;"

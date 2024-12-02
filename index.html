@@ -3693,13 +3693,13 @@
     let player_weapon_offset_increment_left = -17
     let player_weapon_offset_increment_top = -17
     let player_weapon_use_id
-    let randomized_state = Date.now() >>> 1
+    let randomized_state = Date.now() & 65535
     let wave_cleanup_id = 0
-    const bounds_element = document.querySelector(".bounds")
     const bounds_container_element = document.querySelector(".bounds-container")
-    const enemy_bits_elements = Array(45)
-    const enemy_elements = Array(45)
-    const enemy_health = Array(45)
+    const bounds_element = document.querySelector(".bounds")
+    const enemy_bits_elements = Array(42)
+    const enemy_elements = Array(42)
+    const enemy_health = Array(42)
 
     const enemy_hit = function(
       enemy_damage,
@@ -4249,21 +4249,21 @@
       has_enemy_move_states[enemy_id] = false
     }
 
-    const enemy_move_delays = Array(45)
-    const enemy_move_ids = Array(45)
-    const enemy_move_speeds = Array(45)
-    const enemy_offsets_left = Array(45)
-    const enemy_offsets_top = Array(45)
-    const enemy_pieces_elements = Array(45)
-    const enemy_splatter_elements = Array(45)
-    const has_enemy_knockback_state_ids = Array(45)
-    const has_enemy_knockback_states = Array(45)
-    const has_enemy_move_states = Array(45)
+    const enemy_move_delays = Array(42)
+    const enemy_move_ids = Array(42)
+    const enemy_move_speeds = Array(42)
+    const enemy_offsets_left = Array(42)
+    const enemy_offsets_top = Array(42)
+    const enemy_pieces_elements = Array(42)
+    const enemy_splatter_elements = Array(42)
+    const has_enemy_knockback_state_ids = Array(42)
+    const has_enemy_knockback_states = Array(42)
+    const has_enemy_move_states = Array(42)
     const player_element = document.createElement("div")
     const player_inputs = Array(151)
     const player_weapon_effect_elements = Array(150)
     const player_weapon_element = document.createElement("div")
-    const player_weapon_projectile_elements = Array(200)
+    const player_weapon_projectile_elements = Array(150)
     const player_weapons = [
       {
         "initialize": function() {
@@ -6868,7 +6868,7 @@
         selected_element.remove()
       })
 
-      while (i != 45) {
+      while (i != 42) {
         if (typeof enemy_bits_elements[i] != "undefined") {
           enemy_bits_elements[i].remove()
         }
@@ -6978,21 +6978,18 @@
         i++
       }
 
-      player_weapon_delay = 0
-
       if (player_weapons_randomized.length == 0) {
         i = 0
 
         while (i != 5) {
-          player_weapons_randomized[i] = i
+          player_weapons_randomized.push(i)
           i++
         }
 
         i = 1
-        j = 0
 
         while (i != 5) {
-          j = (Date.now() >>> i) % i
+          j = (randomized_state >> i) % i
           player_weapon_equipped = player_weapons_randomized[j]
           player_weapons_randomized[j] = player_weapons_randomized[i]
           player_weapons_randomized[i] = player_weapon_equipped
@@ -7001,6 +6998,7 @@
       }
 
       i = 0
+      player_weapon_delay = 0
       player_weapon_equipped = player_weapons_randomized.pop()
       player_weapons[player_weapon_equipped].initialize()
       player_weapon_use_id = setInterval(
@@ -7011,7 +7009,7 @@
       const enemies_initialize_id = setInterval(function() {
         if (
           enemies_count != 34 &&
-          i != 45
+          i != 42
         ) {
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
@@ -7083,6 +7081,7 @@
                 )
                 wave_cleanup_width += 8
               } else {
+                clearInterval(player_weapon_use_id)
                 clearInterval(wave_cleanup_id)
                 i = 0
                 wave_cleanup_id = 0
@@ -7090,7 +7089,6 @@
                   "style",
                   "display:none; width: 0;"
                 )
-                clearInterval(player_weapon_use_id)
                 has_player_weapon_reload_state = false
                 wave_initialize()
               }
@@ -7213,7 +7211,7 @@
 
             i = 0
 
-            while (i != 200) {
+            while (i != 150) {
               player_weapon_projectile_elements[i] = document.createElement("div")
               player_weapon_projectile_elements[i].setAttribute(
                 "class",
@@ -7244,7 +7242,7 @@
               if (randomized_state_offset <= 2146372536) {
                 randomized_state_offset += 1111111
               } else {
-                randomized_state_offset = Date.now() & 65535
+                randomized_state_offset &= 65535
               }
             }, 10)
 
