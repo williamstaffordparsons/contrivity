@@ -3697,9 +3697,9 @@
     let _19 = 0
     const _20 = document.querySelector(".bounds-container")
     const _21 = document.querySelector(".bounds")
-    const _22 = Array(42)
-    const _23 = Array(42)
-    const _24 = Array(42)
+    const _22 = Array(51)
+    const _23 = Array(51)
+    const _24 = Array(51)
 
     const _25 = function(
       enemy_damage,
@@ -4249,16 +4249,16 @@
       _50[_94] = false
     }
 
-    const _41 = Array(42)
-    const _42 = Array(42)
-    const _43 = Array(42)
-    const _44 = Array(42)
-    const _45 = Array(42)
-    const _46 = Array(42)
-    const _47 = Array(42)
-    const _48 = Array(42)
-    const _49 = Array(42)
-    const _50 = Array(42)
+    const _41 = Array(51)
+    const _42 = Array(51)
+    const _43 = Array(51)
+    const _44 = Array(51)
+    const _45 = Array(51)
+    const _46 = Array(51)
+    const _47 = Array(51)
+    const _48 = Array(51)
+    const _49 = Array(51)
+    const _50 = Array(51)
     const _51 = document.createElement("div")
     const _52 = Array(151)
     const _53 = Array(150)
@@ -6868,7 +6868,7 @@
         selected_element.remove()
       })
 
-      while (i != 42) {
+      while (i != 51) {
         if (typeof _22[i] != "undefined") {
           _22[i].remove()
         }
@@ -6953,7 +6953,8 @@
             _44[i] = 722
           }
 
-          _45[i] = _125 % 378
+          _45[i] = (_125 & 255)
+            + (_125 & 127)
         } else {
           if (((_125 >> 2) & 1) == 0) {
             _45[i] = -50
@@ -6961,7 +6962,8 @@
             _45[i] = 428
           }
 
-          _44[i] = _125 % 672
+          _44[i] = (_125 & 511)
+            + (_125 & 127)
         }
 
         _23[i].setAttribute(
@@ -6969,12 +6971,6 @@
           "left: " + _44[i] + "px; top: "
             + _45[i] + "px; transition: none;"
         )
-        i++
-      }
-
-      while (i != 51) {
-        _2[i] = {}
-        _3[i] = {}
         i++
       }
 
@@ -7007,10 +7003,7 @@
       )
 
       const _128 = setInterval(function() {
-        if (
-          _0 != 34 &&
-          i != 42
-        ) {
+        if (i != 51) {
           let _32 = _44[i]
           let _33 = _45[i]
 
@@ -7150,11 +7143,12 @@
         const _133 = setInterval(function() {
           if ((_52[133] + _52[141]
             + _52[147] + _52[150]) != 0) {
-            let _134 = 0
+            let _134
+            let _135 = 0
             let i = 0
 
             clearInterval(_133)
-            clearInterval(_135)
+            clearInterval(_136)
             _130.classList.add("hidden")
             _131.setAttribute(
               "class",
@@ -7232,17 +7226,19 @@
             }
 
             setInterval(function() {
-              _18 = ((_18 << 13)
-                | (_18 >> 19)) ^ _134
+              _134 = ((_18 << 13)
+                | (_18 >> 19)) ^ _135
 
-              if (_18 < 0) {
-                _18 >>>= _134 & 15
+              if (_134 < 0) {
+                _134 >>>= _135 & 15
               }
 
-              if (_134 <= 2146372536) {
-                _134 += 1111111
+              _18 = _134
+
+              if (_135 <= 2146372536) {
+                _135 += 1111111
               } else {
-                _134 &= 65535
+                _135 &= 65535
               }
             }, 10)
 
@@ -7250,7 +7246,7 @@
           }
         }, 10)
 
-        const _135 = setInterval(function() {
+        const _136 = setInterval(function() {
           _130.classList.toggle("hidden")
         }, 500)
       })
