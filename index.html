@@ -6701,7 +6701,7 @@
         }
       }
     ]
-    const player_weapons_randomized = Array(5)
+    const player_weapons_randomized = Array(0)
 
     const on_document_ready = function(callback) {
       if (document.readyState != "complete") {
@@ -7259,10 +7259,6 @@
                 player_weapon_projectile_elements[i]
               )
               i++
-            }
-
-            while (player_weapons_randomized.length != 0) {
-              player_weapons_randomized.pop()
             }
 
             setInterval(function() {
