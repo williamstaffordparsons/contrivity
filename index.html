@@ -6949,14 +6949,8 @@
         has_enemy_knockback_state_ids[i] = 0
         has_enemy_knockback_states[i] = false
         has_enemy_move_states[i] = false
-
-        randomized_enemy_offset = ((randomized_enemy_offset << 13)
-          | (randomized_enemy_offset >> 19)) ^ randomized_enemy_offset_state
-
-        if (randomized_enemy_offset < 0) {
-          randomized_enemy_offset >>>= randomized_enemy_offset_state & 15
-        }
-
+        randomized_enemy_offset = (((randomized_enemy_offset << 13)
+          | (randomized_enemy_offset >> 19)) ^ randomized_enemy_offset_state) >>> 1
         randomized_enemy_offset_state += 1111111
 
         if ((randomized_enemy_offset & 1) == 0) {
@@ -6966,8 +6960,7 @@
             enemy_offsets_left[i] = 700
           }
 
-          enemy_offsets_top[i] = (randomized_enemy_offset & 255)
-            + (randomized_enemy_offset_state & 127)
+          enemy_offsets_top[i] = randomized_enemy_offset % 378
         } else {
           if (((randomized_enemy_offset >> 2) & 1) == 0) {
             enemy_offsets_top[i] = -28
@@ -6975,8 +6968,7 @@
             enemy_offsets_top[i] = 406
           }
 
-          enemy_offsets_left[i] = (randomized_enemy_offset_state & 511)
-            + (randomized_enemy_offset & 127)
+          enemy_offsets_left[i] = randomized_enemy_offset % 672
         }
 
         enemy_elements[i].setAttribute(
@@ -7108,12 +7100,12 @@
             player_weapon_element.removeAttribute("recoil_light")
 
             wave_cleanup_id = setInterval(function() {
-              if (wave_cleanup_width != 704) {
+              if (wave_cleanup_width != 710) {
                 wave_cleanup_element.setAttribute(
                   "style",
                   "height: 378px; width: " + wave_cleanup_width + "px;"
                 )
-                wave_cleanup_width += 8
+                wave_cleanup_width += 10
               } else {
                 clearInterval(player_weapon_use_id)
                 clearInterval(wave_cleanup_id)
