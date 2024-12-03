@@ -3694,6 +3694,7 @@
     let player_weapon_offset_increment_top = -17
     let player_weapon_use_id
     let randomized_state = Date.now() & 65535
+    let randomized_state_offset = 0
     let wave_cleanup_id = 0
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
@@ -6966,7 +6967,7 @@
           }
 
           enemy_offsets_top[i] = (randomized_enemy_offset & 255)
-            + (randomized_enemy_offset & 127)
+            + (randomized_enemy_offset_state & 127)
         } else {
           if (((randomized_enemy_offset >> 2) & 1) == 0) {
             enemy_offsets_top[i] = -28
@@ -6974,7 +6975,7 @@
             enemy_offsets_top[i] = 406
           }
 
-          enemy_offsets_left[i] = (randomized_enemy_offset & 511)
+          enemy_offsets_left[i] = (randomized_enemy_offset_state & 511)
             + (randomized_enemy_offset & 127)
         }
 
@@ -7183,8 +7184,6 @@
         const play_initialize_id = setInterval(function() {
           if ((player_inputs[133] + player_inputs[141]
             + player_inputs[147] + player_inputs[150]) != 0) {
-            let randomized_state_capture
-            let randomized_state_offset = 0
             let i = 0
 
             clearInterval(play_initialize_id)
@@ -7262,14 +7261,8 @@
             }
 
             setInterval(function() {
-              randomized_state_capture = ((randomized_state << 13)
-                | (randomized_state >> 19)) ^ randomized_state_offset
-
-              if (randomized_state_capture < 0) {
-                randomized_state_capture >>>= randomized_state_offset & 15
-              }
-
-              randomized_state = randomized_state_capture
+              randomized_state = (((randomized_state << 13)
+                | (randomized_state >> 19)) ^ randomized_state_offset) >>> 1
 
               if (randomized_state_offset <= 2146372536) {
                 randomized_state_offset += 1111111
