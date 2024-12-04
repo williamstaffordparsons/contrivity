@@ -1194,8 +1194,8 @@
           transform: rotate(143deg);
           width: 6px;
         }
-        .bit-hidden div {
-          background-color: #ddd;
+        .bits-hidden div {
+          background-color: #ccc;
         }
       .bounds,
       .bounds-container {
@@ -4308,8 +4308,8 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] + player_inputs[141]
-              + player_inputs[147] + player_inputs[150]) == 0
+            (player_inputs[133] | player_inputs[141]
+              | player_inputs[147] | player_inputs[150]) == 0
           ) {
             return
           }
@@ -4929,8 +4929,8 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] + player_inputs[141]
-              + player_inputs[147] + player_inputs[150]) == 0
+            (player_inputs[133] | player_inputs[141]
+              | player_inputs[147] | player_inputs[150]) == 0
           ) {
             return
           }
@@ -5440,8 +5440,8 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] + player_inputs[141]
-              + player_inputs[147] + player_inputs[150]) == 0
+            (player_inputs[133] | player_inputs[141]
+              | player_inputs[147] | player_inputs[150]) == 0
           ) {
             return
           }
@@ -5863,8 +5863,8 @@
             return
           }
 
-          if ((player_inputs[133] + player_inputs[141]
-            + player_inputs[147] + player_inputs[150]) == 0) {
+          if ((player_inputs[133] | player_inputs[141]
+            | player_inputs[147] | player_inputs[150]) == 0) {
             return
           }
 
@@ -6370,8 +6370,8 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] + player_inputs[141]
-              + player_inputs[147] + player_inputs[150]) == 0
+            (player_inputs[133] | player_inputs[141]
+              | player_inputs[147] | player_inputs[150]) == 0
           ) {
             return
           }
@@ -6715,8 +6715,8 @@
     }
 
     const player_move = function() {
-      if ((player_inputs[97] + player_inputs[100]
-        + player_inputs[115] + player_inputs[119]) == 0) {
+      if ((player_inputs[97] | player_inputs[100]
+        | player_inputs[115] | player_inputs[119]) == 0) {
         return
       }
 
@@ -6899,6 +6899,7 @@
         enemy_elements[i] = bounds_element.appendChild(
           document.createElement("div")
         )
+        enemy_health[i] = 100
         enemy_move_delays[i] = 0
         enemy_offsets_map_horizontal[i] = {}
         enemy_offsets_map_vertical[i] = {}
@@ -7044,7 +7045,6 @@
             "class",
             "element enemy"
           )
-          enemy_health[i] = 100
           enemy_move_speeds[i] = randomized_state & 7
           enemies_count++
 
@@ -7174,8 +7174,8 @@
         )
 
         const play_initialize_id = setInterval(function() {
-          if ((player_inputs[133] + player_inputs[141]
-            + player_inputs[147] + player_inputs[150]) != 0) {
+          if ((player_inputs[133] | player_inputs[141]
+            | player_inputs[147] | player_inputs[150]) != 0) {
             let i = 0
 
             clearInterval(play_initialize_id)
