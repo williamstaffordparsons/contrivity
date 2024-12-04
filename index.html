@@ -1195,7 +1195,7 @@
           width: 6px;
         }
         .bits-hidden div {
-          background-color: #ccc;
+          background-color: #940105;
         }
       .bounds,
       .bounds-container {
@@ -2382,7 +2382,7 @@
           width: 6px;
         }
         .pieces-hidden div {
-          background-color: #eee;
+          background-color: #540203;
         }
       .player {
         border-color: #fff;
@@ -3913,8 +3913,6 @@
           }
         }
       } else {
-        let bounds_recoil = randomized_state & 3
-        let i = 0
         const enemy_bits_element = enemy_bits_elements.pop()
         const enemy_offset_left = enemy_offsets_left[enemy_id]
         const enemy_offset_top = enemy_offsets_top[enemy_id]
@@ -3926,26 +3924,50 @@
         const enemy_splatter_randomized_scatter_b = (enemy_splatter_randomized_scatter_a
           + (randomized_state & 7) + 1) & 15
 
-        if (has_bounds_recoil_state == false) {
-          has_bounds_recoil_state = true
+        setTimeout(function() {
+          if (has_bounds_recoil_state == false) {
+            let bounds_recoil = randomized_state & 3
+            let i = 0
 
-          const bounds_recoil_id = setInterval(function() {
-            bounds_element.setAttribute(
-              "recoil_light",
-              bounds_recoil
-            )
+            has_bounds_recoil_state = true
 
-            i++
+            if (bounds_recoil == 0) {
+              const bounds_recoil_id = setInterval(function() {
+                bounds_element.setAttribute(
+                  "recoil_heavy",
+                  bounds_recoil
+                )
 
-            if (i < 3) {
-              bounds_recoil = (bounds_recoil + 1) & 3
+                i++
+
+                if (i < 3) {
+                  bounds_recoil = (bounds_recoil + 1) & 3
+                } else {
+                  clearInterval(bounds_recoil_id)
+                  bounds_element.removeAttribute("recoil_heavy")
+                  has_bounds_recoil_state = false
+                }
+              }, 15)
             } else {
-              clearInterval(bounds_recoil_id)
-              bounds_element.removeAttribute("recoil_light")
-              has_bounds_recoil_state = false
+              const bounds_recoil_id = setInterval(function() {
+                bounds_element.setAttribute(
+                  "recoil_light",
+                  bounds_recoil
+                )
+
+                i++
+
+                if (i < 3) {
+                  bounds_recoil = (bounds_recoil + 1) & 3
+                } else {
+                  clearInterval(bounds_recoil_id)
+                  bounds_element.removeAttribute("recoil_light")
+                  has_bounds_recoil_state = false
+                }
+              }, 15)
             }
-          }, 15)
-        }
+          }
+        }, 0)
 
         clearInterval(enemy_move_ids[enemy_id])
 
