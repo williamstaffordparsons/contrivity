@@ -4259,7 +4259,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 30
-          player_weapon_delay_maximum = 7
+          player_weapon_delay_maximum = 3
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -4377,7 +4377,7 @@
                 setTimeout(function() {
                   has_player_weapon_reload_state = false
                   player_weapon_ammunition = 30
-                  player_weapon_delay = -40
+                  player_weapon_delay = -15
                   player_weapon_element.removeAttribute("reload")
                 }, 100)
               }, 100)
@@ -4798,7 +4798,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 20
-          player_weapon_delay_maximum = 25
+          player_weapon_delay_maximum = 12
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -4909,7 +4909,7 @@
                   setTimeout(function() {
                     has_player_weapon_reload_state = false
                     player_weapon_ammunition = 20
-                    player_weapon_delay = -15
+                    player_weapon_delay = -7
                     player_weapon_element.removeAttribute("reload")
                   }, 100)
                 }, 100)
@@ -5299,7 +5299,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 60
-          player_weapon_delay_maximum = 10
+          player_weapon_delay_maximum = 5
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -5433,7 +5433,7 @@
                         setTimeout(function() {
                           has_player_weapon_reload_state = false
                           player_weapon_ammunition = 60
-                          player_weapon_delay = -15
+                          player_weapon_delay = -7
                           player_weapon_element.removeAttribute("reload")
                         }, 30)
                       }, 200)
@@ -5868,7 +5868,7 @@
           const player_weapon_projectile_elements_count
             = player_weapon_projectile_elements.length
 
-          player_weapon_delay_maximum = 6
+          player_weapon_delay_maximum = 3
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -6297,7 +6297,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 50
-          player_weapon_delay_maximum = 3
+          player_weapon_delay_maximum = 1
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -6404,7 +6404,7 @@
                 setTimeout(function() {
                   has_player_weapon_reload_state = false
                   player_weapon_ammunition = 50
-                  player_weapon_delay = -20
+                  player_weapon_delay = -10
                   player_weapon_element.removeAttribute("reload")
                 }, 100)
               }, 100)
@@ -7100,7 +7100,7 @@
       player_weapons[player_weapon_equipped].initialize()
       player_weapon_use_id = setInterval(
         player_weapons[player_weapon_equipped].use,
-        10
+        20
       )
 
       const enemies_initialize_id = setInterval(function() {
