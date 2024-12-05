@@ -3912,65 +3912,76 @@
             }
           }
         }
-      } else {
-        const enemy_bits_element = enemy_bits_elements.pop()
-        const enemy_offset_left = enemy_offsets_left[enemy_id]
-        const enemy_offset_top = enemy_offsets_top[enemy_id]
-        const enemy_pieces_element = enemy_pieces_elements.pop()
-        const enemy_pieces_randomized_scatter = enemy_id & 15
-        const enemy_splatter_element_a = enemy_splatter_elements.pop()
-        const enemy_splatter_element_b = enemy_splatter_elements.pop()
-        const enemy_splatter_randomized_scatter_a = (enemy_pieces_randomized_scatter + 1) & 15
-        const enemy_splatter_randomized_scatter_b = (enemy_splatter_randomized_scatter_a
-          + (randomized_state & 7) + 1) & 15
 
-        setTimeout(function() {
-          if (has_bounds_recoil_state == false) {
-            let bounds_recoil = randomized_state & 3
-            let i = 0
+        clearTimeout(has_enemy_knockback_state_ids[enemy_id])
 
-            has_bounds_recoil_state = true
+        has_enemy_knockback_state_ids[enemy_id] = setTimeout(function() {
+          has_enemy_knockback_states[enemy_id] = false
+        }, 100)
 
-            if (bounds_recoil == 0) {
-              const bounds_recoil_id = setInterval(function() {
-                bounds_element.setAttribute(
-                  "recoil_heavy",
-                  bounds_recoil
-                )
+        return
+      }
 
-                i++
+      if (enemy_offsets_left[enemy_id] == -100) {
+        return
+      }
 
-                if (i < 3) {
-                  bounds_recoil = (bounds_recoil + 1) & 3
-                } else {
-                  clearInterval(bounds_recoil_id)
-                  bounds_element.removeAttribute("recoil_heavy")
-                  has_bounds_recoil_state = false
-                }
-              }, 15)
-            } else {
-              const bounds_recoil_id = setInterval(function() {
-                bounds_element.setAttribute(
-                  "recoil_light",
-                  bounds_recoil
-                )
+      clearInterval(enemy_move_ids[enemy_id])
 
-                i++
+      const enemy_offset_left = enemy_offsets_left[enemy_id]
+      const enemy_offset_top = enemy_offsets_top[enemy_id]
 
-                if (i < 3) {
-                  bounds_recoil = (bounds_recoil + 1) & 3
-                } else {
-                  clearInterval(bounds_recoil_id)
-                  bounds_element.removeAttribute("recoil_light")
-                  has_bounds_recoil_state = false
-                }
-              }, 15)
-            }
+      enemy_offsets_left[enemy_id] = -100
+      enemy_offsets_top[enemy_id] = -100
+      enemies_count--
+      enemy_health[enemy_id] = 0
+
+      setTimeout(function() {
+        if (has_bounds_recoil_state == false) {
+          let bounds_recoil = randomized_state & 3
+          let i = 0
+
+          has_bounds_recoil_state = true
+
+          if (bounds_recoil == 0) {
+            const bounds_recoil_id = setInterval(function() {
+              bounds_element.setAttribute(
+                "recoil_heavy",
+                bounds_recoil
+              )
+
+              i++
+
+              if (i < 3) {
+                bounds_recoil = (bounds_recoil + 1) & 3
+              } else {
+                clearInterval(bounds_recoil_id)
+                bounds_element.removeAttribute("recoil_heavy")
+                has_bounds_recoil_state = false
+              }
+            }, 15)
+          } else {
+            const bounds_recoil_id = setInterval(function() {
+              bounds_element.setAttribute(
+                "recoil_light",
+                bounds_recoil
+              )
+
+              i++
+
+              if (i < 3) {
+                bounds_recoil = (bounds_recoil + 1) & 3
+              } else {
+                clearInterval(bounds_recoil_id)
+                bounds_element.removeAttribute("recoil_light")
+                has_bounds_recoil_state = false
+              }
+            }, 15)
           }
-        }, 0)
+        }
+      }, 0)
 
-        clearInterval(enemy_move_ids[enemy_id])
-
+      setTimeout(function() {
         if (enemy_offset_left > 0) {
           const enemy_segment = enemy_offset_left >> 4
 
@@ -4010,52 +4021,75 @@
           delete enemy_offsets_map_vertical[0][enemy_id]
           delete enemy_offsets_map_vertical[1][enemy_id]
         }
+      }, 0)
 
-        enemy_elements[enemy_id].setAttribute(
-          "style",
-          "display: none;"
-        )
-        enemies_count--
-        enemy_health[enemy_id] = 0
-        enemy_bits_element.setAttribute(
-          "style",
-          "left: " + enemy_offset_left + "px; top: "
-            + enemy_offset_top + "px;"
-        )
-        enemy_bits_element.setAttribute(
-          "class",
-          "element bits bits-" + enemy_bits_randomized_scatter
-        )
-        enemy_bits_randomized_scatter
-          = (enemy_bits_randomized_scatter + 1) & 15
-        enemy_pieces_element.setAttribute(
-          "style",
-          "left: " + enemy_offset_left + "px; top: "
-            + enemy_offset_top + "px;"
-        )
-        enemy_pieces_element.setAttribute(
-          "class",
-          "element pieces pieces-" + enemy_pieces_randomized_scatter
-        )
-        enemy_splatter_element_a.setAttribute(
-          "style",
-          "left: " + enemy_offset_left + "px; top: "
-            + enemy_offset_top + "px;"
-        )
-        enemy_splatter_element_a.setAttribute(
-          "class",
-          "element splatter splatter-" + enemy_splatter_randomized_scatter_a
-        )
-        enemy_splatter_element_b.setAttribute(
-          "style",
-          "left: " + enemy_offset_left + "px; top: "
-            + enemy_offset_top + "px;"
-        )
-        enemy_splatter_element_b.setAttribute(
-          "class",
-          "element splatter splatter-" + enemy_splatter_randomized_scatter_b
-        )
-      }
+      enemy_bits_randomized_scatter
+        = (enemy_bits_randomized_scatter + 1) & 15
+      enemy_elements[enemy_id].setAttribute(
+        "style",
+        "display: none;"
+      )
+
+      setTimeout(function() {
+        const enemy_bits_element = enemy_bits_elements.pop()
+
+        if (typeof enemy_bits_element != "undefined") {
+          enemy_bits_element.setAttribute(
+            "style",
+            "left: " + enemy_offset_left + "px; top: "
+              + enemy_offset_top + "px;"
+          )
+          enemy_bits_element.setAttribute(
+            "class",
+            "element bits bits-" + enemy_bits_randomized_scatter
+          )
+        }
+      }, 0)
+
+      setTimeout(function() {
+        const enemy_pieces_element = enemy_pieces_elements.pop()
+
+        if (typeof enemy_pieces_element != "undefined") {
+          enemy_pieces_element.setAttribute(
+            "style",
+            "left: " + enemy_offset_left + "px; top: "
+              + enemy_offset_top + "px;"
+          )
+          enemy_pieces_element.setAttribute(
+            "class",
+            "element pieces pieces-" + (enemy_id & 15)
+          )
+        }
+      }, 0)
+
+      setTimeout(function() {
+        const enemy_splatter_element_a = enemy_splatter_elements.pop()
+        const enemy_splatter_element_b = enemy_splatter_elements.pop()
+
+        if (typeof enemy_splatter_element_a != "undefined") {
+          enemy_splatter_element_a.setAttribute(
+            "style",
+            "left: " + enemy_offset_left + "px; top: "
+              + enemy_offset_top + "px;"
+          )
+          enemy_splatter_element_a.setAttribute(
+            "class",
+            "element splatter splatter-" + ((enemy_id + 1) & 15)
+          )
+
+          if (typeof enemy_splatter_element_b != "undefined") {
+            enemy_splatter_element_b.setAttribute(
+              "style",
+              "left: " + enemy_offset_left + "px; top: "
+                + enemy_offset_top + "px;"
+            )
+            enemy_splatter_element_b.setAttribute(
+              "class",
+              "element splatter splatter-" + ((enemy_id + (randomized_state & 3) + 6) & 15)
+            )
+          }
+        }
+      }, 0)
 
       clearTimeout(has_enemy_knockback_state_ids[enemy_id])
 
