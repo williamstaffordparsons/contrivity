@@ -6795,6 +6795,8 @@
       let randomized_enemy_offset_state = randomized_state & 65535
       const randomized_enemy_id = (randomized_state & 15) + 25
 
+      enemies_count = 25
+
       select_elements(".bits, .pieces, .splatter", function(selected_element) {
         selected_element.remove()
       })
@@ -6964,7 +6966,6 @@
             "element enemy"
           )
           enemy_move_speeds[i] = randomized_state & 7
-          enemies_count++
 
           if (enemy_offset_left > 0) {
             enemy_offset_left >>= 4
@@ -7008,7 +7009,7 @@
           )
           i++
         } else {
-          if (enemies_count == 0) {
+          if (enemies_count <= 0) {
             let wave_cleanup_width = 0
 
             clearInterval(enemies_initialize_id)
