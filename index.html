@@ -3520,7 +3520,7 @@
         background-color: #000;
         border-right: 4px solid #444;
         left: -10px;
-        transition: width 0.1s ease;
+        transition: width 0.05s ease;
         z-index: 3;
       }
     </style>
@@ -3562,9 +3562,9 @@
     let wave_cleanup_id = 0
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
-    const enemy_bits_elements = Array(30)
-    const enemy_elements = Array(30)
-    const enemy_health = Array(30)
+    const enemy_bits_elements = Array(26)
+    const enemy_elements = Array(26)
+    const enemy_health = Array(26)
 
     const enemy_hit = function(
       enemy_damage,
@@ -3915,18 +3915,31 @@
       }, 0)
 
       setTimeout(function() {
-        const enemy_pieces_element = enemy_pieces_elements.pop()
+        const enemy_pieces_element_a = enemy_pieces_elements.pop()
+        const enemy_pieces_element_b = enemy_pieces_elements.pop()
 
-        if (typeof enemy_pieces_element != "undefined") {
-          enemy_pieces_element.setAttribute(
+        if (typeof enemy_pieces_element_a != "undefined") {
+          enemy_pieces_element_a.setAttribute(
             "style",
             "left: " + enemy_offset_left + "px; top: "
               + enemy_offset_top + "px;"
           )
-          enemy_pieces_element.setAttribute(
+          enemy_pieces_element_a.setAttribute(
             "class",
             "element pieces pieces-" + (enemy_id & 15)
           )
+
+          if (typeof enemy_pieces_element_b != "undefined") {
+            enemy_pieces_element_b.setAttribute(
+              "style",
+              "left: " + enemy_offset_left + "px; top: "
+                + enemy_offset_top + "px;"
+            )
+            enemy_pieces_element_b.setAttribute(
+              "class",
+              "element pieces pieces-" + ((enemy_id + (randomized_state & 3) + 6) & 15)
+            )
+          }
         }
       }, 0)
 
@@ -4228,17 +4241,17 @@
       has_enemy_move_states[enemy_id] = false
     }
 
-    const enemy_move_ids = Array(28)
-    const enemy_move_speeds = Array(28)
-    const enemy_offsets_bottom = Array(28)
-    const enemy_offsets_left = Array(28)
-    const enemy_offsets_right = Array(28)
-    const enemy_offsets_top = Array(28)
-    const enemy_pieces_elements = Array(28)
-    const enemy_splatter_elements = Array(56)
-    const has_enemy_knockback_state_ids = Array(28)
-    const has_enemy_knockback_states = Array(28)
-    const has_enemy_move_states = Array(28)
+    const enemy_move_ids = Array(26)
+    const enemy_move_speeds = Array(26)
+    const enemy_offsets_bottom = Array(26)
+    const enemy_offsets_left = Array(26)
+    const enemy_offsets_right = Array(26)
+    const enemy_offsets_top = Array(26)
+    const enemy_pieces_elements = Array(52)
+    const enemy_splatter_elements = Array(52)
+    const has_enemy_knockback_state_ids = Array(26)
+    const has_enemy_knockback_states = Array(26)
+    const has_enemy_move_states = Array(26)
     const player_element = document.createElement("div")
     const player_inputs = Array(151)
     const player_weapon_effect_elements = Array(150)
@@ -6929,13 +6942,13 @@
       let randomized_enemy_offset_state = randomized_state & 65535
       const randomized_enemy_id = (randomized_state & 15) + 25
 
-      enemies_count = 28
+      enemies_count = 26
 
       select_elements(".bits, .pieces, .splatter", function(selected_element) {
         selected_element.remove()
       })
 
-      while (i != 28) {
+      while (i != 26) {
         if (typeof enemy_bits_elements[i] != "undefined") {
           enemy_bits_elements[i].remove()
         }
@@ -7035,11 +7048,21 @@
         i++
       }
 
-      while (i != 56) {
+      while (i != 52) {
         if (i < 51) {
           enemy_offsets_map_horizontal[i] = {}
           enemy_offsets_map_vertical[i] = {}
         }
+
+        if (typeof enemy_pieces_elements[i] != "undefined") {
+          enemy_pieces_elements[i].remove()
+        }
+
+        enemy_pieces_elements[i] = document.createElement("div")
+        enemy_pieces_elements[i].setAttribute(
+          "class",
+          "pieces-hidden"
+        )
 
         if (typeof enemy_splatter_elements[i] != "undefined") {
           enemy_splatter_elements[i].remove()
@@ -7053,12 +7076,18 @@
         j = 0
 
         while (j != 10) {
+          enemy_pieces_elements[i].appendChild(
+            document.createElement("div")
+          )
           enemy_splatter_elements[i].appendChild(
             document.createElement("div")
           )
           j++
         }
 
+        enemy_pieces_elements[i] = bounds_element.appendChild(
+          enemy_pieces_elements[i]
+        )
         enemy_splatter_elements[i] = bounds_element.appendChild(
           enemy_splatter_elements[i]
         )
@@ -7094,7 +7123,7 @@
       )
 
       const enemies_initialize_id = setInterval(function() {
-        if (i != 28) {
+        if (i != 26) {
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
 
@@ -7139,11 +7168,13 @@
 
           enemy_offsets_map_vertical[enemy_offset_top][i] = i
           enemy_offsets_map_vertical[enemy_offset_top + 1][i] = i
+
           enemy_move_ids[i] = setInterval(
             enemy_move,
             320,
             i
           )
+
           i++
         } else {
           if (enemies_count <= 0) {
