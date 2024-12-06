@@ -3562,9 +3562,9 @@
     let wave_cleanup_id = 0
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
-    const enemy_bits_elements = Array(25)
-    const enemy_elements = Array(25)
-    const enemy_health = Array(25)
+    const enemy_bits_elements = Array(28)
+    const enemy_elements = Array(28)
+    const enemy_health = Array(28)
 
     const enemy_hit = function(
       enemy_damage,
@@ -3968,14 +3968,9 @@
 
     const enemy_move = function(enemy_id) {
       if (
-        enemy_move_delays[enemy_id] < 26 ||
-        has_enemy_knockback_states[enemy_id] == true
+        has_enemy_knockback_states[enemy_id] == true ||
+        has_enemy_move_states[enemy_id] == true
       ) {
-        enemy_move_delays[enemy_id]++
-        return
-      }
-
-      if (has_enemy_move_states[enemy_id] == true) {
         return
       }
 
@@ -4230,22 +4225,20 @@
         }
       }
 
-      enemy_move_delays[enemy_id] = 0
       has_enemy_move_states[enemy_id] = false
     }
 
-    const enemy_move_delays = Array(25)
-    const enemy_move_ids = Array(25)
-    const enemy_move_speeds = Array(25)
-    const enemy_offsets_bottom = Array(25)
-    const enemy_offsets_left = Array(25)
-    const enemy_offsets_right = Array(25)
-    const enemy_offsets_top = Array(25)
-    const enemy_pieces_elements = Array(25)
-    const enemy_splatter_elements = Array(51)
-    const has_enemy_knockback_state_ids = Array(25)
-    const has_enemy_knockback_states = Array(25)
-    const has_enemy_move_states = Array(25)
+    const enemy_move_ids = Array(28)
+    const enemy_move_speeds = Array(28)
+    const enemy_offsets_bottom = Array(28)
+    const enemy_offsets_left = Array(28)
+    const enemy_offsets_right = Array(28)
+    const enemy_offsets_top = Array(28)
+    const enemy_pieces_elements = Array(28)
+    const enemy_splatter_elements = Array(56)
+    const has_enemy_knockback_state_ids = Array(28)
+    const has_enemy_knockback_states = Array(28)
+    const has_enemy_move_states = Array(28)
     const player_element = document.createElement("div")
     const player_inputs = Array(151)
     const player_weapon_effect_elements = Array(150)
@@ -6940,13 +6933,13 @@
       let randomized_enemy_offset_state = randomized_state & 65535
       const randomized_enemy_id = (randomized_state & 15) + 25
 
-      enemies_count = 25
+      enemies_count = 28
 
       select_elements(".bits, .pieces, .splatter", function(selected_element) {
         selected_element.remove()
       })
 
-      while (i != 25) {
+      while (i != 28) {
         if (typeof enemy_bits_elements[i] != "undefined") {
           enemy_bits_elements[i].remove()
         }
@@ -6965,7 +6958,6 @@
           document.createElement("div")
         )
         enemy_health[i] = 100
-        enemy_move_delays[i] = 0
         enemy_offsets_map_horizontal[i] = {}
         enemy_offsets_map_vertical[i] = {}
 
@@ -7047,9 +7039,11 @@
         i++
       }
 
-      while (i != 51) {
-        enemy_offsets_map_horizontal[i] = {}
-        enemy_offsets_map_vertical[i] = {}
+      while (i != 56) {
+        if (i < 51) {
+          enemy_offsets_map_horizontal[i] = {}
+          enemy_offsets_map_vertical[i] = {}
+        }
 
         if (typeof enemy_splatter_elements[i] != "undefined") {
           enemy_splatter_elements[i].remove()
@@ -7104,7 +7098,7 @@
       )
 
       const enemies_initialize_id = setInterval(function() {
-        if (i != 25) {
+        if (i != 28) {
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
 
@@ -7151,7 +7145,7 @@
           enemy_offsets_map_vertical[enemy_offset_top + 1][i] = i
           enemy_move_ids[i] = setInterval(
             enemy_move,
-            10,
+            280,
             i
           )
           i++
