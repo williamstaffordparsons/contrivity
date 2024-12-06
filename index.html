@@ -3562,9 +3562,9 @@
     let wave_cleanup_id = 0
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
-    const enemy_bits_elements = Array(28)
-    const enemy_elements = Array(28)
-    const enemy_health = Array(28)
+    const enemy_bits_elements = Array(30)
+    const enemy_elements = Array(30)
+    const enemy_health = Array(30)
 
     const enemy_hit = function(
       enemy_damage,
@@ -4252,7 +4252,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 30
-          player_weapon_delay_maximum = 3
+          player_weapon_delay_maximum = 4
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -5292,7 +5292,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 60
-          player_weapon_delay_maximum = 5
+          player_weapon_delay_maximum = 6
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -6290,7 +6290,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 50
-          player_weapon_delay_maximum = 1
+          player_weapon_delay_maximum = 2
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -6417,8 +6417,6 @@
           player_weapon_delay = 0
 
           let has_player_weapon_projectile_move_horizontal_state = false
-          let player_weapon_muzzle_flash_margin = 0
-          let player_weapon_muzzle_flash_size = 8
           let player_weapon_projectile_casing_offset_left
           let player_weapon_projectile_casing_offset_top
           let player_weapon_projectile_casing_opacity = 96
@@ -6427,8 +6425,6 @@
           let player_weapon_projectile_casing_z_index = 5
           let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
           let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
-          const player_weapon_muzzle_flash_offset_left = player_weapon_projectile_offset_left
-          const player_weapon_muzzle_flash_offset_top = player_weapon_projectile_offset_top
           const player_weapon_projectile_casing_element = player_weapon_effect_elements.pop()
           const player_weapon_projectile_casing_offset_increment_left
             = (player_offset_left & 7) - (randomized_state & 7)
@@ -7145,7 +7141,7 @@
           enemy_offsets_map_vertical[enemy_offset_top + 1][i] = i
           enemy_move_ids[i] = setInterval(
             enemy_move,
-            280,
+            320,
             i
           )
           i++
