@@ -4294,7 +4294,6 @@
           }
 
           player_weapon_delay = 0
-          player_weapon_position()
 
           if (
             has_player_weapon_reload_state == false &&
@@ -4941,7 +4940,6 @@
           }
 
           player_weapon_delay = 0
-          player_weapon_position()
 
           let player_weapon_projectile_delay = 5
           let player_weapon_recoil = randomized_state & 3
@@ -5355,7 +5353,6 @@
           }
 
           player_weapon_delay = 0
-          player_weapon_position()
 
           let has_player_weapon_projectile_move_horizontal_state = false
           let player_weapon_recoil = randomized_state & 3
@@ -5894,7 +5891,6 @@
           }
 
           player_weapon_delay = 0
-          player_weapon_position()
 
           let has_player_weapon_projectile_move_horizontal_state = false
           let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
@@ -6185,7 +6181,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 6)
+              }, 7)
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
@@ -6197,7 +6193,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 6)
+              }, 7)
             }
           } else {
             if (player_weapon_projectile_offset_increment_top < 0) {
@@ -6211,7 +6207,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 6)
+              }, 7)
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
@@ -6223,7 +6219,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 6)
+              }, 7)
             }
           }
 
@@ -6776,7 +6772,7 @@
             player_inputs[147] = 0
             player_inputs[150] = 0
             setInterval(player_move, 20)
-            setInterval(player_weapon_position, 20)
+            setInterval(player_weapon_position, 2)
             player_weapon_element.setAttribute(
               "class",
               "element player-weapon"
