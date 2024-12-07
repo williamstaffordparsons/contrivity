@@ -3547,7 +3547,6 @@
     let enemy_bits_randomized_scatter = 0
     let enemy_offsets_map_horizontal = Array(51)
     let enemy_offsets_map_vertical = Array(51)
-    let has_bounds_recoil_state = false
     let has_player_weapon_reload_state = false
     let player_offset_left
     let player_offset_top
@@ -3809,29 +3808,24 @@
       enemy_healths[enemy_id] = 0
 
       setTimeout(function() {
-        if (has_bounds_recoil_state == false) {
-          let bounds_recoil = randomized_state & 3
-          let i = 0
+        let bounds_recoil = randomized_state & 3
+        let i = 0
 
-          has_bounds_recoil_state = true
+        const bounds_recoil_id = setInterval(function() {
+          bounds_element.setAttribute(
+            "recoil_heavy",
+            bounds_recoil
+          )
 
-          const bounds_recoil_id = setInterval(function() {
-            bounds_element.setAttribute(
-              "recoil_heavy",
-              bounds_recoil
-            )
+          i++
 
-            i++
-
-            if (i < 3) {
-              bounds_recoil = (bounds_recoil + 1) & 3
-            } else {
-              clearInterval(bounds_recoil_id)
-              bounds_element.removeAttribute("recoil_heavy")
-              has_bounds_recoil_state = false
-            }
-          }, 15)
-        }
+          if (i < 3) {
+            bounds_recoil = (bounds_recoil + 1) & 3
+          } else {
+            clearInterval(bounds_recoil_id)
+            bounds_element.removeAttribute("recoil_heavy")
+          }
+        }, 15)
       }, 0)
 
       setTimeout(function() {
@@ -4265,9 +4259,9 @@
     const has_enemy_move_states = Array(21)
     const player_element = document.createElement("div")
     const player_inputs = Array(151)
-    const player_weapon_effect_elements = Array(150)
+    const player_weapon_effect_elements = Array(120)
     const player_weapon_element = document.createElement("div")
-    const player_weapon_projectile_elements = Array(150)
+    const player_weapon_projectile_elements = Array(120)
     const player_weapons = [
       {
         "initialize": function() {
@@ -4304,6 +4298,7 @@
           }
 
           player_weapon_delay = 0
+          player_weapon_position()
 
           if (
             has_player_weapon_reload_state == false &&
@@ -4392,7 +4387,7 @@
                 setTimeout(function() {
                   has_player_weapon_reload_state = false
                   player_weapon_ammunition = 30
-                  player_weapon_delay = -15
+                  player_weapon_delay = -7
                   player_weapon_element.removeAttribute("reload")
                 }, 100)
               }, 100)
@@ -4667,7 +4662,6 @@
 
                 setTimeout(function() {
                   bounds_element.removeAttribute("recoil_light")
-                  has_bounds_recoil_state = false
                 }, 15)
               }, 15)
             }, 15)
@@ -4820,9 +4814,9 @@
               if (i < 5) {
                 player_weapon_recoil = (player_weapon_recoil + 1) & 3
               } else {
+                clearInterval(player_weapon_recoil_id)
                 player_element.removeAttribute("recoil_light")
                 player_weapon_element.removeAttribute("recoil_light")
-                clearInterval(player_weapon_recoil_id)
               }
             }, 25)
           }, 0)
@@ -4946,7 +4940,7 @@
                   setTimeout(function() {
                     has_player_weapon_reload_state = false
                     player_weapon_ammunition = 20
-                    player_weapon_delay = -5
+                    player_weapon_delay = -7
                     player_weapon_element.removeAttribute("reload")
                   }, 70)
                 }, 80)
@@ -4965,6 +4959,7 @@
           }
 
           player_weapon_delay = 0
+          player_weapon_position()
 
           let player_weapon_projectile_delay = 5
           let player_weapon_recoil = randomized_state & 3
@@ -5234,7 +5229,6 @@
 
                 setTimeout(function() {
                   bounds_element.removeAttribute("recoil_heavy")
-                  has_bounds_recoil_state = false
                 }, 15)
               }, 15)
             }, 15)
@@ -5340,9 +5334,9 @@
               if (i < 5) {
                 player_weapon_recoil = (player_weapon_recoil + 1) & 3
               } else {
+                clearInterval(player_weapon_recoil_id)
                 player_element.removeAttribute("recoil_heavy")
                 player_weapon_element.removeAttribute("recoil_heavy")
-                clearInterval(player_weapon_recoil_id)
               }
             }, 25)
           }, 0)
@@ -5381,6 +5375,7 @@
           }
 
           player_weapon_delay = 0
+          player_weapon_position()
 
           let has_player_weapon_projectile_move_horizontal_state = false
           let player_weapon_recoil = randomized_state & 3
@@ -5687,7 +5682,6 @@
 
                 setTimeout(function() {
                   bounds_element.removeAttribute("recoil_light")
-                  has_bounds_recoil_state = false
                 }, 15)
               }, 15)
             }, 15)
@@ -5787,9 +5781,9 @@
               if (i < 5) {
                 player_weapon_recoil = (player_weapon_recoil + 1) & 3
               } else {
+                clearInterval(player_weapon_recoil_id)
                 player_element.removeAttribute("recoil_heavy")
                 player_weapon_element.removeAttribute("recoil_heavy")
-                clearInterval(player_weapon_recoil_id)
               }
             }, 25)
           }, 0)
@@ -5908,7 +5902,7 @@
                 setTimeout(function() {
                   has_player_weapon_reload_state = false
                   player_weapon_ammunition = 50
-                  player_weapon_delay = -10
+                  player_weapon_delay = -6
                   player_weapon_element.removeAttribute("reload")
                 }, 100)
               }, 100)
@@ -5926,6 +5920,7 @@
           }
 
           player_weapon_delay = 0
+          player_weapon_position()
 
           let has_player_weapon_projectile_move_horizontal_state = false
           let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
@@ -6179,7 +6174,6 @@
 
                 setTimeout(function() {
                   bounds_element.removeAttribute("recoil_light")
-                  has_bounds_recoil_state = false
                 }, 15)
               }, 15)
             }, 15)
@@ -6279,9 +6273,9 @@
               if (i < 5) {
                 player_weapon_recoil = (player_weapon_recoil + 1) & 3
               } else {
+                clearInterval(player_weapon_recoil_id)
                 player_element.removeAttribute("recoil_light")
                 player_weapon_element.removeAttribute("recoil_light")
-                clearInterval(player_weapon_recoil_id)
               }
             }, 25)
           }, 0)
@@ -6622,7 +6616,7 @@
       player_weapons[player_weapon_equipped].initialize()
       player_weapon_use_id = setInterval(
         player_weapons[player_weapon_equipped].use,
-        45
+        48
       )
 
       const enemies_initialize_id = setInterval(function() {
@@ -6809,7 +6803,7 @@
               player_weapon_muzzle_flash_element
             )
 
-            while (i != 150) {
+            while (i != 120) {
               player_weapon_effect_elements[i] = document.createElement("div")
               player_weapon_effect_elements[i].setAttribute(
                 "class",
@@ -6827,7 +6821,7 @@
 
             i = 0
 
-            while (i != 150) {
+            while (i != 120) {
               player_weapon_projectile_elements[i] = document.createElement("div")
               player_weapon_projectile_elements[i].setAttribute(
                 "class",
