@@ -4009,18 +4009,18 @@
 
       if (enemy_offset_left_next < player_offset_left) {
         enemy_offset_left_next += enemy_move_speeds[enemy_id]
-          + (randomized_state & 15)
+          + (randomized_state & 7)
       } else {
         enemy_offset_left_next -= enemy_move_speeds[enemy_id]
-          + (randomized_state & 15)
+          + (randomized_state & 7)
       }
 
       if (enemy_offset_top_next < player_offset_top) {
         enemy_offset_top_next += enemy_move_speeds[enemy_id]
-          + ((randomized_state >> 3) & 15)
+          + ((randomized_state >> 3) & 7)
       } else {
         enemy_offset_top_next -= enemy_move_speeds[enemy_id]
-          + ((randomized_state >> 3) & 15)
+          + ((randomized_state >> 3) & 7)
       }
 
       enemy_elements[enemy_id].setAttribute(
@@ -6666,7 +6666,7 @@
             "class",
             "element enemy"
           )
-          enemy_move_speeds[i] = randomized_state & 7
+          enemy_move_speeds[i] = randomized_state & 3
 
           if (enemy_offset_left > 0) {
             enemy_offset_left >>= 4
@@ -6706,7 +6706,7 @@
 
           enemy_move_ids[i] = setInterval(
             enemy_move,
-            320,
+            140,
             i
           )
 
