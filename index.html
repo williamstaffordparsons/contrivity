@@ -4349,11 +4349,11 @@
           const player_weapon_projectile_offset_increment_left = (
             player_weapon_offset_increment_left
             + (randomized_state & 1) - ((randomized_state >> 1) & 1)
-          ) * 0.3
+          ) * 0.4
           const player_weapon_projectile_offset_increment_top = (
             player_weapon_offset_increment_top
             + ((randomized_state >> 2) & 1) - ((randomized_state >> 3) & 1)
-          ) * 0.3
+          ) * 0.4
           const enemy_knockback_offset_increment_left
             = player_weapon_projectile_offset_increment_left
           const enemy_knockback_offset_increment_top
@@ -4700,7 +4700,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 4)
+              }, 6)
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
@@ -4712,7 +4712,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 4)
+              }, 6)
             }
           } else {
             if (player_weapon_projectile_offset_increment_top < 0) {
@@ -4726,7 +4726,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 4)
+              }, 6)
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
@@ -4738,7 +4738,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 4)
+              }, 6)
             }
           }
 
@@ -5323,11 +5323,11 @@
           const player_weapon_projectile_offset_increment_left = (
             player_weapon_offset_increment_left
             + player_weapon_recoil - ((randomized_state >> 2) & 3)
-          ) * 0.3
+          ) * 0.35
           const player_weapon_projectile_offset_increment_top = (
             player_weapon_offset_increment_top
             + player_weapon_recoil - ((randomized_state >> 4) & 3)
-          ) * 0.3
+          ) * 0.35
           const enemy_knockback_offset_increment_left
             = (player_weapon_projectile_offset_increment_left * 2)
             + (player_weapon_offset_left & 7) - (randomized_state & 7)
@@ -5661,7 +5661,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 5)
+              }, 7)
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
@@ -5673,7 +5673,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 5)
+              }, 7)
             }
           } else {
             if (player_weapon_projectile_offset_increment_top < 0) {
@@ -5687,7 +5687,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 5)
+              }, 7)
             } else {
               const player_weapon_projectile_id = setInterval(function() {
                 if (
@@ -5699,7 +5699,7 @@
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
                 }
-              }, 5)
+              }, 7)
             }
           }
 
