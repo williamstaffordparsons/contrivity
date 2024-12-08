@@ -4317,7 +4317,7 @@
                   )
                   player_weapon_effect_elements.push(player_weapon_magazine_element)
                 }
-              }, 25)
+              }, 20)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -4686,7 +4686,7 @@
                 )
                 player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
               }
-            }, 25)
+            }, 20)
           }, 0)
 
           if (player_weapon_projectile_offset_increment_left < 0) {
@@ -4778,7 +4778,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 20
-          player_weapon_delay_maximum = 5
+          player_weapon_delay_maximum = 4
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -4859,7 +4859,7 @@
                   )
                   player_weapon_effect_elements.push(player_weapon_magazine_element)
                 }
-              }, 25)
+              }, 20)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -5246,7 +5246,7 @@
                 )
                 player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
               }
-            }, 25)
+            }, 20)
           }, 0)
 
           while (player_weapon_projectile_delay != 40) {
@@ -5823,7 +5823,7 @@
                   )
                   player_weapon_effect_elements.push(player_weapon_magazine_element)
                 }
-              }, 25)
+              }, 20)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -6086,7 +6086,7 @@
                 )
                 player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
               }
-            }, 25)
+            }, 20)
           }, 0)
 
           setTimeout(function() {
@@ -6670,34 +6670,26 @@
         document.querySelector("body").addEventListener(
           "keydown",
           function(event) {
-            let player_input = event.key.charCodeAt(0)
-
-            if (
-              event.key[0] == "A" &&
-              event.key[1] == "r"
-            ) {
+            if (event.key.indexOf("r") == 1) {
               event.preventDefault()
-              player_input += event.key.charCodeAt(5)
+              player_inputs[(event.key.charCodeAt(0) + event.key.charCodeAt(5))] = 1
+              return
             }
 
-            player_inputs[player_input] = 1
+            player_inputs[event.key.charCodeAt(0)] = 1
           }
         )
 
         document.querySelector("body").addEventListener(
           "keyup",
           function(event) {
-            let player_input = event.key.charCodeAt(0)
-
-            if (
-              event.key[0] == "A" &&
-              event.key[1] == "r"
-            ) {
+            if (event.key.indexOf("r") == 1) {
               event.preventDefault()
-              player_input += event.key.charCodeAt(5)
+              player_inputs[(event.key.charCodeAt(0) + event.key.charCodeAt(5))] = 0
+              return
             }
 
-            player_inputs[player_input] = 0
+            player_inputs[event.key.charCodeAt(0)] = 0
           }
         )
 
