@@ -3533,8 +3533,8 @@
 
     let enemies_count = 0
     let enemy_bits_randomized_scatter = 0
-    let enemy_offsets_map_horizontal = Array(51)
-    let enemy_offsets_map_vertical = Array(51)
+    let enemy_offsets_map_horizontal = Array(60)
+    let enemy_offsets_map_vertical = Array(60)
     let has_player_weapon_reload_state = false
     let player_offset_left
     let player_offset_top
@@ -3600,40 +3600,24 @@
 
         if (enemy_offset_left_previous > 0) {
           enemy_offset_left_previous >>= 4
-
-          if (enemy_offset_left_previous > 49) {
-            enemy_offset_left_previous = 49
-          }
         } else {
           enemy_offset_left_previous = 0
         }
 
         if (enemy_offset_left_next > 0) {
           enemy_offset_left_next >>= 4
-
-          if (enemy_offset_left_next > 49) {
-            enemy_offset_left_next = 49
-          }
         } else {
           enemy_offset_left_next = 0
         }
 
         if (enemy_offset_top_previous > 0) {
           enemy_offset_top_previous >>= 3
-
-          if (enemy_offset_top_previous > 49) {
-            enemy_offset_top_previous = 49
-          }
         } else {
           enemy_offset_top_previous = 0
         }
 
         if (enemy_offset_top_next > 0) {
           enemy_offset_top_next >>= 3
-
-          if (enemy_offset_top_next > 49) {
-            enemy_offset_top_next = 49
-          }
         } else {
           enemy_offset_top_next = 0
         }
@@ -3820,18 +3804,12 @@
         if (enemy_offset_left > 0) {
           const enemy_segment = enemy_offset_left >> 4
 
-          if (enemy_segment > 49) {
-            delete enemy_offsets_map_horizontal[48][enemy_id]
-            delete enemy_offsets_map_horizontal[49][enemy_id]
-            delete enemy_offsets_map_horizontal[50][enemy_id]
-          } else {
-            if (enemy_segment != 0) {
-              delete enemy_offsets_map_horizontal[enemy_segment - 1][enemy_id]
-            }
-
-            delete enemy_offsets_map_horizontal[enemy_segment][enemy_id]
-            delete enemy_offsets_map_horizontal[enemy_segment + 1][enemy_id]
+          if (enemy_segment != 0) {
+            delete enemy_offsets_map_horizontal[enemy_segment - 1][enemy_id]
           }
+
+          delete enemy_offsets_map_horizontal[enemy_segment][enemy_id]
+          delete enemy_offsets_map_horizontal[enemy_segment + 1][enemy_id]
         } else {
           delete enemy_offsets_map_horizontal[0][enemy_id]
           delete enemy_offsets_map_horizontal[1][enemy_id]
@@ -3840,18 +3818,12 @@
         if (enemy_offset_top > 0) {
           const enemy_segment = enemy_offset_top >> 3
 
-          if (enemy_segment > 49) {
-            delete enemy_offsets_map_vertical[48][enemy_id]
-            delete enemy_offsets_map_vertical[49][enemy_id]
-            delete enemy_offsets_map_vertical[50][enemy_id]
-          } else {
-            if (enemy_segment != 0) {
-              delete enemy_offsets_map_vertical[enemy_segment - 1][enemy_id]
-            }
-
-            delete enemy_offsets_map_vertical[enemy_segment][enemy_id]
-            delete enemy_offsets_map_vertical[enemy_segment + 1][enemy_id]
+          if (enemy_segment != 0) {
+            delete enemy_offsets_map_vertical[enemy_segment - 1][enemy_id]
           }
+
+          delete enemy_offsets_map_vertical[enemy_segment][enemy_id]
+          delete enemy_offsets_map_vertical[enemy_segment + 1][enemy_id]
         } else {
           delete enemy_offsets_map_vertical[0][enemy_id]
           delete enemy_offsets_map_vertical[1][enemy_id]
@@ -4023,40 +3995,24 @@
 
       if (enemy_offset_left_previous > 0) {
         enemy_offset_left_previous >>= 4
-
-        if (enemy_offset_left_previous > 49) {
-          enemy_offset_left_previous = 49
-        }
       } else {
         enemy_offset_left_previous = 0
       }
 
       if (enemy_offset_left_next > 0) {
         enemy_offset_left_next >>= 4
-
-        if (enemy_offset_left_next > 49) {
-          enemy_offset_left_next = 49
-        }
       } else {
         enemy_offset_left_next = 0
       }
 
       if (enemy_offset_top_previous > 0) {
         enemy_offset_top_previous >>= 3
-
-        if (enemy_offset_top_previous > 49) {
-          enemy_offset_top_previous = 49
-        }
       } else {
         enemy_offset_top_previous = 0
       }
 
       if (enemy_offset_top_next > 0) {
         enemy_offset_top_next >>= 3
-
-        if (enemy_offset_top_next > 49) {
-          enemy_offset_top_next = 49
-        }
       } else {
         enemy_offset_top_next = 0
       }
@@ -4407,6 +4363,9 @@
           const player_weapon_projectile_move = function(player_weapon_projectile_id) {
             player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
             player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+
+            let player_weapon_projectile_segment = player_weapon_projectile_offset_left >>> 4
+
             player_weapon_projectile_element.setAttribute(
               "style",
               "left: " + player_weapon_projectile_offset_left + "px; top: "
@@ -4416,12 +4375,11 @@
             if (
               has_player_weapon_projectile_move_horizontal_state == true &&
               player_weapon_projectile_offset_left >= 0 &&
-              player_weapon_projectile_offset_left <= 672 &&
-              enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)].length != 0
+              enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
             ) {
               let i = 0
               const enemy_ids = Object.values(
-                enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)]
+                enemy_offsets_map_horizontal[player_weapon_projectile_segment]
               )
 
               while (i != enemy_ids.length) {
@@ -4434,7 +4392,7 @@
                     <= enemy_offsets_bottom[enemy_id] &&
                   (player_weapon_projectile_offset_left + 8)
                     >= enemy_offsets_left[enemy_id] &&
-                  (player_weapon_projectile_offset_top + 9)
+                  (player_weapon_projectile_offset_top + 8)
                     >= enemy_offsets_top[enemy_id]
                 ) {
                   setTimeout(function() {
@@ -4520,14 +4478,15 @@
               return
             }
 
+            player_weapon_projectile_segment = player_weapon_projectile_offset_top >>> 3
+
             if (
               player_weapon_projectile_offset_top >= 0 &&
-              player_weapon_projectile_offset_top <= 378 &&
-              enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)].length != 0
+              enemy_offsets_map_vertical[player_weapon_projectile_segment].length != 0
             ) {
               let i = 0
               const enemy_ids = Object.values(
-                enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)]
+                enemy_offsets_map_vertical[player_weapon_projectile_segment]
               )
 
               while (i != enemy_ids.length) {
@@ -4971,10 +4930,11 @@
               + (player_weapon_offset_top & 7) - ((randomized_state >> 3) & 7)
 
             const player_weapon_projectile_move = function(player_weapon_projectile_id) {
-              player_weapon_projectile_offset_left
-                += player_weapon_projectile_offset_increment_left
-              player_weapon_projectile_offset_top
-                += player_weapon_projectile_offset_increment_top
+              player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
+              player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+
+              let player_weapon_projectile_segment = player_weapon_projectile_offset_left >>> 4
+
               player_weapon_projectile_element.setAttribute(
                 "style",
                 "left: " + player_weapon_projectile_offset_left + "px; top: "
@@ -4984,12 +4944,11 @@
               if (
                 has_player_weapon_projectile_move_horizontal_state == true &&
                 player_weapon_projectile_offset_left >= 0 &&
-                player_weapon_projectile_offset_left <= 672 &&
-                enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)].length != 0
+                enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
               ) {
                 let i = 0
                 const enemy_ids = Object.values(
-                  enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)]
+                  enemy_offsets_map_horizontal[player_weapon_projectile_segment]
                 )
 
                 while (i != enemy_ids.length) {
@@ -5054,14 +5013,15 @@
                 return
               }
 
+              player_weapon_projectile_segment = player_weapon_projectile_offset_top >>> 3
+
               if (
                 player_weapon_projectile_offset_top >= 0 &&
-                player_weapon_projectile_offset_top <= 378 &&
-                enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)].length != 0
+                enemy_offsets_map_vertical[player_weapon_projectile_segment].length != 0
               ) {
                 let i = 0
                 const enemy_ids = Object.values(
-                  enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)]
+                  enemy_offsets_map_vertical[player_weapon_projectile_segment]
                 )
 
                 while (i != enemy_ids.length) {
@@ -5381,6 +5341,9 @@
           const player_weapon_projectile_move = function(player_weapon_projectile_id) {
             player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
             player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+
+            let player_weapon_projectile_segment = player_weapon_projectile_offset_left >>> 4
+
             player_weapon_projectile_element.setAttribute(
               "style",
               "left: " + player_weapon_projectile_offset_left + "px; top: "
@@ -5390,12 +5353,11 @@
             if (
               has_player_weapon_projectile_move_horizontal_state == true &&
               player_weapon_projectile_offset_left >= 0 &&
-              player_weapon_projectile_offset_left <= 672 &&
-              enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)].length != 0
+              enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
             ) {
               let i = 0
               const enemy_ids = Object.values(
-                enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)]
+                enemy_offsets_map_horizontal[player_weapon_projectile_segment]
               )
 
               while (i != enemy_ids.length) {
@@ -5492,14 +5454,15 @@
               return
             }
 
+            player_weapon_projectile_segment = player_weapon_projectile_offset_top >>> 3
+
             if (
               player_weapon_projectile_offset_top >= 0 &&
-              player_weapon_projectile_offset_top <= 378 &&
-              enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)].length != 0
+              enemy_offsets_map_vertical[player_weapon_projectile_segment].length != 0
             ) {
               let i = 0
               const enemy_ids = Object.values(
-                enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)]
+                enemy_offsets_map_vertical[player_weapon_projectile_segment]
               )
 
               while (i != enemy_ids.length) {
@@ -5918,6 +5881,9 @@
           const player_weapon_projectile_move = function(player_weapon_projectile_id) {
             player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
             player_weapon_projectile_offset_top += player_weapon_projectile_offset_increment_top
+
+            let player_weapon_projectile_segment = player_weapon_projectile_offset_left >>> 4
+
             player_weapon_projectile_element.setAttribute(
               "style",
               "left: " + player_weapon_projectile_offset_left + "px; top: "
@@ -5927,12 +5893,11 @@
             if (
               has_player_weapon_projectile_move_horizontal_state == true &&
               player_weapon_projectile_offset_left >= 0 &&
-              player_weapon_projectile_offset_left <= 672 &&
-              enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)].length != 0
+              enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
             ) {
               let i = 0
               const enemy_ids = Object.values(
-                enemy_offsets_map_horizontal[(player_weapon_projectile_offset_left >> 4)]
+                enemy_offsets_map_horizontal[player_weapon_projectile_segment]
               )
 
               while (i != enemy_ids.length) {
@@ -5997,14 +5962,15 @@
               return
             }
 
+            player_weapon_projectile_segment = player_weapon_projectile_offset_top >>> 3
+
             if (
               player_weapon_projectile_offset_top >= 0 &&
-              player_weapon_projectile_offset_top <= 378 &&
-              enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)].length != 0
+              enemy_offsets_map_vertical[player_weapon_projectile_segment].length != 0
             ) {
               let i = 0
               const enemy_ids = Object.values(
-                enemy_offsets_map_vertical[(player_weapon_projectile_offset_top >> 3)]
+                enemy_offsets_map_vertical[player_weapon_projectile_segment]
               )
 
               while (i != enemy_ids.length) {
@@ -6573,7 +6539,7 @@
         i++
       }
 
-      while (i != 51) {
+      while (i != 60) {
         enemy_offsets_map_horizontal[i] = {}
         enemy_offsets_map_vertical[i] = {}
         i++
@@ -6621,13 +6587,8 @@
           if (enemy_offset_left > 0) {
             enemy_offset_left >>= 4
 
-            if (enemy_offset_left > 49) {
-              enemy_offset_left = 49
-              enemy_offsets_map_horizontal[48][i] = i
-            } else {
-              if (enemy_offset_left != 0) {
-                enemy_offsets_map_horizontal[enemy_offset_left - 1][i] = i
-              }
+            if (enemy_offset_left != 0) {
+              enemy_offsets_map_horizontal[enemy_offset_left - 1][i] = i
             }
           } else {
             enemy_offset_left = 0
@@ -6639,13 +6600,8 @@
           if (enemy_offset_top > 0) {
             enemy_offset_top >>= 3
 
-            if (enemy_offset_top > 49) {
-              enemy_offset_top = 49
-              enemy_offsets_map_vertical[48][i] = i
-            } else {
-              if (enemy_offset_top != 0) {
-                enemy_offsets_map_vertical[enemy_offset_top - 1][i] = i
-              }
+            if (enemy_offset_top != 0) {
+              enemy_offsets_map_vertical[enemy_offset_top - 1][i] = i
             }
           } else {
             enemy_offset_top = 0
