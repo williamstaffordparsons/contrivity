@@ -3536,6 +3536,7 @@
     let enemy_offsets_map_horizontal = Array(60)
     let enemy_offsets_map_vertical = Array(60)
     let has_player_weapon_reload_state = false
+    let has_player_weapon_use_state = false
     let player_offset_left
     let player_offset_top
     let player_weapon_ammunition
@@ -3834,7 +3835,6 @@
       enemy_elements[enemy_id].setAttribute(
         "style",
         "display: none;"
-
       )
 
       setTimeout(function() {
@@ -4243,8 +4243,7 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] | player_inputs[141]
-              | player_inputs[147] | player_inputs[150]) == 0
+            has_player_weapon_use_state == false
           ) {
             return
           }
@@ -4893,8 +4892,7 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] | player_inputs[141]
-              | player_inputs[147] | player_inputs[150]) == 0
+            has_player_weapon_use_state == false
           ) {
             return
           }
@@ -5309,8 +5307,7 @@
             return
           }
 
-          if ((player_inputs[133] | player_inputs[141]
-            | player_inputs[147] | player_inputs[150]) == 0) {
+          if (has_player_weapon_use_state == false) {
             return
           }
 
@@ -5850,8 +5847,7 @@
 
           if (
             has_player_weapon_reload_state == true ||
-            (player_inputs[133] | player_inputs[141]
-              | player_inputs[147] | player_inputs[150]) == 0
+            has_player_weapon_use_state == false
           ) {
             return
           }
@@ -6723,8 +6719,16 @@
             player_inputs[141] = 0
             player_inputs[147] = 0
             player_inputs[150] = 0
+
             setInterval(player_move, 20)
+
             setInterval(player_weapon_position, 20)
+
+            setInterval(function() {
+              has_player_weapon_use_state = (player_inputs[133] | player_inputs[141]
+                | player_inputs[147] | player_inputs[150]) > 0
+            }, 20)
+
             player_weapon_element.setAttribute(
               "class",
               "element player-weapon"
