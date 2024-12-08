@@ -4778,7 +4778,7 @@
             = player_weapon_projectile_elements.length
 
           player_weapon_ammunition = 20
-          player_weapon_delay_maximum = 4
+          player_weapon_delay_maximum = 5
 
           while (i != player_weapon_projectile_elements_count) {
             player_weapon_projectile_elements[i].setAttribute(
@@ -4917,11 +4917,11 @@
             const player_weapon_projectile_offset_increment_left = (
               player_weapon_offset_increment_left_state
               + player_weapon_recoil - ((randomized_state >> 2) & 3)
-            )
+            ) * 0.5
             const player_weapon_projectile_offset_increment_top = (
               player_weapon_offset_increment_top_state
               + player_weapon_recoil - ((randomized_state >> 6) & 3)
-            )
+            ) * 0.5
             const enemy_knockback_offset_increment_left
               = player_weapon_projectile_offset_increment_left
               + (player_weapon_offset_left & 7) - (randomized_state & 7)
@@ -5107,7 +5107,7 @@
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_elements.push(player_weapon_projectile_element)
                   }
-                }, 15)
+                }, 7)
               } else {
                 const player_weapon_projectile_id = setInterval(function() {
                   if (
@@ -5119,7 +5119,7 @@
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_elements.push(player_weapon_projectile_element)
                   }
-                }, 15)
+                }, 7)
               }
             } else {
               if (player_weapon_projectile_offset_increment_top < 0) {
@@ -5133,7 +5133,7 @@
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_elements.push(player_weapon_projectile_element)
                   }
-                }, 15)
+                }, 7)
               } else {
                 const player_weapon_projectile_id = setInterval(function() {
                   if (
@@ -5145,7 +5145,7 @@
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_elements.push(player_weapon_projectile_element)
                   }
-                }, 15)
+                }, 7)
               }
             }
           }
@@ -6570,7 +6570,7 @@
       player_weapons[player_weapon_equipped].initialize()
       player_weapon_use_id = setInterval(
         player_weapons[player_weapon_equipped].use,
-        46
+        45
       )
 
       const enemies_initialize_id = setInterval(function() {
