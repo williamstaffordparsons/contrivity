@@ -3537,8 +3537,8 @@
     let enemy_offsets_map_vertical = Array(60)
     let has_player_weapon_reload_state = false
     let has_player_weapon_use_state = false
-    let player_offset_left
-    let player_offset_top
+    let player_offset_left = 322
+    let player_offset_top = 175
     let player_weapon_ammunition
     let player_weapon_delay
     let player_weapon_delay_maximum
@@ -3546,8 +3546,8 @@
     let player_weapon_muzzle_flash_element
     let player_weapon_offset_increment_left = -17
     let player_weapon_offset_increment_top = -17
-    let player_weapon_offset_left
-    let player_weapon_offset_top
+    let player_weapon_offset_left = 313
+    let player_weapon_offset_top = 166
     let player_weapon_use_id
     let randomized_state = Date.now() & 65535
     let randomized_state_offset = 0
@@ -4711,7 +4711,7 @@
                 "style",
                 "display: none;"
               )
-            }, 15)
+            }, 10)
           }, 0)
 
           setTimeout(function() {
@@ -5251,7 +5251,7 @@
                 "style",
                 "display: none;"
               )
-            }, 15)
+            }, 10)
           }, 0)
 
           setTimeout(function() {
@@ -5774,7 +5774,7 @@
                 "style",
                 "display: none;"
               )
-            }, 15)
+            }, 10)
           }, 0)
 
           setTimeout(function() {
@@ -6285,7 +6285,7 @@
                 "style",
                 "display: none;"
               )
-            }, 15)
+            }, 10)
           }, 0)
 
           setTimeout(function() {
@@ -6390,112 +6390,130 @@
     const player_weapon_position = function() {
       if (player_inputs[150] == 1) {
         if (player_inputs[141] == 1) {
+          setTimeout(function() {
+            player_weapon_offset_left = player_offset_left - 9
+            player_weapon_offset_top = player_offset_top - 9
+            player_weapon_element.setAttribute(
+              "style",
+              "left: " + player_weapon_offset_left + "px; top: "
+                + player_weapon_offset_top + "px;"
+            )
+          }, 0)
+
           player_weapon_offset_increment_left = -17
           player_weapon_offset_increment_top = -17
-          player_weapon_offset_left = player_offset_left
-            + player_weapon_offset_increment_left + 8
-          player_weapon_offset_top = player_offset_top
-            + player_weapon_offset_increment_top + 8
-          player_weapon_element.setAttribute(
-            "style",
-            "left: " + player_weapon_offset_left + "px; top: "
-              + player_weapon_offset_top + "px;"
-          )
           return
         }
 
         if (player_inputs[147] == 1) {
+          setTimeout(function() {
+            player_weapon_offset_left = player_offset_left + 25
+            player_weapon_offset_top = player_offset_top - 9
+            player_weapon_element.setAttribute(
+              "style",
+              "left: " + player_weapon_offset_left + "px; top: "
+                + player_weapon_offset_top + "px;"
+            )
+          }, 0)
+
           player_weapon_offset_increment_left = 17
           player_weapon_offset_increment_top = -17
-          player_weapon_offset_left = player_offset_left
-            + player_weapon_offset_increment_left + 8
-          player_weapon_offset_top = player_offset_top
-            + player_weapon_offset_increment_top + 8
+          return
+        }
+
+        setTimeout(function() {
+          player_weapon_offset_left = player_offset_left + 8
+          player_weapon_offset_top = player_offset_top - 15
           player_weapon_element.setAttribute(
             "style",
             "left: " + player_weapon_offset_left + "px; top: "
               + player_weapon_offset_top + "px;"
           )
-          return
-        }
+        }, 0)
 
         player_weapon_offset_increment_left = 0
         player_weapon_offset_increment_top = -23
-        player_weapon_offset_left = player_offset_left
-          + player_weapon_offset_increment_left + 8
-        player_weapon_offset_top = player_offset_top
-          + player_weapon_offset_increment_top + 8
-        player_weapon_element.setAttribute(
-          "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
-        )
         return
       }
 
       if (player_inputs[141] == 1) {
         if (player_inputs[133] == 1) {
+          setTimeout(function() {
+            player_weapon_offset_left = player_offset_left - 9
+            player_weapon_offset_top = player_offset_top + 25
+            player_weapon_element.setAttribute(
+              "style",
+              "left: " + player_weapon_offset_left + "px; top: "
+                + player_weapon_offset_top + "px;"
+            )
+          }, 0)
+
           player_weapon_offset_increment_left = -17
           player_weapon_offset_increment_top = 17
-          player_weapon_offset_left = player_offset_left
-            + player_weapon_offset_increment_left + 8
-          player_weapon_offset_top = player_offset_top
-            + player_weapon_offset_increment_top + 8
+          return
+        }
+
+        setTimeout(function() {
+          player_weapon_offset_left = player_offset_left - 15
+          player_weapon_offset_top = player_offset_top + 8
           player_weapon_element.setAttribute(
             "style",
             "left: " + player_weapon_offset_left + "px; top: "
               + player_weapon_offset_top + "px;"
           )
-          return
-        }
+        }, 0)
 
         player_weapon_offset_increment_left = -23
         player_weapon_offset_increment_top = 0
-        player_weapon_offset_left = player_offset_left
-          + player_weapon_offset_increment_left + 8
-        player_weapon_offset_top = player_offset_top
-          + player_weapon_offset_increment_top + 8
-        player_weapon_element.setAttribute(
-          "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
-        )
         return
       }
 
       if (player_inputs[133] == 1) {
         if (player_inputs[147] == 1) {
+          setTimeout(function() {
+            player_weapon_offset_left = player_offset_left + 25
+            player_weapon_offset_top = player_offset_top + 25
+            player_weapon_element.setAttribute(
+              "style",
+              "left: " + player_weapon_offset_left + "px; top: "
+                + player_weapon_offset_top + "px;"
+            )
+          }, 0)
+
           player_weapon_offset_increment_left = 17
           player_weapon_offset_increment_top = 17
-          player_weapon_offset_left = player_offset_left
-            + player_weapon_offset_increment_left + 8
-          player_weapon_offset_top = player_offset_top
-            + player_weapon_offset_increment_top + 8
+          return
+        }
+
+        setTimeout(function() {
+          player_weapon_offset_left = player_offset_left + 8
+          player_weapon_offset_top = player_offset_top + 31
           player_weapon_element.setAttribute(
             "style",
             "left: " + player_weapon_offset_left + "px; top: "
               + player_weapon_offset_top + "px;"
           )
-          return
-        }
+        }, 0)
 
         player_weapon_offset_increment_left = 0
         player_weapon_offset_increment_top = 23
-        player_weapon_offset_left = player_offset_left
-          + player_weapon_offset_increment_left + 8
-        player_weapon_offset_top = player_offset_top
-          + player_weapon_offset_increment_top + 8
-        player_weapon_element.setAttribute(
-          "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
-        )
         return
       }
 
       if (player_inputs[147] == 1) {
+        setTimeout(function() {
+          player_weapon_offset_left = player_offset_left + 31
+          player_weapon_offset_top = player_offset_top + 8
+          player_weapon_element.setAttribute(
+            "style",
+            "left: " + player_weapon_offset_left + "px; top: "
+              + player_weapon_offset_top + "px;"
+          )
+        }, 0)
+
         player_weapon_offset_increment_left = 23
         player_weapon_offset_increment_top = 0
+        return
       }
 
       player_weapon_offset_left = player_offset_left
@@ -6862,8 +6880,6 @@
             )
             bounds_element.append(wave_cleanup_element)
             player_element.setAttribute("class", "element player")
-            player_offset_left = 322
-            player_offset_top = 175
             player_element.setAttribute(
               "style",
               "left: " + player_offset_left + "px; top: "
