@@ -1105,11 +1105,13 @@
           background-color: #aaa;
         }
         .bits-transition div {
-          transition: background-color 0.3s ease,
-            margin-bottom 0.04s ease,
-            margin-left 0.04s ease,
-            margin-right 0.04s ease,
-            margin-top 0.04s ease;
+          transition-duration: 0.3s, 0.04s, 0.04s, 0.04s, 0.04s;
+          transition-property: background-color,
+            margin-bottom,
+            margin-left,
+            margin-right,
+            margin-top;
+          transition-timing-function: ease;
         }
       .bounds,
       .bounds-container {
@@ -1133,8 +1135,9 @@
         border-style: solid;
         border-width: 4px;
         height: 20px;
-        transition: left 0.13s ease-out,
-          top 0.13s ease-out;
+        transition-duration: 0.13s;
+        transition-property: left, top;
+        transition-timing-function: ease-out;
         width: 20px;
         z-index: 4;
       }
@@ -2240,11 +2243,13 @@
           background-color: #540203;
         }
         .pieces-transition {
-          transition: background-color 0.3s ease,
-            margin-bottom 0.1s ease,
-            margin-left 0.1s ease,
-            margin-right 0.1s ease,
-            margin-top 0.1s ease;
+          transition-duration: 0.3s, 0.1s, 0.1s, 0.1s, 0.1s;
+          transition-property: background-color,
+            margin-bottom,
+            margin-left,
+            margin-right,
+            margin-top;
+          transition-timing-function: ease;
         }
       .player {
         border-color: #fff;
@@ -2290,10 +2295,12 @@
         border-width: 4px;
         height: 4px;
         left: -12px;
-        transition: margin-bottom 0.05s ease,
-          margin-left 0.05s ease,
-          margin-right 0.05s ease,
-          margin-top 0.05s ease;
+        transition-duration: 0.05s;
+        transition-property: margin-bottom,
+          margin-left,
+          margin-right,
+          margin-top;
+        transition-timing-function: ease;
         width: 4px;
       }
         .player-weapon[reload="0"] {
@@ -3490,11 +3497,13 @@
           background-color: #ef0000;
         }
         .splatter-transition div {
-          transition: background-color 0.3s ease,
-            margin-bottom 0.2s ease,
-            margin-left 0.2s ease,
-            margin-right 0.2s ease,
-            margin-top 0.2s ease;
+          transition-duration: 0.3s, 0.2s, 0.2s, 0.2s, 0.2s;
+          transition-property: background-color,
+            margin-bottom,
+            margin-left,
+            margin-right,
+            margin-top;
+          transition-timing-function: ease;
         }
       .title-screen {
         cursor: default;
@@ -4284,7 +4293,7 @@
                 "style",
                 "left: " + player_weapon_magazine_offset_left + "px; top: "
                   + player_weapon_magazine_offset_top + "px; transform: rotate("
-                  + player_weapon_magazine_rotation + "deg); transition: none; width: 12px;"
+                  + player_weapon_magazine_rotation + "deg); transition-property: none; width: 12px;"
               )
 
               const player_weapon_magazine_id = setInterval(function() {
@@ -4731,7 +4740,7 @@
             player_weapon_projectile_casing_element.setAttribute(
               "style",
               "left: " + player_weapon_projectile_casing_offset_left + "px; top: "
-                + player_weapon_projectile_casing_offset_top + "px; transition: none;"
+                + player_weapon_projectile_casing_offset_top + "px; transition-property: none;"
             )
 
             const player_weapon_projectile_casing_id = setInterval(function() {
@@ -4856,7 +4865,7 @@
               player_weapon_magazine_element.setAttribute(
                 "style",
                 "left: " + player_weapon_magazine_offset_left + "px; top: "
-                  + player_weapon_magazine_offset_top + "px; transition: none;"
+                  + player_weapon_magazine_offset_top + "px; transition-property: none;"
               )
 
               const player_weapon_magazine_id = setInterval(function() {
@@ -5272,7 +5281,7 @@
               "style",
               "left: " + player_weapon_projectile_casing_offset_left + "px; top: "
                 + player_weapon_projectile_casing_offset_top + "px; transform: rotate("
-                + player_weapon_projectile_casing_rotation + "deg); transition: none; width: 9px;"
+                + player_weapon_projectile_casing_rotation + "deg); transition-property: none; width: 9px;"
             )
 
             const player_weapon_projectile_casing_id = setInterval(function() {
@@ -5700,7 +5709,7 @@
             player_weapon_projectile_casing_element.setAttribute(
               "style",
               "left: " + player_weapon_projectile_casing_offset_left + "px; top: "
-                + player_weapon_projectile_casing_offset_top + "px; transition: none;"
+                + player_weapon_projectile_casing_offset_top + "px; transition-property: none;"
             )
 
             const player_weapon_projectile_casing_id = setInterval(function() {
@@ -5865,7 +5874,7 @@
                 "style",
                 "left: " + player_weapon_magazine_offset_left + "px; top: "
                   + player_weapon_magazine_offset_top + "px; transform: rotate("
-                  + player_weapon_magazine_rotation + "deg); transition: none; width: 12px;"
+                  + player_weapon_magazine_rotation + "deg); transition-property: none; width: 12px;"
               )
 
               const player_weapon_magazine_id = setInterval(function() {
@@ -6200,7 +6209,7 @@
             player_weapon_projectile_casing_element.setAttribute(
               "style",
               "left: " + player_weapon_projectile_casing_offset_left + "px; top: "
-                + player_weapon_projectile_casing_offset_top + "px; transition: none;"
+                + player_weapon_projectile_casing_offset_top + "px; transition-property: none;"
             )
 
             const player_weapon_projectile_casing_id = setInterval(function() {
@@ -6644,7 +6653,7 @@
         enemy_elements[i].setAttribute(
           "style",
           "left: " + enemy_offsets_left[i] + "px; top: "
-            + enemy_offsets_top[i] + "px; transition: none;"
+            + enemy_offsets_top[i] + "px; transition-property: none;"
         )
         enemy_offsets_bottom[i] = enemy_offsets_top[i] + 28
         enemy_offsets_right[i] = enemy_offsets_left[i] + 28
