@@ -2683,11 +2683,9 @@
         let enemy_offset_left_previous = enemy_offsets_left[enemy_id]
         let enemy_offset_left_next = enemy_offset_left_previous
           + enemy_knockback_offset_increment_left
-          + ((randomized_state & 3) - ((randomized_state >> 2) & 3))
         let enemy_offset_top_previous = enemy_offsets_top[enemy_id]
         let enemy_offset_top_next = enemy_offset_top_previous
           + enemy_knockback_offset_increment_top
-          + (((randomized_state >> 4) & 3) - ((randomized_state >> 6) & 3))
 
         enemy_elements[enemy_id].setAttribute(
           "style",
