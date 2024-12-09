@@ -2686,13 +2686,13 @@
 
       if (enemy_healths[enemy_id] > 0) {
         let enemy_offset_left_previous = enemy_offsets_left[enemy_id]
-        let enemy_offset_left_next = enemy_offset_left_previous
+        let enemy_offset_left_next = (enemy_offset_left_previous
           + enemy_knockback_offset_increment_left
-          + ((randomized_state & 3) - ((randomized_state >> 2) & 3))
+          + ((randomized_state & 3) - ((randomized_state >> 2) & 3))) | 0
         let enemy_offset_top_previous = enemy_offsets_top[enemy_id]
-        let enemy_offset_top_next = enemy_offset_top_previous
+        let enemy_offset_top_next = (enemy_offset_top_previous
           + enemy_knockback_offset_increment_top
-          + (((randomized_state >> 4) & 3) - ((randomized_state >> 6) & 3))
+          + (((randomized_state >> 4) & 3) - ((randomized_state >> 6) & 3))) | 0
 
         enemy_elements[enemy_id].setAttribute(
           "style",
@@ -2875,8 +2875,8 @@
 
       clearInterval(enemy_move_ids[enemy_id])
 
-      const enemy_offset_left = enemy_offsets_left[enemy_id]
-      const enemy_offset_top = enemy_offsets_top[enemy_id]
+      let enemy_offset_left = enemy_offsets_left[enemy_id]
+      let enemy_offset_top = enemy_offsets_top[enemy_id]
 
       enemy_offsets_bottom[enemy_id] = -100
       enemy_offsets_left[enemy_id] = -100
@@ -2942,6 +2942,8 @@
         "style",
         "display: none;"
       )
+      enemy_offset_left |= 0
+      enemy_offset_top |= 0
 
       setTimeout(function() {
         const enemy_bits_element_a = enemy_bits_elements.pop()
@@ -3847,6 +3849,8 @@
                   player_weapon_projectile_casing_rotation -= 3
 
                   if (player_weapon_projectile_casing_opacity == 81) {
+                    player_weapon_projectile_casing_offset_left |= 0
+                    player_weapon_projectile_casing_offset_top |= 0
                     player_weapon_projectile_casing_z_index = 3
                   }
                 }
@@ -4388,6 +4392,8 @@
                   player_weapon_projectile_casing_rotation -= 3
 
                   if (player_weapon_projectile_casing_opacity == 86) {
+                    player_weapon_projectile_casing_offset_left |= 0
+                    player_weapon_projectile_casing_offset_top |= 0
                     player_weapon_projectile_casing_z_index = 3
                   }
                 }
@@ -5316,6 +5322,8 @@
                   player_weapon_projectile_casing_rotation -= 3
 
                   if ((player_weapon_projectile_casing_opacity - 1) == player_weapon_projectile_casing_opacity_maximum) {
+                    player_weapon_projectile_casing_offset_left |= 0
+                    player_weapon_projectile_casing_offset_top |= 0
                     player_weapon_projectile_casing_z_index = 3
                   }
                 }
