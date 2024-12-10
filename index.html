@@ -836,9 +836,9 @@
           background-color: #aaa;
         }
         .bits-transition div {
-          transition-duration: 0.3s, 0.04s, 0.04s;
+          transition-duration: 0.2s, 0.04s, 0.04s;
           transition-property: background-color, margin-left, margin-top;
-          transition-timing-function: ease;
+          transition-timing-function: steps(10, jump-none);
         }
       .bounds,
       .bounds-container {
@@ -862,9 +862,9 @@
         border-style: solid;
         border-width: 4px;
         height: 20px;
-        transition-duration: 0.13s;
+        transition-duration: 0.2s;
         transition-property: left, top;
-        transition-timing-function: ease-out;
+        transition-timing-function: steps(13, jump-none);
         width: 20px;
         z-index: 4;
       }
@@ -1702,9 +1702,9 @@
           background-color: #540203;
         }
         .pieces-transition {
-          transition-duration: 0.3s, 0.1s, 0.1s;
+          transition-duration: 0.2s, 0.05s, 0.05s;
           transition-property: background-color, margin-left, margin-top;
-          transition-timing-function: ease;
+          transition-timing-function: steps(10, jump-none);
         }
       .player {
         border-color: #fff;
@@ -1752,7 +1752,7 @@
         left: -12px;
         transition-duration: 0.05s;
         transition-property: margin-left, margin-top;
-        transition-timing-function: ease;
+        transition-timing-function: steps(15, jump-none);
         width: 4px;
       }
         .player-weapon[reload="0"] {
@@ -2594,9 +2594,9 @@
           background-color: #ef0000;
         }
         .splatter-transition div {
-          transition-duration: 0.3s, 0.2s, 0.2s;
+          transition-duration: 0.2s, 0.15s, 0.15s;
           transition-property: background-color, margin-left, margin-top;
-          transition-timing-function: ease;
+          transition-timing-function: steps(15, jump-none);
         }
       .title-screen {
         cursor: default;
