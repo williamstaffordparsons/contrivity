@@ -181,14 +181,14 @@
         .bits-15 .bits-7 {background-color: #666; height: 4px; left: 28px; top: 17px; width: 4px;}
         .bits-15 .bits-8 {background-color: #333; height: 4px; left: -12px; top: -18px; width: 4px;}
         .bits-hidden div {
-          background-color: #777;
+          background-color: #ccc;
           left: 0;
           top: 0;
         }
         .bits-transition div {
           transition-duration: 0.15s;
           transition-property: background-color, left, top;
-          transition-timing-function: steps(10, jump-none);
+          transition-timing-function: steps(5, jump-none);
         }
       .bounds,
       .bounds-container {
@@ -212,7 +212,7 @@
         border-style: solid;
         border-width: 4px;
         height: 20px;
-        transition-duration: 0.11s;
+        transition-duration: 0.1s;
         transition-property: left, top;
         transition-timing-function: steps(15, jump-none);
         width: 20px;
@@ -377,14 +377,14 @@
         .pieces-15 .pieces-7 {background-color: #444; height: 4px; left: 28px; top: 37px; width: 4px;}
         .pieces-15 .pieces-8 {background-color: #333; height: 6px; left: -12px; top: -38px; width: 6px;}
         .pieces-hidden div {
-          background-color: #222;
+          background-color: #ccc;
           left: 0;
           top: 0;
         }
         .pieces-transition {
           transition-duration: 0.3s;
           transition-property: background-color, left, top;
-          transition-timing-function: steps(10, jump-none);
+          transition-timing-function: steps(5, jump-none);
         }
       .player {
         border-color: #fff;
@@ -597,14 +597,14 @@
         .splatter-15 .splatter-7 {background-color: #222; height: 4px; left: 28px; top: 97px; width: 4px;}
         .splatter-15 .splatter-8 {background-color: #333; height: 4px; left: -68px; top: -48px; width: 4px;}
         .splatter-hidden div {
-          background-color: #777;
+          background-color: #ccc;
           left: 0;
           top: 0;
         }
         .splatter-transition div {
-          transition-duration: 0.08s;
+          transition-duration: 0.1s;
           transition-property: background-color, left, top;
-          transition-timing-function: steps(10, jump-none);
+          transition-timing-function: steps(5, jump-none);
         }
       .title-screen {
         cursor: default;
@@ -1437,7 +1437,7 @@
                   "display: none;"
                 )
                 player_weapon_effect_elements.push(player_weapon_magazine_element)
-              }, 20)
+              }, 30)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -1713,7 +1713,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 5)
+                }, 6)
 
                 return
               }
@@ -1729,7 +1729,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 5)
+              }, 6)
 
               return
             }
@@ -1746,7 +1746,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 5)
+              }, 6)
 
               return
             }
@@ -1762,7 +1762,7 @@
 
               clearInterval(player_weapon_projectile_id)
               player_weapon_projectile_elements.push(player_weapon_projectile_element)
-            }, 5)
+            }, 6)
           }, 0)
 
           setTimeout(function() {
@@ -1875,7 +1875,7 @@
                 "display: none;"
               )
               player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
-            }, 23)
+            }, 30)
           }, 0)
 
           setTimeout(function() {
@@ -1986,7 +1986,7 @@
                   "display: none;"
                 )
                 player_weapon_effect_elements.push(player_weapon_magazine_element)
-              }, 20)
+              }, 30)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -2220,7 +2220,7 @@
 
                     clearInterval(player_weapon_projectile_id)
                     player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                  }, 5)
+                  }, 6)
 
                   return
                 }
@@ -2236,7 +2236,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 5)
+                }, 6)
 
                 return
               }
@@ -2253,7 +2253,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 5)
+                }, 6)
 
                 return
               }
@@ -2269,7 +2269,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 5)
+              }, 6)
             }
 
             while (player_weapon_projectile_delay != 40) {
@@ -2383,7 +2383,7 @@
                 "display: none;"
               )
               player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
-            }, 23)
+            }, 30)
           }, 0)
 
           setTimeout(function() {
@@ -2496,7 +2496,7 @@
                   "display: none;"
                 )
                 player_weapon_effect_elements.push(player_weapon_magazine_element)
-              }, 20)
+              }, 30)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -2708,7 +2708,7 @@
 
                   clearInterval(player_weapon_projectile_id)
                   player_weapon_projectile_elements.push(player_weapon_projectile_element)
-                }, 6)
+                }, 7)
 
                 return
               }
@@ -2724,7 +2724,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 6)
+              }, 7)
 
               return
             }
@@ -2741,7 +2741,7 @@
 
                 clearInterval(player_weapon_projectile_id)
                 player_weapon_projectile_elements.push(player_weapon_projectile_element)
-              }, 6)
+              }, 7)
 
               return
             }
@@ -2757,7 +2757,7 @@
 
               clearInterval(player_weapon_projectile_id)
               player_weapon_projectile_elements.push(player_weapon_projectile_element)
-            }, 6)
+            }, 7)
           }, 0)
 
           setTimeout(function() {
@@ -2811,7 +2811,7 @@
                 "display: none;"
               )
               player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
-            }, 23)
+            }, 30)
           }, 0)
 
           setTimeout(function() {
@@ -2899,7 +2899,7 @@
         player_inputs[97] == 1 &&
         player_offset_left > 0
       ) {
-        player_offset_left -= 3
+        player_offset_left -= 4
 
         if (player_offset_left < 0) {
           player_offset_left = 0
@@ -2910,7 +2910,7 @@
         player_inputs[100] == 1 &&
         player_offset_left < 644
       ) {
-        player_offset_left += 3
+        player_offset_left += 4
 
         if (player_offset_left > 644) {
           player_offset_left = 644
@@ -2921,7 +2921,7 @@
         player_inputs[115] == 1 &&
         player_offset_top < 350
       ) {
-        player_offset_top += 3
+        player_offset_top += 4
 
         if (player_offset_top > 350) {
           player_offset_top = 350
@@ -2932,7 +2932,7 @@
         player_inputs[119] == 1 &&
         player_offset_top > 0
       ) {
-        player_offset_top -= 3
+        player_offset_top -= 4
 
         if (player_offset_top < 0) {
           player_offset_top = 0
@@ -3304,7 +3304,7 @@
       player_weapons[player_weapon_equipped].initialize()
       player_weapon_use_id = setInterval(
         player_weapons[player_weapon_equipped].use,
-        45
+        42
       )
 
       const enemies_initialize_id = setInterval(function() {
@@ -3462,13 +3462,13 @@
             player_inputs[147] = 0
             player_inputs[150] = 0
 
-            setInterval(player_move, 20)
+            setInterval(player_move, 25)
 
-            setInterval(player_weapon_position, 20)
+            setInterval(player_weapon_position, 25)
 
             setInterval(function() {
               has_player_weapon_use_state = (player_inputs[133] | player_inputs[141] | player_inputs[147] | player_inputs[150]) > 0
-            }, 20)
+            }, 25)
 
             player_weapon_element.setAttribute(
               "class",
@@ -3528,7 +3528,7 @@
               }
 
               randomized_state_offset &= 65535
-            }, 10)
+            }, 15)
 
             wave_initialize()
           }
