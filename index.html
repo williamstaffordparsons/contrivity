@@ -1314,7 +1314,7 @@
       {
         "initialize": function() {
           player_weapon_ammunition = 20
-          player_weapon_delay_maximum = 6
+          player_weapon_delay_maximum = 4
         },
         "use": function() {
           if (player_weapon_delay != player_weapon_delay_maximum) {
@@ -1667,12 +1667,12 @@
               }, 10)
             }
 
-            while (player_weapon_projectile_delay != 110) {
+            while (player_weapon_projectile_delay != 40) {
               setTimeout(function() {
                 player_weapon_projectile_initialize()
               }, player_weapon_projectile_delay)
 
-              player_weapon_projectile_delay += 15
+              player_weapon_projectile_delay += 5
             }
           }, 0)
 
@@ -2660,7 +2660,7 @@
       player_weapons[player_weapon_equipped].initialize()
       player_weapon_use_id = setInterval(
         player_weapons[player_weapon_equipped].use,
-        40
+        45
       )
 
       const enemies_initialize_id = setInterval(function() {
