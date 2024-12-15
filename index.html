@@ -180,13 +180,16 @@
         .bits-15 .bits-6 {background-color: #333; height: 4px; left: -23px; top: -2px; width: 4px;}
         .bits-15 .bits-7 {background-color: #666; height: 4px; left: 28px; top: 17px; width: 4px;}
         .bits-15 .bits-8 {background-color: #333; height: 4px; left: -12px; top: -18px; width: 4px;}
-        .bits-hidden div {
-          background-color: #fff;
+        .bits-hidden div,
+        .pieces-hidden div,
+        .splatter-hidden div {
+          background-color: #ddd;
           left: 0;
           top: 0;
         }
-        .bits-transition div {
-          transition-duration: 0.15s;
+        .bits-transition div,
+        .pieces-transition div {
+          transition-duration: 0.1s, 0.1s, 0.1s;
           transition-property: background-color, left, top;
           transition-timing-function: steps(10, jump-none);
         }
@@ -212,9 +215,9 @@
         border-style: solid;
         border-width: 4px;
         height: 20px;
-        transition-duration: 0.12s;
+        transition-duration: 0.13s, 0.13s;
         transition-property: left, top;
-        transition-timing-function: steps(14, jump-none);
+        transition-timing-function: steps(16, jump-none);
         width: 20px;
         z-index: 4;
       }
@@ -376,16 +379,6 @@
         .pieces-15 .pieces-6 {background-color: #444; height: 4px; left: -23px; top: -2px; width: 4px;}
         .pieces-15 .pieces-7 {background-color: #444; height: 4px; left: 28px; top: 37px; width: 4px;}
         .pieces-15 .pieces-8 {background-color: #333; height: 6px; left: -12px; top: -38px; width: 6px;}
-        .pieces-hidden div {
-          background-color: #fff;
-          left: 0;
-          top: 0;
-        }
-        .pieces-transition {
-          transition-duration: 0.2s;
-          transition-property: background-color, left, top;
-          transition-timing-function: steps(15, jump-none);
-        }
       .player {
         border-color: #fff;
         border-radius: 20px;
@@ -410,7 +403,7 @@
         border-width: 4px;
         height: 4px;
         left: -12px;
-        transition-duration: 0.05s;
+        transition-duration: 0.05s, 0.05s;
         transition-property: margin-left, margin-top;
         transition-timing-function: steps(10, jump-none);
         width: 4px;
@@ -597,14 +590,14 @@
         .splatter-15 .splatter-7 {background-color: #222; height: 4px; left: 28px; top: 97px; width: 4px;}
         .splatter-15 .splatter-8 {background-color: #333; height: 4px; left: -68px; top: -48px; width: 4px;}
         .splatter-hidden div {
-          background-color: #ddd;
+          background-color: #fff;
           left: 0;
           top: 0;
         }
         .splatter-transition div {
-          transition-duration: 0.15s;
+          transition-duration: 0.15s, 0.15s, 0.15s;
           transition-property: background-color, left, top;
-          transition-timing-function: steps(15, jump-none);
+          transition-timing-function: steps(20, jump-none);
         }
       .title-screen {
         cursor: default;
@@ -675,7 +668,7 @@
     let wave_cleanup_id
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
-    const enemy_bits_elements = Array(60)
+    const enemy_bits_elements = Array(30)
     const enemy_elements = Array(30)
     const enemy_healths = Array(30)
 
@@ -941,107 +934,68 @@
       }, 0)
 
       setTimeout(function() {
-        const enemy_bits_element_a = enemy_bits_elements.pop()
-        const enemy_bits_element_b = enemy_bits_elements.pop()
+        const enemy_bits_element = enemy_bits_elements.pop()
 
-        if (typeof enemy_bits_element_a != "undefined") {
-          enemy_bits_element_a.setAttribute(
+        if (typeof enemy_bits_element != "undefined") {
+          enemy_bits_element.setAttribute(
             "style",
             "left: " + enemy_offset_left + "px; top: "
               + enemy_offset_top + "px; transform: rotate(" + ((enemy_id << 2) + enemy_id) + "deg)"
           )
-          enemy_bits_element_a.setAttribute(
+          enemy_bits_element.setAttribute(
             "class",
             "bits bits-" + (enemy_id & 15) + " bits-transition element"
           )
 
           setTimeout(function() {
-            if (typeof enemy_bits_element_a != "undefined") {
-              enemy_bits_element_a.classList.remove("bits-transition")
+            if (typeof enemy_bits_element != "undefined") {
+              enemy_bits_element.classList.remove("bits-transition")
             }
           }, 400)
-
-          if (typeof enemy_bits_element_b != "undefined") {
-            enemy_bits_element_b.setAttribute(
-              "style",
-              "left: " + enemy_offset_left + "px; top: "
-                + enemy_offset_top + "px; transform: rotate(180deg);"
-            )
-            enemy_bits_element_b.setAttribute(
-              "class",
-              "bits bits-" + ((enemy_id + 1) & 15) + " element"
-            )
-          }
         }
       }, 0)
 
       setTimeout(function() {
-        const enemy_pieces_element_a = enemy_pieces_elements.pop()
-        const enemy_pieces_element_b = enemy_pieces_elements.pop()
+        const enemy_pieces_element = enemy_pieces_elements.pop()
 
-        if (typeof enemy_pieces_element_a != "undefined") {
-          enemy_pieces_element_a.setAttribute(
+        if (typeof enemy_pieces_element != "undefined") {
+          enemy_pieces_element.setAttribute(
             "style",
             "left: " + enemy_offset_left + "px; top: "
               + enemy_offset_top + "px; transform: rotate(" + ((enemy_id << 2) + enemy_id) + "deg)"
           )
-          enemy_pieces_element_a.setAttribute(
+          enemy_pieces_element.setAttribute(
             "class",
             "element pieces pieces-" + (enemy_id & 15) + " pieces-transition"
           )
 
           setTimeout(function() {
-            if (typeof enemy_pieces_element_a != "undefined") {
-              enemy_pieces_element_a.classList.remove("pieces-transition")
+            if (typeof enemy_pieces_element != "undefined") {
+              enemy_pieces_element.classList.remove("pieces-transition")
             }
           }, 400)
-
-          if (typeof enemy_pieces_element_b != "undefined") {
-            enemy_pieces_element_b.setAttribute(
-              "style",
-              "left: " + enemy_offset_left + "px; top: "
-                + enemy_offset_top + "px; transform: rotate(180deg);"
-            )
-            enemy_pieces_element_b.setAttribute(
-              "class",
-              "element pieces pieces-" + ((enemy_id + 1) & 15)
-            )
-          }
         }
       }, 0)
 
       setTimeout(function() {
-        const enemy_splatter_element_a = enemy_splatter_elements.pop()
-        const enemy_splatter_element_b = enemy_splatter_elements.pop()
+        const enemy_splatter_element = enemy_splatter_elements.pop()
 
-        if (typeof enemy_splatter_element_a != "undefined") {
-          enemy_splatter_element_a.setAttribute(
+        if (typeof enemy_splatter_element != "undefined") {
+          enemy_splatter_element.setAttribute(
             "style",
             "left: " + enemy_offset_left + "px; top: "
               + enemy_offset_top + "px; transform: rotate(" + ((enemy_id << 2) + enemy_id) + "deg)"
           )
-          enemy_splatter_element_a.setAttribute(
+          enemy_splatter_element.setAttribute(
             "class",
             "element splatter splatter-" + (enemy_id & 15) + " splatter-transition"
           )
 
           setTimeout(function() {
-            if (typeof enemy_splatter_element_a != "undefined") {
-              enemy_splatter_element_a.classList.remove("splatter-transition")
+            if (typeof enemy_splatter_element != "undefined") {
+              enemy_splatter_element.classList.remove("splatter-transition")
             }
           }, 400)
-
-          if (typeof enemy_splatter_element_b != "undefined") {
-            enemy_splatter_element_b.setAttribute(
-              "style",
-              "left: " + enemy_offset_left + "px; top: "
-                + enemy_offset_top + "px; transform: rotate(180deg);"
-            )
-            enemy_splatter_element_b.setAttribute(
-              "class",
-              "element splatter splatter-" + ((enemy_id + 1) & 15)
-            )
-          }
         }
       }, 0)
     }
@@ -1286,13 +1240,13 @@
     }
 
     const enemy_move_ids = Array(30)
-    const enemy_move_speeds = Array(30)
+    const enemy_move_speeds = Array(32)
     const enemy_offsets_bottom = Array(30)
     const enemy_offsets_left = Array(30)
     const enemy_offsets_right = Array(30)
     const enemy_offsets_top = Array(30)
-    const enemy_pieces_elements = Array(60)
-    const enemy_splatter_elements = Array(60)
+    const enemy_pieces_elements = Array(30)
+    const enemy_splatter_elements = Array(30)
     const has_enemy_move_states = Array(30)
 
     const on_document_ready = function(callback) {
@@ -2573,84 +2527,14 @@
         i++
       }
 
-      while (i != 60) {
-        if (i < 48) {
-          enemy_offsets_map_horizontal[i] = {}
-        }
+      while (i != 48) {
+        enemy_offsets_map_horizontal[i] = {}
+        enemy_offsets_map_vertical[i] = {}
+        i++
+      }
 
-        if (i < 57) {
-          enemy_offsets_map_vertical[i] = {}
-        }
-
-        if (typeof enemy_bits_elements[i] != "undefined") {
-          enemy_bits_elements[i].remove()
-        }
-
-        enemy_bits_elements[i] = document.createElement("div")
-        enemy_bits_elements[i].setAttribute(
-          "class",
-          "bits-hidden"
-        )
-
-        if (typeof enemy_pieces_elements[i] != "undefined") {
-          enemy_pieces_elements[i].remove()
-        }
-
-        enemy_pieces_elements[i] = document.createElement("div")
-        enemy_pieces_elements[i].setAttribute(
-          "class",
-          "pieces-hidden"
-        )
-
-        if (typeof enemy_splatter_elements[i] != "undefined") {
-          enemy_splatter_elements[i].remove()
-        }
-
-        enemy_splatter_elements[i] = document.createElement("div")
-        enemy_splatter_elements[i].setAttribute(
-          "class",
-          "splatter-hidden"
-        )
-        j = 0
-
-        while (j != 9) {
-          const bits_element_child_element = document.createElement("div")
-          const pieces_element_child_element = document.createElement("div")
-          const splatter_element_child_element = document.createElement("div")
-
-          bits_element_child_element.setAttribute(
-            "class",
-            "bits-" + j
-          )
-          pieces_element_child_element.setAttribute(
-            "class",
-            "pieces-" + j
-          )
-          splatter_element_child_element.setAttribute(
-            "class",
-            "splatter-" + j
-          )
-          enemy_bits_elements[i].appendChild(
-            bits_element_child_element
-          )
-          enemy_pieces_elements[i].appendChild(
-            pieces_element_child_element
-          )
-          enemy_splatter_elements[i].appendChild(
-            splatter_element_child_element
-          )
-          j++
-        }
-
-        enemy_bits_elements[i] = bounds_element.appendChild(
-          enemy_bits_elements[i]
-        )
-        enemy_pieces_elements[i] = bounds_element.appendChild(
-          enemy_pieces_elements[i]
-        )
-        enemy_splatter_elements[i] = bounds_element.appendChild(
-          enemy_splatter_elements[i]
-        )
+      while (i != 57) {
+        enemy_offsets_map_vertical[i] = {}
         i++
       }
 
@@ -2667,8 +2551,6 @@
         if (i != 30) {
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
-
-          enemy_move_speeds[i] = randomized_state_segmented_medium_a
 
           if (enemy_offset_left > 0) {
             enemy_offset_left >>= 4
@@ -2778,6 +2660,8 @@
 
         const play_initialize_id = setInterval(function() {
           if ((player_inputs[133] | player_inputs[141] | player_inputs[147] | player_inputs[150]) != 0) {
+            let has_randomization_state = false
+            let has_randomization_segmented_state = false
             let i = 0
 
             clearInterval(play_initialize_id)
@@ -2797,6 +2681,7 @@
                 "class",
                 "element enemy"
               )
+              enemy_move_speeds[i] = i & 3
               i++
             }
 
@@ -2874,17 +2759,31 @@
             }
 
             setInterval(function() {
+              if (has_randomization_state == true) {
+                return
+              }
+
+              has_randomization_state = true
               randomized_state = (((randomized_state << 13) | (randomized_state >> 19)) ^ randomized_state_offset) >>> 1
 
               if (randomized_state_offset <= 2146372536) {
                 randomized_state_offset += 1111111
+                has_randomization_state = false
                 return
               }
 
               randomized_state_offset &= 65535
+              has_randomization_state = false
             }, 15)
 
             setInterval(function() {
+              if (has_randomization_segmented_state == true) {
+                return
+              }
+
+              has_randomization_segmented_state = true
+              i = (i + 1) & 31
+              enemy_move_speeds[i] = randomized_state_segmented_medium_a
               randomized_state_segmented_large_a = randomized_state & 7
               randomized_state_segmented_large_b = (randomized_state >> 3) & 7
               randomized_state_segmented_large_c = (randomized_state >> 6) & 7
@@ -2897,6 +2796,7 @@
               randomized_state_segmented_small_b = (randomized_state >> 1) & 1
               randomized_state_segmented_small_c = (randomized_state >> 2) & 1
               randomized_state_segmented_small_d = (randomized_state >> 3) & 1
+              has_randomization_segmented_state = false
             }, 15)
 
             wave_initialize()
