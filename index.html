@@ -660,6 +660,18 @@
     let player_weapon_use_id
     let randomized_state = Date.now() & 65535
     let randomized_state_offset = 0
+    let randomized_state_segmented_large_a = 0
+    let randomized_state_segmented_large_b = 0
+    let randomized_state_segmented_large_c = 0
+    let randomized_state_segmented_large_d = 0
+    let randomized_state_segmented_medium_a = 0
+    let randomized_state_segmented_medium_b = 0
+    let randomized_state_segmented_medium_c = 0
+    let randomized_state_segmented_medium_d = 0
+    let randomized_state_segmented_small_a = 0
+    let randomized_state_segmented_small_b = 0
+    let randomized_state_segmented_small_c = 0
+    let randomized_state_segmented_small_d = 0
     let wave_cleanup_id = 0
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
@@ -873,7 +885,7 @@
       enemy_healths[enemy_id] = 0
 
       setTimeout(function() {
-        let bounds_recoil = randomized_state & 3
+        let bounds_recoil = randomized_state_segmented_medium_a
         let i = 0
 
         const bounds_recoil_id = setInterval(function() {
@@ -1050,15 +1062,15 @@
       let enemy_offset_top_next = enemy_offset_top_previous
 
       if (enemy_offset_left_next < player_offset_left) {
-        enemy_offset_left_next += enemy_move_speeds[enemy_id] + (randomized_state & 7)
+        enemy_offset_left_next += enemy_move_speeds[enemy_id] + randomized_state_segmented_large_a
       } else {
-        enemy_offset_left_next -= enemy_move_speeds[enemy_id] + (randomized_state & 7)
+        enemy_offset_left_next -= enemy_move_speeds[enemy_id] + randomized_state_segmented_large_a
       }
 
       if (enemy_offset_top_next < player_offset_top) {
-        enemy_offset_top_next += enemy_move_speeds[enemy_id] + ((randomized_state ^ enemy_id) & 7)
+        enemy_offset_top_next += enemy_move_speeds[enemy_id] + randomized_state_segmented_large_b
       } else {
-        enemy_offset_top_next -= enemy_move_speeds[enemy_id] + ((randomized_state ^ enemy_id) & 7)
+        enemy_offset_top_next -= enemy_move_speeds[enemy_id] + randomized_state_segmented_large_b
       }
 
       enemy_elements[enemy_id].setAttribute(
@@ -1330,17 +1342,17 @@
 
             has_player_weapon_reload_state = true
 
-            if ((randomized_state & 1) == 0) {
+            if (randomized_state_segmented_small_a == 0) {
               player_weapon_magazine_offset_increment_left = -3
             }
 
-            if (((randomized_state >> 1) & 1) == 0) {
+            if (randomized_state_segmented_small_b == 0) {
               player_weapon_magazine_offset_increment_top = -3
             }
 
             player_weapon_element.setAttribute(
               "reload",
-              randomized_state & 3
+              randomized_state_segmented_small_a
             )
 
             setTimeout(function() {
@@ -1385,19 +1397,19 @@
 
               player_weapon_element.setAttribute(
                 "reload",
-                randomized_state & 3
+                randomized_state_segmented_medium_a
               )
 
               setTimeout(function() {
                 player_weapon_element.setAttribute(
                   "reload",
-                  randomized_state & 3
+                  randomized_state_segmented_medium_b
                 )
 
                 setTimeout(function() {
                   player_weapon_element.setAttribute(
                     "reload",
-                    randomized_state & 3
+                    randomized_state_segmented_medium_c
                   )
 
                   setTimeout(function() {
@@ -1420,7 +1432,7 @@
             return
           }
 
-          let player_weapon_recoil = randomized_state & 3
+          let player_weapon_recoil = randomized_state_segmented_medium_a
 
           player_weapon_delay = 0
 
@@ -1437,8 +1449,10 @@
               let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
               let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
               const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
-              const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left_state + player_weapon_recoil - ((randomized_state >> 2) & 3)) * 0.45
-              const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top_state + player_weapon_recoil - ((randomized_state >> 6) & 3)) * 0.45
+              const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left_state
+                + randomized_state_segmented_medium_a - randomized_state_segmented_medium_b) * 0.45
+              const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top_state
+                + randomized_state_segmented_medium_c - randomized_state_segmented_medium_d) * 0.45
 
               const player_weapon_projectile_move = function(player_weapon_projectile_id) {
                 player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
@@ -1475,8 +1489,8 @@
                         enemy_hit(
                           50,
                           enemy_id,
-                          (player_weapon_projectile_offset_increment_left | 0) + (randomized_state & 7),
-                          (player_weapon_projectile_offset_increment_top | 0) + ((randomized_state >> 3) & 7)
+                          (player_weapon_projectile_offset_increment_left | 0) + randomized_state_segmented_large_a,
+                          (player_weapon_projectile_offset_increment_top | 0) + randomized_state_segmented_large_b
                         )
                       }, 0)
 
@@ -1545,8 +1559,8 @@
                         enemy_hit(
                           50,
                           enemy_id,
-                          (player_weapon_projectile_offset_increment_left | 0) + (randomized_state & 7),
-                          (player_weapon_projectile_offset_increment_top | 0) + ((randomized_state >> 3) & 7)
+                          (player_weapon_projectile_offset_increment_left | 0) + randomized_state_segmented_large_a,
+                          (player_weapon_projectile_offset_increment_top | 0) + randomized_state_segmented_large_b
                         )
                       }, 0)
 
@@ -1594,12 +1608,6 @@
 
               if (player_weapon_offset_increment_left != 0) {
                 has_player_weapon_projectile_move_horizontal_state = true
-              }
-
-              if (randomized_state > 3) {
-                randomized_state -= 3
-              } else {
-                randomized_state += 3
               }
 
               if (player_weapon_projectile_offset_increment_left < 0) {
@@ -1667,17 +1675,17 @@
               }, 10)
             }
 
-            while (player_weapon_projectile_delay != 40) {
+            while (player_weapon_projectile_delay != 61) {
               setTimeout(function() {
                 player_weapon_projectile_initialize()
               }, player_weapon_projectile_delay)
 
-              player_weapon_projectile_delay += 5
+              player_weapon_projectile_delay += 8
             }
           }, 0)
 
           setTimeout(function() {
-            let bounds_recoil = randomized_state & 3
+            let bounds_recoil = randomized_state_segmented_medium_a
             let player_weapon_muzzle_flash_margin = 2
             let player_weapon_muzzle_flash_size = 0
             const player_weapon_muzzle_flash_offset_left = player_weapon_offset_left
@@ -1734,8 +1742,8 @@
             let player_weapon_projectile_casing_rotation = randomized_state & 255
             let player_weapon_projectile_casing_z_index = 5
             const player_weapon_projectile_casing_element = player_weapon_effect_elements.pop()
-            const player_weapon_projectile_casing_offset_increment_left = (player_offset_left & 7) - (randomized_state & 7)
-            const player_weapon_projectile_casing_offset_increment_top = (player_offset_top & 7) - ((randomized_state >> 3) & 7)
+            const player_weapon_projectile_casing_offset_increment_left = randomized_state_segmented_large_a - randomized_state_segmented_large_b
+            const player_weapon_projectile_casing_offset_increment_top = randomized_state_segmented_large_c - randomized_state_segmented_large_d
 
             player_weapon_projectile_casing_offset_left = player_weapon_offset_left
             player_weapon_projectile_casing_offset_top = player_weapon_offset_top
@@ -1838,11 +1846,11 @@
 
             has_player_weapon_reload_state = true
 
-            if ((randomized_state & 1) == 0) {
+            if (randomized_state_segmented_small_a == 0) {
               player_weapon_magazine_offset_increment_left = -4
             }
 
-            if (((randomized_state >> 1) & 1) == 0) {
+            if (randomized_state_segmented_small_b == 0) {
               player_weapon_magazine_offset_increment_top = -4
             }
 
@@ -1895,13 +1903,13 @@
 
               player_weapon_element.setAttribute(
                 "reload",
-                randomized_state & 3
+                randomized_state_segmented_medium_a
               )
 
               setTimeout(function() {
                 player_weapon_element.setAttribute(
                   "reload",
-                  randomized_state & 3
+                  randomized_state_segmented_medium_b
                 )
 
                 setTimeout(function() {
@@ -1931,8 +1939,8 @@
             let player_weapon_projectile_offset_left = player_weapon_offset_left + 3
             let player_weapon_projectile_offset_top = player_weapon_offset_top + 3
             const player_weapon_projectile_element = player_weapon_projectile_elements.pop()
-            const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left + (randomized_state & 1) - ((randomized_state >> 1) & 1)) * 0.45
-            const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top + ((randomized_state >> 2) & 1) - ((randomized_state >> 3) & 1)) * 0.45
+            const player_weapon_projectile_offset_increment_left = (player_weapon_offset_increment_left + randomized_state_segmented_small_a - randomized_state_segmented_small_b) * 0.45
+            const player_weapon_projectile_offset_increment_top = (player_weapon_offset_increment_top + randomized_state_segmented_small_c - randomized_state_segmented_small_d) * 0.45
 
             const player_weapon_projectile_move = function(player_weapon_projectile_id) {
               player_weapon_projectile_offset_left += player_weapon_projectile_offset_increment_left
@@ -1969,8 +1977,8 @@
                       enemy_hit(
                         50,
                         enemy_id,
-                        (player_weapon_projectile_offset_increment_left | 0) + (randomized_state & 3),
-                        (player_weapon_projectile_offset_increment_top | 0) + ((randomized_state >> 2) & 3)
+                        (player_weapon_projectile_offset_increment_left | 0) + randomized_state_segmented_medium_a,
+                        (player_weapon_projectile_offset_increment_top | 0) + randomized_state_segmented_medium_b
                       )
                     }, 0)
 
@@ -2039,8 +2047,8 @@
                       enemy_hit(
                         50,
                         enemy_id,
-                        (player_weapon_projectile_offset_increment_left | 0) + (randomized_state & 3),
-                        (player_weapon_projectile_offset_increment_top | 0) + ((randomized_state >> 2) & 3)
+                        (player_weapon_projectile_offset_increment_left | 0) + randomized_state_segmented_medium_a,
+                        (player_weapon_projectile_offset_increment_top | 0) + randomized_state_segmented_medium_b
                       )
                     }, 0)
 
@@ -2162,9 +2170,9 @@
             let player_weapon_projectile_casing_rotation = randomized_state & 255
             let player_weapon_projectile_casing_z_index = 5
             const player_weapon_projectile_casing_element = player_weapon_effect_elements.pop()
-            const player_weapon_projectile_casing_offset_increment_left = (player_offset_left & 7) - (randomized_state & 7)
-            const player_weapon_projectile_casing_offset_increment_top = (player_offset_top & 7) - ((randomized_state >> 3) & 7)
-            const player_weapon_projectile_casing_opacity_maximum = (randomized_state & 7) + 80
+            const player_weapon_projectile_casing_offset_increment_left = randomized_state_segmented_large_a - randomized_state_segmented_large_b
+            const player_weapon_projectile_casing_offset_increment_top = randomized_state_segmented_large_c - randomized_state_segmented_large_d
+            const player_weapon_projectile_casing_opacity_maximum = randomized_state_segmented_large_a + 80
 
             player_weapon_projectile_casing_offset_left = player_weapon_offset_left
             player_weapon_projectile_casing_offset_top = player_weapon_offset_top
@@ -2210,7 +2218,7 @@
           }, 0)
 
           setTimeout(function() {
-            let bounds_recoil = randomized_state & 3
+            let bounds_recoil = randomized_state_segmented_medium_a
             let player_weapon_muzzle_flash_margin = 5.5
             let player_weapon_muzzle_flash_size = 0
             const player_weapon_muzzle_flash_offset_left = player_weapon_offset_left
@@ -2255,7 +2263,7 @@
 
           setTimeout(function() {
             let i = 0
-            let player_weapon_recoil = randomized_state & 3
+            let player_weapon_recoil = randomized_state_segmented_medium_a
 
             const player_weapon_recoil_id = setInterval(function() {
               player_element.setAttribute(
@@ -2679,7 +2687,7 @@
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
 
-          enemy_move_speeds[i] = randomized_state & 3
+          enemy_move_speeds[i] = randomized_state_segmented_medium_a
 
           if (enemy_offset_left > 0) {
             enemy_offset_left >>= 4
@@ -2895,6 +2903,21 @@
               }
 
               randomized_state_offset &= 65535
+            }, 15)
+
+            setInterval(function() {
+              randomized_state_segmented_large_a = randomized_state & 7
+              randomized_state_segmented_large_b = (randomized_state >> 3) & 7
+              randomized_state_segmented_large_c = (randomized_state >> 6) & 7
+              randomized_state_segmented_large_d = (randomized_state >> 9) & 7
+              randomized_state_segmented_medium_a = randomized_state & 3
+              randomized_state_segmented_medium_b = (randomized_state >> 2) & 3
+              randomized_state_segmented_medium_c = (randomized_state >> 4) & 3
+              randomized_state_segmented_medium_d = (randomized_state >> 6) & 3
+              randomized_state_segmented_small_a = randomized_state & 1
+              randomized_state_segmented_small_b = (randomized_state >> 1) & 1
+              randomized_state_segmented_small_c = (randomized_state >> 2) & 1
+              randomized_state_segmented_small_d = (randomized_state >> 3) & 1
             }, 15)
 
             wave_initialize()
