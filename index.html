@@ -33,7 +33,10 @@
         z-index: 2;
       }
         .bits div {
-          border-radius: 10px;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
           position: absolute;
         }
         .bits-0 .bits-0 {background-color: #333; height: 4px; left: 9px; top: 19px; width: 4px;}
@@ -201,7 +204,10 @@
       }
       .bounds-container {
         background-color: #000;
-        border-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
         overflow: hidden;
       }
       .element {
@@ -210,9 +216,12 @@
       }
       .enemy {
         background-color: #000;
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;
         border-color: #777;
-        border-radius: 60px;
         border-style: solid;
+        border-top-left-radius: 60px;
+        border-top-right-radius: 60px;
         border-width: 4px;
         height: 20px;
         transition-duration: 0.13s, 0.13s;
@@ -232,7 +241,10 @@
         z-index: 1;
       }
         .pieces div {
-          border-radius: 10px;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
           position: absolute;
         }
         .pieces-0 .pieces-0 {background-color: #333; height: 4px; left: 9px; top: 39px; width: 4px;}
@@ -380,9 +392,12 @@
         .pieces-15 .pieces-7 {background-color: #444; height: 4px; left: 28px; top: 37px; width: 4px;}
         .pieces-15 .pieces-8 {background-color: #333; height: 6px; left: -12px; top: -38px; width: 6px;}
       .player {
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
         border-color: #fff;
-        border-radius: 20px;
         border-style: solid;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
         border-width: 4px;
         height: 20px;
         width: 20px;
@@ -397,9 +412,12 @@
         z-index: 6;
       }
       .player-weapon {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
         border-color: #fff;
-        border-radius: 8px;
         border-style: solid;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
         border-width: 4px;
         height: 4px;
         left: -12px;
@@ -414,8 +432,11 @@
         .player-weapon[reload="3"] {margin-left: 10px; margin-top: 6px;}
       .player-weapon-effect {
         background-color: #ddd;
-        border-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
         border-style: none;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
         height: 4px;
         margin-left: 2px;
         margin-top: 2px;
@@ -424,16 +445,22 @@
       }
       .player-weapon-muzzle-flash {
         background-color: #888;
-        border-radius: 128px;
+        border-bottom-left-radius: 128px;
+        border-bottom-right-radius: 128px;
         border-style: none;
+        border-top-left-radius: 128px;
+        border-top-right-radius: 128px;
         height: 0;
         width: 0;
         z-index: 4;
       }
       .player-weapon-projectile {
         background-color: #fff;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
         border-style: none;
-        border-radius: 16px;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
         height: 8px;
         width: 8px;
         z-index: 5;
@@ -442,7 +469,10 @@
         z-index: 2;
       }
         .splatter div {
-          border-radius: 10px;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
           position: absolute;
         }
         .splatter-0 .splatter-0 {background-color: #333; height: 4px; left: 18px; top: 38px; width: 4px;}
@@ -616,7 +646,9 @@
         }
       .wave-cleanup {
         background-color: #000;
-        border-right: 4px solid #555;
+        border-right-color: #555;
+        border-right-style: solid;
+        border-right-width: 4px;
         left: -10px;
         z-index: 3;
       }
