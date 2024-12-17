@@ -216,22 +216,34 @@
       }
       .enemy {
         background-color: #000;
+        border-bottom-color: #999;
         border-bottom-left-radius: 60px;
         border-bottom-right-radius: 60px;
-        border-color: #777;
-        border-style: solid;
+        border-bottom-style: solid;
+        border-bottom-width: 4px;
+        border-left-color: #999;
+        border-left-style: solid;
+        border-left-width: 4px;
+        border-right-color: #999;
+        border-right-style: solid;
+        border-right-width: 4px;
+        border-top-color: #999;
         border-top-left-radius: 60px;
         border-top-right-radius: 60px;
-        border-width: 4px;
+        border-top-style: solid;
+        border-top-width: 4px;
         height: 20px;
-        transition-duration: 0.13s, 0.13s;
+        transition-duration: 0.14s, 0.14s;
         transition-property: left, top;
         transition-timing-function: steps(16, jump-none);
         width: 20px;
         z-index: 4;
       }
         .enemy.hit {
-          border-color: #ccc;
+          border-bottom-color: #fff;
+          border-left-color: #fff;
+          border-right-color: #fff;
+          border-top-color: #fff;
           z-index: 5;
         }
       .hidden {
@@ -412,13 +424,22 @@
         z-index: 6;
       }
       .player-weapon {
+        border-bottom-color: #fff;
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        border-color: #fff;
-        border-style: solid;
+        border-bottom-style: solid;
+        border-bottom-width: 4px;
+        border-left-color: #fff;
+        border-left-style: solid;
+        border-left-width: 4px;
+        border-right-color: #fff;
+        border-right-style: solid;
+        border-right-width: 4px;
+        border-top-color: #fff;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
-        border-width: 4px;
+        border-top-style: solid;
+        border-top-width: 4px;
         height: 4px;
         left: -12px;
         transition-duration: 0.05s, 0.05s;
@@ -434,9 +455,12 @@
         background-color: #ddd;
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        border-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-right-style: none;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
+        border-top-style: none;
         height: 4px;
         margin-left: 2px;
         margin-top: 2px;
@@ -447,9 +471,12 @@
         background-color: #888;
         border-bottom-left-radius: 128px;
         border-bottom-right-radius: 128px;
-        border-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-right-style: none;
         border-top-left-radius: 128px;
         border-top-right-radius: 128px;
+        border-top-style: none;
         height: 0;
         width: 0;
         z-index: 4;
@@ -458,9 +485,12 @@
         background-color: #fff;
         border-bottom-left-radius: 16px;
         border-bottom-right-radius: 16px;
-        border-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-right-style: none;
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
+        border-top-style: none;
         height: 8px;
         width: 8px;
         z-index: 5;
@@ -1373,7 +1403,7 @@
                   "display: none;"
                 )
                 player_weapon_effect_elements.push(player_weapon_magazine_element)
-              }, 30)
+              }, 20)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -1761,7 +1791,7 @@
                 "display: none;"
               )
               player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
-            }, 30)
+            }, 20)
           }, 0)
 
           setTimeout(function() {
@@ -1870,7 +1900,7 @@
                   "display: none;"
                 )
                 player_weapon_effect_elements.push(player_weapon_magazine_element)
-              }, 30)
+              }, 20)
 
               player_weapon_element.setAttribute(
                 "reload",
@@ -2185,7 +2215,7 @@
                 "display: none;"
               )
               player_weapon_effect_elements.push(player_weapon_projectile_casing_element)
-            }, 30)
+            }, 20)
           }, 0)
 
           setTimeout(function() {
