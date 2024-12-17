@@ -2095,6 +2095,37 @@
         if (player_offset_left < 0) {
           player_offset_left = 0
         }
+
+        if (
+          player_inputs[115] == 1 &&
+          player_offset_top < 350
+        ) {
+          player_offset_top += 3
+
+          if (player_offset_top > 350) {
+            player_offset_top = 350
+          }
+
+          player_element.setAttribute(
+            "style",
+            "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
+          )
+          return
+        }
+
+        if (player_inputs[119] == 1) {
+          player_offset_top -= 3
+
+          if (player_offset_top < 0) {
+            player_offset_top = 0
+          }
+        }
+
+        player_element.setAttribute(
+          "style",
+          "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
+        )
+        return
       }
 
       if (
@@ -2106,6 +2137,37 @@
         if (player_offset_left > 644) {
           player_offset_left = 644
         }
+
+        if (
+          player_inputs[115] == 1 &&
+          player_offset_top < 350
+        ) {
+          player_offset_top += 3
+
+          if (player_offset_top > 350) {
+            player_offset_top = 350
+          }
+
+          player_element.setAttribute(
+            "style",
+            "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
+          )
+          return
+        }
+
+        if (player_inputs[119] == 1) {
+          player_offset_top -= 3
+
+          if (player_offset_top < 0) {
+            player_offset_top = 0
+          }
+        }
+
+        player_element.setAttribute(
+          "style",
+          "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
+        )
+        return
       }
 
       if (
@@ -2117,6 +2179,12 @@
         if (player_offset_top > 350) {
           player_offset_top = 350
         }
+
+        player_element.setAttribute(
+          "style",
+          "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
+        )
+        return
       }
 
       if (player_inputs[119] == 1) {
@@ -2129,8 +2197,7 @@
 
       player_element.setAttribute(
         "style",
-        "left: " + player_offset_left + "px; top: "
-          + player_offset_top + "px;"
+        "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
       )
     }
 
@@ -2143,8 +2210,7 @@
           player_weapon_offset_top = player_offset_top - 9
           player_weapon_element.setAttribute(
             "style",
-            "left: " + player_weapon_offset_left + "px; top: "
-              + player_weapon_offset_top + "px;"
+            "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
           )
           return
         }
@@ -2156,8 +2222,7 @@
           player_weapon_offset_top = player_offset_top - 9
           player_weapon_element.setAttribute(
             "style",
-            "left: " + player_weapon_offset_left + "px; top: "
-              + player_weapon_offset_top + "px;"
+            "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
           )
           return
         }
@@ -2168,8 +2233,7 @@
         player_weapon_offset_top = player_offset_top - 15
         player_weapon_element.setAttribute(
           "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
+          "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
         )
         return
       }
@@ -2182,8 +2246,7 @@
           player_weapon_offset_top = player_offset_top + 25
           player_weapon_element.setAttribute(
             "style",
-            "left: " + player_weapon_offset_left + "px; top: "
-              + player_weapon_offset_top + "px;"
+            "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
           )
           return
         }
@@ -2194,8 +2257,7 @@
         player_weapon_offset_top = player_offset_top + 8
         player_weapon_element.setAttribute(
           "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
+          "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
         )
         return
       }
@@ -2208,8 +2270,7 @@
           player_weapon_offset_top = player_offset_top + 25
           player_weapon_element.setAttribute(
             "style",
-            "left: " + player_weapon_offset_left + "px; top: "
-              + player_weapon_offset_top + "px;"
+            "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
           )
           return
         }
@@ -2220,8 +2281,7 @@
         player_weapon_offset_top = player_offset_top + 8
         player_weapon_element.setAttribute(
           "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
+          "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
         )
         return
       }
@@ -2233,8 +2293,7 @@
         player_weapon_offset_top = player_offset_top + 31
         player_weapon_element.setAttribute(
           "style",
-          "left: " + player_weapon_offset_left + "px; top: "
-            + player_weapon_offset_top + "px;"
+          "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
         )
         return
       }
@@ -2243,8 +2302,7 @@
       player_weapon_offset_top = player_offset_top + player_weapon_offset_increment_top + 8
       player_weapon_element.setAttribute(
         "style",
-        "left: " + player_weapon_offset_left + "px; top: "
-          + player_weapon_offset_top + "px;"
+        "left: " + player_weapon_offset_left + "px; top: " + player_weapon_offset_top + "px;"
       )
     }
 
@@ -2370,8 +2428,7 @@
 
         enemy_elements[i].setAttribute(
           "style",
-          "left: " + enemy_offsets_left[i] + "px; top: "
-            + enemy_offsets_top[i] + "px; transition-property: none;"
+          "left: " + enemy_offsets_left[i] + "px; top: " + enemy_offsets_top[i] + "px; transition-property: none;"
         )
         enemy_offsets_bottom[i] = enemy_offsets_top[i] + 28
         enemy_offsets_right[i] = enemy_offsets_left[i] + 28
@@ -2474,8 +2531,7 @@
       on_document_ready(function() {
         bounds_container_element.setAttribute(
           "style",
-          "left: " + ((innerWidth >> 1) - 336) + "px; top: "
-            + ((innerHeight >> 1) - 189) + "px;"
+          "left: " + ((innerWidth >> 1) - 336) + "px; top: " + ((innerHeight >> 1) - 189) + "px;"
         )
         player_inputs[133] = 0
         player_inputs[141] = 0
@@ -2538,8 +2594,7 @@
             player_element.setAttribute("class", "element player")
             player_element.setAttribute(
               "style",
-              "left: " + player_offset_left + "px; top: "
-                + player_offset_top + "px;"
+              "left: " + player_offset_left + "px; top: " + player_offset_top + "px;"
             )
             bounds_element.append(player_element)
             player_inputs[97] = 0
