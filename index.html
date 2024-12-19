@@ -1061,7 +1061,7 @@
                 player_weapon_projectile_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
 
                 if (
-                  has_player_weapon_projectile_move_horizontal_state == true &&
+                  player_weapon_projectile_move_horizontal_state == true &&
                   player_weapon_projectile_offset_left >= 0 &&
                   enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
                 ) {
@@ -1174,10 +1174,10 @@
                 }
               }
 
-              let has_player_weapon_projectile_move_horizontal_state = false
+              let player_weapon_projectile_move_horizontal_state = false
 
               if (player_weapon_offset_increment_left != 0) {
-                has_player_weapon_projectile_move_horizontal_state = true
+                player_weapon_projectile_move_horizontal_state = true
               }
 
               if (player_weapon_projectile_offset_increment_left < 0) {
@@ -1297,8 +1297,8 @@
             let player_weapon_projectile_casing_offset_left
             let player_weapon_projectile_casing_offset_top
             let player_weapon_projectile_casing_opacity = 96
-            let player_weapon_projectile_casing_rotation = randomized_state & 255
             let player_weapon_projectile_casing_z_index = 5
+            const player_weapon_projectile_casing_rotation = randomized_state & 255
             const player_weapon_projectile_casing_element = player_weapon_effect_elements.pop()
             const player_weapon_projectile_casing_offset_increment_left = randomized_state_segmented_large_a - randomized_state_segmented_large_b
             const player_weapon_projectile_casing_offset_increment_top = randomized_state_segmented_large_c - randomized_state_segmented_large_d
@@ -1317,7 +1317,6 @@
                 if (player_weapon_projectile_casing_opacity > 85) {
                   player_weapon_projectile_casing_offset_left += player_weapon_projectile_casing_offset_increment_left
                   player_weapon_projectile_casing_offset_top += player_weapon_projectile_casing_offset_increment_top
-                  player_weapon_projectile_casing_rotation -= 3
 
                   if (player_weapon_projectile_casing_opacity == 86) {
                     player_weapon_projectile_casing_offset_left |= 0
@@ -1388,7 +1387,7 @@
               player_weapon_projectile_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
 
               if (
-                has_player_weapon_projectile_move_horizontal_state == true &&
+                player_weapon_projectile_move_horizontal_state == true &&
                 player_weapon_projectile_offset_left >= 0 &&
                 enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
               ) {
@@ -1501,10 +1500,10 @@
               }
             }
 
-            let has_player_weapon_projectile_move_horizontal_state = false
+            let player_weapon_projectile_move_horizontal_state = false
 
             if (player_weapon_offset_increment_left != 0) {
-              has_player_weapon_projectile_move_horizontal_state = true
+              player_weapon_projectile_move_horizontal_state = true
             }
 
             if (player_weapon_projectile_offset_increment_left < 0) {
@@ -1576,12 +1575,12 @@
             let player_weapon_projectile_casing_offset_left
             let player_weapon_projectile_casing_offset_top
             let player_weapon_projectile_casing_opacity = 96
-            let player_weapon_projectile_casing_rotation = randomized_state & 255
             let player_weapon_projectile_casing_z_index = 5
             const player_weapon_projectile_casing_element = player_weapon_effect_elements.pop()
             const player_weapon_projectile_casing_offset_increment_left = randomized_state_segmented_large_a - randomized_state_segmented_large_b
             const player_weapon_projectile_casing_offset_increment_top = randomized_state_segmented_large_c - randomized_state_segmented_large_d
             const player_weapon_projectile_casing_opacity_maximum = randomized_state_segmented_large_a + 80
+            const player_weapon_projectile_casing_rotation = randomized_state & 255
 
             player_weapon_projectile_casing_offset_left = player_weapon_offset_left
             player_weapon_projectile_casing_offset_top = player_weapon_offset_top
@@ -1592,7 +1591,6 @@
                 if (player_weapon_projectile_casing_opacity > player_weapon_projectile_casing_opacity_maximum) {
                   player_weapon_projectile_casing_offset_left += player_weapon_projectile_casing_offset_increment_left
                   player_weapon_projectile_casing_offset_top += player_weapon_projectile_casing_offset_increment_top
-                  player_weapon_projectile_casing_rotation -= 3
 
                   if ((player_weapon_projectile_casing_opacity - 1) == player_weapon_projectile_casing_opacity_maximum) {
                     player_weapon_projectile_casing_offset_left |= 0
@@ -1708,7 +1706,7 @@
               player_weapon_projectile_element.setAttribute("style", "left: " + player_weapon_projectile_offset_left + "px; top: " + player_weapon_projectile_offset_top + "px;")
 
               if (
-                has_player_weapon_projectile_move_horizontal_state == true &&
+                player_weapon_projectile_move_horizontal_state == true &&
                 player_weapon_projectile_offset_left >= 0 &&
                 enemy_offsets_map_horizontal[player_weapon_projectile_segment].length != 0
               ) {
@@ -1821,10 +1819,10 @@
               }
             }
 
-            let has_player_weapon_projectile_move_horizontal_state = false
+            let player_weapon_projectile_move_horizontal_state = false
 
             if (player_weapon_offset_increment_left != 0) {
-              has_player_weapon_projectile_move_horizontal_state = true
+              player_weapon_projectile_move_horizontal_state = true
             }
 
             if (player_weapon_projectile_offset_increment_left < 0) {
@@ -1896,12 +1894,12 @@
             let player_weapon_projectile_casing_offset_left
             let player_weapon_projectile_casing_offset_top
             let player_weapon_projectile_casing_opacity = 96
-            let player_weapon_projectile_casing_rotation = randomized_state & 255
             let player_weapon_projectile_casing_z_index = 5
             const player_weapon_projectile_casing_element = player_weapon_effect_elements.pop()
             const player_weapon_projectile_casing_offset_increment_left = randomized_state_segmented_large_a - randomized_state_segmented_large_b
             const player_weapon_projectile_casing_offset_increment_top = randomized_state_segmented_large_c - randomized_state_segmented_large_d
             const player_weapon_projectile_casing_opacity_maximum = randomized_state_segmented_large_a + 80
+            const player_weapon_projectile_casing_rotation = randomized_state & 255
 
             player_weapon_projectile_casing_offset_left = player_weapon_offset_left
             player_weapon_projectile_casing_offset_top = player_weapon_offset_top
@@ -1912,7 +1910,6 @@
                 if (player_weapon_projectile_casing_opacity > player_weapon_projectile_casing_opacity_maximum) {
                   player_weapon_projectile_casing_offset_left += player_weapon_projectile_casing_offset_increment_left
                   player_weapon_projectile_casing_offset_top += player_weapon_projectile_casing_offset_increment_top
-                  player_weapon_projectile_casing_rotation -= 3
 
                   if ((player_weapon_projectile_casing_opacity - 1) == player_weapon_projectile_casing_opacity_maximum) {
                     player_weapon_projectile_casing_offset_left |= 0
@@ -2402,7 +2399,6 @@
             player_element.setAttribute("class", "element player")
             player_element.setAttribute("style", "left: " + player_offset_left + "px; top: " + player_offset_top + "px;")
             bounds_element.append(player_element)
-            player_alive_state = true
             player_inputs[97] = 0
             player_inputs[100] = 0
             player_inputs[115] = 0
@@ -2500,7 +2496,7 @@
 
                 player_weapons[player_weapon_equipped].initialize()
                 switch_weapon_state = false
-              }, 3000)
+              }, 5000)
             })
 
             weapon_use_id = setInterval(function() {
