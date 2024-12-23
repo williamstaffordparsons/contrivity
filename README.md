@@ -7,6 +7,7 @@ Spawn into the hostile quantum laboratory and destroy oscillations in this endle
 Play Contrivity and read more [here](https://williamstaffordparsons.github.io/contrivity/).
 
 ## Controls
-Use arrow keys to attack and `w` `a` `s` `d` keys to move.
+Use arrow keys to shoot and `w` `a` `s` `d` keys to move.
 
-Zoom in with `ctrl` and `+`, then click or focus on the playing area to activate the game controls.
+## Instructions
+Avoid and shoot the advancing enemy oscillations and activate powerful weapons by moving within the large white circle that changes to a randomized position every 5 seconds.

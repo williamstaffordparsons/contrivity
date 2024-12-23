@@ -597,7 +597,7 @@
     let player_weapon_offset_increment_top = -17
     let player_weapon_offset_left = 313
     let player_weapon_offset_top = 166
-    let player_weapon_use_id = 0
+    let player_weapon_use_id
     let randomness = Date.now() & 65535
     let randomness_offset = 0
     let randomness_segmented_large_a = 0
@@ -617,7 +617,7 @@
     let randomness_segmented_small_e = 0
     let randomness_segmented_small_f = 0
     let splatter_element_selector = randomness & 15
-    const bits_elements = Array(26)
+    const bits_elements = Array(10)
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
     const enemy_alive_states = Array(26)
@@ -967,7 +967,7 @@
       }
     }
 
-    const pieces_elements = Array(26)
+    const pieces_elements = Array(10)
 
     const player_die = function() {
       clearInterval(player_weapon_use_id)
@@ -1961,7 +1961,7 @@
         }
       }
     ]
-    const splatter_elements = Array(26)
+    const splatter_elements = Array(10)
 
     const wave_initialize = function() {
       let enemy_initialize_state = false
@@ -2131,7 +2131,7 @@
             clearInterval(title_screen_id)
             title_screen_prompt_element.classList.add("hidden")
 
-            while (i != 26) {
+            while (i != 10) {
               bits_elements[i] = document.createElement("div")
               bits_elements[i].setAttribute("class", "bits-hidden")
               enemy_elements[i] = bounds_element.appendChild(document.createElement("div"))
@@ -2171,6 +2171,13 @@
               bits_elements[i] = bounds_element.appendChild(bits_elements[i])
               pieces_elements[i] = bounds_element.appendChild(pieces_elements[i])
               splatter_elements[i] = bounds_element.appendChild(splatter_elements[i])
+              i++
+            }
+
+            while (i != 26) {
+              enemy_elements[i] = bounds_element.appendChild(document.createElement("div"))
+              enemy_move_speeds[i] = i & 3
+              enemy_move_states[i] = false
               i++
             }
 
@@ -2233,34 +2240,32 @@
             player_weapon_activation_zone_element.setAttribute("class", "element player-weapon-activation-zone")
 
             setTimeout(function() {
-              let player_weapon_activation_zone_height = 160
-              let player_weapon_activation_zone_height_half = 80
-              let player_weapon_activation_zone_id = 0
-              let player_weapon_activation_zone_width = 160
-              let player_weapon_activation_zone_width_half = 80
               let player_weapon_activated = 0
+              let player_weapon_activation_zone_id = 0
+              let player_weapon_activation_zone_size = 160
+              let player_weapon_activation_zone_size_half = 80
 
               setInterval(function() {
                 clearInterval(player_weapon_activation_zone_id)
                 player_weapon_activated ^= 1
-                player_weapon_activation_zone_height = (randomness & 127) + 72
-                player_weapon_activation_zone_height_half = player_weapon_activation_zone_height >> 1
-                player_weapon_activation_zone_width = player_weapon_activation_zone_height
-                player_weapon_activation_zone_width_half = player_weapon_activation_zone_height_half
+                player_weapon_activation_zone_size = (randomness & 127) + 72
+                player_weapon_activation_zone_size_half = player_weapon_activation_zone_size >> 1
 
-                let player_weapon_activation_zone_offset_left = 632 - player_weapon_activation_zone_width
-                let player_weapon_activation_zone_offset_top = 338 - player_weapon_activation_zone_height
+                let player_weapon_activation_zone_offset_left = 624 - player_weapon_activation_zone_size
+                let player_weapon_activation_zone_offset_top = 330 - player_weapon_activation_zone_size
 
                 player_weapon_activation_zone_offset_left = (randomness % player_weapon_activation_zone_offset_left) + 20
-                player_weapon_activation_zone_offset_top = (randomness % player_weapon_activation_zone_offset_top) + 20
+                player_weapon_activation_zone_offset_top = (randomness_offset % player_weapon_activation_zone_offset_top) + 20
 
-                let player_weapon_activation_zone_offset_bottom = player_weapon_activation_zone_offset_top + player_weapon_activation_zone_height + 8
-                let player_weapon_activation_zone_offset_right = player_weapon_activation_zone_offset_left + player_weapon_activation_zone_width + 8
+                let player_weapon_activation_zone_offset_bottom = player_weapon_activation_zone_offset_top + player_weapon_activation_zone_size + 8
+                let player_weapon_activation_zone_offset_left_size_half = player_weapon_activation_zone_offset_left + player_weapon_activation_zone_size_half
+                let player_weapon_activation_zone_offset_right = player_weapon_activation_zone_offset_left + player_weapon_activation_zone_size + 8
+                let player_weapon_activation_zone_offset_top_size_half = player_weapon_activation_zone_offset_top + player_weapon_activation_zone_size_half
 
                 player_weapon_activation_zone_element.setAttribute(
                   "style",
-                  "height: " + player_weapon_activation_zone_height + "px; left: " + player_weapon_activation_zone_offset_left + "px; top: "
-                    + player_weapon_activation_zone_offset_top + "px; width: " + player_weapon_activation_zone_width + "px;"
+                  "height: " + player_weapon_activation_zone_size + "px; left: " + player_weapon_activation_zone_offset_left + "px; top: "
+                    + player_weapon_activation_zone_offset_top + "px; width: " + player_weapon_activation_zone_size + "px;"
                 )
 
                 setTimeout(function() {
@@ -2274,12 +2279,10 @@
                     player_weapon_activation_zone_state = true
 
                     if (
-                      (player_offset_left + (Math.abs((player_weapon_activation_zone_offset_top + player_weapon_activation_zone_height - player_weapon_activation_zone_height_half) - (player_offset_top + 14)) * 0.34))
-                        <= player_weapon_activation_zone_offset_right &&
-                      (player_offset_top + (Math.abs((player_weapon_activation_zone_offset_left + player_weapon_activation_zone_width - player_weapon_activation_zone_width_half) - (player_offset_left + 14)) * 0.34))
-                        <= player_weapon_activation_zone_offset_bottom &&
-                      (player_offset_left + 28) >= (player_weapon_activation_zone_offset_left + (Math.abs((player_weapon_activation_zone_offset_top + player_weapon_activation_zone_height_half) - (player_offset_top + 14)) * 0.34)) &&
-                      (player_offset_top + 28) >= (player_weapon_activation_zone_offset_top + (Math.abs((player_weapon_activation_zone_offset_left + player_weapon_activation_zone_width_half) - (player_offset_left + 14)) * 0.34))
+                      (player_offset_left + (Math.abs(player_weapon_activation_zone_offset_top_size_half - (player_offset_top + 14)) * 0.34)) <= player_weapon_activation_zone_offset_right &&
+                      (player_offset_top + (Math.abs(player_weapon_activation_zone_offset_left_size_half - (player_offset_left + 14)) * 0.34)) <= player_weapon_activation_zone_offset_bottom &&
+                      (player_offset_left + 28) >= (player_weapon_activation_zone_offset_left + (Math.abs(player_weapon_activation_zone_offset_top_size_half - (player_offset_top + 14)) * 0.34)) &&
+                      (player_offset_top + 28) >= (player_weapon_activation_zone_offset_top + (Math.abs(player_weapon_activation_zone_offset_left_size_half - (player_offset_left + 14)) * 0.34))
                     ) {
                       player_weapon_activation_zone_element.classList.add("active")
                       player_weapon_delay_maximum = 3
