@@ -10,4 +10,6 @@ Play Contrivity and read more [here](https://williamstaffordparsons.github.io/co
 Use arrow keys to shoot and `w` `a` `s` `d` keys to move.
 
 ## Instructions
-Avoid and shoot the advancing enemy oscillations and activate powerful weapons by moving within the large white circle that changes to a randomized position every 5 seconds.
+Avoid and shoot the advancing enemy oscillations.
+
+Activate powerful weapons by staying within the pulsing circle that moves every 5 seconds.
