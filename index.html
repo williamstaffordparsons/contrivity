@@ -634,7 +634,7 @@
     let player_weapon_offset_top = 166
     let player_weapon_use_id
     let randomness = Date.now() & 65535
-    let randomness_offset = 0
+    let randomness_offset = randomness + 1111111
     let randomness_segmented_large_a = 0
     let randomness_segmented_large_b = 0
     let randomness_segmented_large_c = 0
@@ -1080,7 +1080,7 @@
       }
 
       if (player_inputs[97] == 1) {
-        player_offset_left -= 3
+        player_offset_left -= 2.5
 
         if (player_offset_left < 0) {
           player_offset_left = 0
@@ -1090,7 +1090,7 @@
           player_inputs[115] == 1 &&
           player_offset_top < 350
         ) {
-          player_offset_top += 3
+          player_offset_top += 2.5
 
           if (player_offset_top > 350) {
             player_offset_top = 350
@@ -1101,7 +1101,7 @@
         }
 
         if (player_inputs[119] == 1) {
-          player_offset_top -= 3
+          player_offset_top -= 2.5
 
           if (player_offset_top < 0) {
             player_offset_top = 0
@@ -1116,7 +1116,7 @@
         player_inputs[100] == 1 &&
         player_offset_left < 644
       ) {
-        player_offset_left += 3
+        player_offset_left += 2.5
 
         if (player_offset_left > 644) {
           player_offset_left = 644
@@ -1126,7 +1126,7 @@
           player_inputs[115] == 1 &&
           player_offset_top < 350
         ) {
-          player_offset_top += 3
+          player_offset_top += 2.5
 
           if (player_offset_top > 350) {
             player_offset_top = 350
@@ -1137,7 +1137,7 @@
         }
 
         if (player_inputs[119] == 1) {
-          player_offset_top -= 3
+          player_offset_top -= 2.5
 
           if (player_offset_top < 0) {
             player_offset_top = 0
@@ -1152,7 +1152,7 @@
         player_inputs[115] == 1 &&
         player_offset_top < 350
       ) {
-        player_offset_top += 3
+        player_offset_top += 2.5
 
         if (player_offset_top > 350) {
           player_offset_top = 350
@@ -1163,7 +1163,7 @@
       }
 
       if (player_inputs[119] == 1) {
-        player_offset_top -= 3
+        player_offset_top -= 2.5
 
         if (player_offset_top < 0) {
           player_offset_top = 0
@@ -1422,7 +1422,7 @@
                         (player_weapon_projectile_offset_top + 8) >= enemy_offsets_top[enemy_id]
                       ) {
                         setTimeout(function() {
-                          enemy_hit(15, enemy_id)
+                          enemy_hit(20, enemy_id)
                         })
 
                         setTimeout(function() {
@@ -1467,7 +1467,7 @@
                         (player_weapon_projectile_offset_top + 8) >= enemy_offsets_top[enemy_id]
                       ) {
                         setTimeout(function() {
-                          enemy_hit(15, enemy_id)
+                          enemy_hit(20, enemy_id)
                         })
 
                         setTimeout(function() {
@@ -1648,7 +1648,7 @@
                       (player_weapon_projectile_offset_top + 8) >= enemy_offsets_top[enemy_id]
                     ) {
                       setTimeout(function() {
-                        enemy_hit(30, enemy_id)
+                        enemy_hit(35, enemy_id)
                       })
 
                       setTimeout(function() {
@@ -1693,7 +1693,7 @@
                       (player_weapon_projectile_offset_top + 8) >= enemy_offsets_top[enemy_id]
                     ) {
                       setTimeout(function() {
-                        enemy_hit(30, enemy_id)
+                        enemy_hit(35, enemy_id)
                       })
 
                       setTimeout(function() {
@@ -2316,14 +2316,11 @@
               let i = 0
               let player_weapon_activated = 0
               let player_weapon_activation_zone_id = 0
-              let player_weapon_activation_zone_size = 160
-              let player_weapon_activation_zone_size_half = 80
-              const player_weapon_activation_zone_pulse_element = player_weapon_activation_zone_element.querySelector("div")
 
-              setInterval(function() {
+              const player_weapon_activation_zone_move = function() {
                 clearInterval(player_weapon_activation_zone_id)
                 player_weapon_activated ^= 1
-                player_weapon_activation_zone_size = (randomness & 127) + 72
+                player_weapon_activation_zone_size = (randomness & 63) + 120
                 player_weapon_activation_zone_size_half = player_weapon_activation_zone_size >> 1
 
                 let player_weapon_activation_zone_offset_left = 624 - player_weapon_activation_zone_size
@@ -2380,7 +2377,14 @@
                     player_weapon_activation_zone_state = false
                   }, 100)
                 })
-              }, 5000)
+              }
+
+              let player_weapon_activation_zone_size = 160
+              let player_weapon_activation_zone_size_half = 80
+              const player_weapon_activation_zone_pulse_element = player_weapon_activation_zone_element.querySelector("div")
+
+              setInterval(player_weapon_activation_zone_move, 5000)
+              player_weapon_activation_zone_move()
             })
 
             player_weapon_element.setAttribute("class", "element player-weapon")
