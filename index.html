@@ -122,9 +122,9 @@
       }
       .bits-transition div,
       .pieces-transition div {
-        transition-duration: 0.3s, 0.1s, 0.1s;
+        transition-duration: 0.2s, 0.1s, 0.1s;
         transition-property: background-color, left, top;
-        transition-timing-function: steps(20, jump-none);
+        transition-timing-function: steps(17, jump-none);
       }
       .bounds,
       .bounds-container {
@@ -163,6 +163,7 @@
       .player,
       .player-weapon,
       .player-weapon-activation-zone,
+      .player-weapon-activation-zone div,
       .player-weapon-muzzle-flash {
         border-bottom-style: solid;
         border-bottom-width: 4px;
@@ -176,7 +177,6 @@
         .enemy.hit,
         .player,
         .player-weapon,
-        .player-weapon-activation-zone,
         .player-weapon-muzzle-flash {
           border-bottom-color: #fff;
           border-left-color: #fff;
@@ -373,15 +373,50 @@
         width: 4px;
       }
       .player-weapon-activation-zone {
+        border-bottom-color: #ccc;
+        border-left-color: #ccc;
+        border-right-color: #ccc;
+        border-top-color: #ccc;
+        z-index: 3;
+      }
+      .player-weapon-activation-zone,
+      .player-weapon-activation-zone div {
         border-bottom-left-radius: 200px;
         border-bottom-right-radius: 200px;
         border-top-left-radius: 200px;
         border-top-right-radius: 200px;
-        transition-duration: 0.1s, 0.1s, 0.1s, 0.1s, 0.1s, 0.2s, 0.2s, 0.1s;
-        transition-property: border-bottom-color, border-left-color, border-right-color, border-top-color, height, left, top, width;
-        transition-timing-function: steps(15, jump-none);
-        z-index: 3;
+        transition-duration: 0.1s, 0.1s, 0.1s, 0.1s, 0.1s, 0.2s, 0.2s, 0.2s, 0.2s, 0.2s, 0.2s, 0.1s;
+        transition-property: border-bottom-color, border-left-color, border-right-color, border-top-color, height, left, padding-bottom, padding-left, padding-right, padding-top, top, width;
+        transition-timing-function: steps(13, jump-none);
       }
+        .player-weapon-activation-zone.active {
+          border-bottom-color: #fff;
+          border-left-color: #fff;
+          border-right-color: #fff;
+          border-top-color: #fff;
+        }
+        .player-weapon-activation-zone div {
+          border-bottom-color: #000;
+          border-left-color: #000;
+          border-right-color: #000;
+          border-top-color: #000;
+          height: 100%;
+          left: -8px;
+          padding: 4px;
+          position: absolute;
+          top: -8px;
+          width: 100%;
+          z-index: 2;
+        }
+          .player-weapon-activation-zone div.pulse {
+            border-bottom-color: #555;
+            border-left-color: #555;
+            border-right-color: #555;
+            border-top-color: #555;
+            left: -14px;
+            top: -14px;
+            padding: 10px;
+          }
       .player-weapon-effect {
         margin-left: 2px;
         margin-top: 2px;
@@ -563,9 +598,9 @@
       .splatter-15 .splatter-7 {height: 4px; left: 28px; top: 97px; width: 4px;}
       .splatter-15 .splatter-8 {height: 4px; left: -68px; top: -48px; width: 4px;}
       .splatter-transition div {
-        transition-duration: 0.3s, 0.15s, 0.15s;
+        transition-duration: 0.2s, 0.15s, 0.15s;
         transition-property: background-color, left, top;
-        transition-timing-function: steps(20, jump-none);
+        transition-timing-function: steps(17, jump-none);
       }
     </style>
   </head>
@@ -589,7 +624,7 @@
     let player_offset_left = 322
     let player_offset_top = 175
     let player_weapon_delay = 0
-    let player_weapon_delay_maximum = 6
+    let player_weapon_delay_maximum = 5
     let player_weapon_equipped = 2
     let player_weapon_muzzle_flash_element
     let player_weapon_muzzle_flash_state = false
@@ -617,12 +652,12 @@
     let randomness_segmented_small_e = 0
     let randomness_segmented_small_f = 0
     let splatter_element_selector = randomness & 15
-    const bits_elements = Array(10)
+    const bits_elements = Array(16)
     const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
-    const enemy_alive_states = Array(26)
-    const enemy_elements = Array(26)
-    const enemy_healths = Array(26)
+    const enemy_alive_states = Array(34)
+    const enemy_elements = Array(34)
+    const enemy_healths = Array(34)
 
     const enemy_hit = function(enemy_damage, enemy_id) {
       enemy_elements[enemy_id].classList.add("hit")
@@ -704,44 +739,81 @@
       })
 
       setTimeout(function() {
-        const pieces_element = pieces_elements.pop()
+        const pieces_element_a = pieces_elements.pop()
 
-        if (typeof pieces_element != "undefined") {
-          pieces_element.setAttribute("class", "element pieces pieces-" + (pieces_element_selector & 15) + " pieces-transition")
+        if (typeof pieces_element_a != "undefined") {
+          pieces_element_a.setAttribute("class", "element pieces pieces-" + (pieces_element_selector & 15) + " pieces-transition")
           pieces_element_selector = (pieces_element_selector + 1) & 15
-          pieces_element.setAttribute("style", "left: " + enemy_offset_left + "px; top: " + enemy_offset_top + "px;")
+          pieces_element_a.setAttribute("style", "left: " + enemy_offset_left + "px; top: " + enemy_offset_top + "px;")
 
           setTimeout(function() {
-            pieces_element.setAttribute("fade-out", "")
+            pieces_element_a.setAttribute("fade-out", "")
 
             setTimeout(function() {
-              pieces_element.removeAttribute("style")
-              pieces_element.removeAttribute("fade-out")
-              pieces_element.setAttribute("class", "pieces-hidden")
-              pieces_elements.push(pieces_element)
-            }, 400)
-          }, 400)
+              pieces_element_a.removeAttribute("style")
+              pieces_element_a.removeAttribute("fade-out")
+              pieces_element_a.setAttribute("class", "pieces-hidden")
+              pieces_elements.push(pieces_element_a)
+            }, 250)
+          }, 250)
+
+          const pieces_element_b = pieces_elements.pop()
+
+          if (typeof pieces_element_b != "undefined") {
+            pieces_element_b.setAttribute("class", "element pieces pieces-" + ((pieces_element_selector + 8) & 15) + " pieces-transition")
+            pieces_element_b.setAttribute("style", "left: " + enemy_offset_left + "px; top: " + enemy_offset_top + "px;")
+
+            setTimeout(function() {
+              pieces_element_b.setAttribute("fade-out", "")
+
+              setTimeout(function() {
+                pieces_element_b.removeAttribute("style")
+                pieces_element_b.removeAttribute("fade-out")
+                pieces_element_b.setAttribute("class", "pieces-hidden")
+                pieces_elements.push(pieces_element_b)
+              }, 250)
+            }, 250)
+          }
         }
       })
 
       setTimeout(function() {
-        const splatter_element = splatter_elements.pop()
+        const splatter_element_a = splatter_elements.pop()
 
-        if (typeof splatter_element != "undefined") {
-          splatter_element.setAttribute("class", "element splatter splatter-" + (splatter_element_selector & 15) + " splatter-transition")
+        if (typeof splatter_element_a != "undefined") {
+          splatter_element_a.setAttribute("class", "element splatter splatter-" + (splatter_element_selector & 15) + " splatter-transition")
           splatter_element_selector = (splatter_element_selector + 3) & 15
-          splatter_element.setAttribute("style", "left: " + enemy_offset_left + "px; top: " + enemy_offset_top + "px;")
+          splatter_element_a.setAttribute("style", "left: " + enemy_offset_left + "px; top: " + enemy_offset_top + "px;")
 
           setTimeout(function() {
-            splatter_element.setAttribute("fade-out", "")
+            splatter_element_a.setAttribute("fade-out", "")
 
             setTimeout(function() {
-              splatter_element.removeAttribute("style")
-              splatter_element.removeAttribute("fade-out")
-              splatter_element.setAttribute("class", "splatter-hidden")
-              splatter_elements.push(splatter_element)
-            }, 400)
-          }, 400)
+              splatter_element_a.removeAttribute("style")
+              splatter_element_a.removeAttribute("fade-out")
+              splatter_element_a.setAttribute("class", "splatter-hidden")
+              splatter_elements.push(splatter_element_a)
+            }, 250)
+          }, 250)
+
+          const splatter_element_b = splatter_elements.pop()
+
+          if (typeof splatter_element_b != "undefined") {
+            splatter_element_b.setAttribute("class", "element splatter splatter-" + (splatter_element_selector & 15) + " splatter-transition")
+            splatter_element_selector = (splatter_element_selector + 10) & 15
+            splatter_element_b.setAttribute("style", "left: " + enemy_offset_left + "px; top: " + enemy_offset_top + "px;")
+
+            setTimeout(function() {
+              splatter_element_b.setAttribute("fade-out", "")
+
+              setTimeout(function() {
+                splatter_element_b.removeAttribute("style")
+                splatter_element_b.removeAttribute("fade-out")
+                splatter_element_b.setAttribute("class", "splatter-hidden")
+                splatter_elements.push(splatter_element_b)
+              }, 250)
+            }, 250)
+          }
         }
       })
 
@@ -949,13 +1021,13 @@
       enemy_move_states[enemy_id] = false
     }
 
-    const enemy_move_ids = Array(26)
-    const enemy_move_speeds = Array(26)
-    const enemy_move_states = Array(26)
-    const enemy_offsets_bottom = Array(26)
-    const enemy_offsets_left = Array(26)
-    const enemy_offsets_right = Array(26)
-    const enemy_offsets_top = Array(26)
+    const enemy_move_ids = Array(34)
+    const enemy_move_speeds = Array(34)
+    const enemy_move_states = Array(34)
+    const enemy_offsets_bottom = Array(34)
+    const enemy_offsets_left = Array(34)
+    const enemy_offsets_right = Array(34)
+    const enemy_offsets_top = Array(34)
 
     const on_document_ready = function(callback) {
       if (document.readyState != "complete") {
@@ -967,7 +1039,7 @@
       }
     }
 
-    const pieces_elements = Array(10)
+    const pieces_elements = Array(16)
 
     const player_die = function() {
       clearInterval(player_weapon_use_id)
@@ -1102,7 +1174,7 @@
     }
 
     const player_weapon_activation_zone_element = bounds_element.appendChild(document.createElement("div"))
-    const player_weapon_effect_elements = Array(15)
+    const player_weapon_effect_elements = Array(16)
     const player_weapon_element = document.createElement("div")
 
     const player_weapon_muzzle_flash = function() {
@@ -1961,7 +2033,7 @@
         }
       }
     ]
-    const splatter_elements = Array(10)
+    const splatter_elements = Array(16)
 
     const wave_initialize = function() {
       let enemy_initialize_state = false
@@ -1970,7 +2042,7 @@
       let randomized_enemy_offset = randomness
       let randomized_enemy_offset_state = randomness & 65535
 
-      while (i != 26) {
+      while (i != 34) {
         enemy_healths[i] = 100
         enemy_offsets_map_horizontal[i] = {}
         enemy_offsets_map_vertical[i] = {}
@@ -2021,7 +2093,7 @@
 
         enemy_initialize_state = true
 
-        if (i != 26) {
+        if (i != 34) {
           let enemy_offset_left = enemy_offsets_left[i]
           let enemy_offset_top = enemy_offsets_top[i]
 
@@ -2065,7 +2137,7 @@
 
         j = 0
 
-        while (j != 26) {
+        while (j != 34) {
           if (enemy_alive_states[j] == true) {
             enemy_initialize_state = false
             return
@@ -2131,11 +2203,11 @@
             clearInterval(title_screen_id)
             title_screen_prompt_element.classList.add("hidden")
 
-            while (i != 10) {
+            while (i != 16) {
               bits_elements[i] = document.createElement("div")
               bits_elements[i].setAttribute("class", "bits-hidden")
               enemy_elements[i] = bounds_element.appendChild(document.createElement("div"))
-              enemy_move_speeds[i] = i & 3
+              enemy_move_speeds[i] = (i & 3) + 1
               enemy_move_states[i] = false
               pieces_elements[i] = document.createElement("div")
               pieces_elements[i].setAttribute("class", "pieces-hidden")
@@ -2174,7 +2246,7 @@
               i++
             }
 
-            while (i != 26) {
+            while (i != 34) {
               enemy_elements[i] = bounds_element.appendChild(document.createElement("div"))
               enemy_move_speeds[i] = i & 3
               enemy_move_states[i] = false
@@ -2236,14 +2308,17 @@
               }, 20)
             })
 
+            player_weapon_activation_zone_element.appendChild(document.createElement("div"))
             player_weapon_activation_zone_element.setAttribute("style", "left: 332px; top: -34px;")
             player_weapon_activation_zone_element.setAttribute("class", "element player-weapon-activation-zone")
 
             setTimeout(function() {
+              let i = 0
               let player_weapon_activated = 0
               let player_weapon_activation_zone_id = 0
               let player_weapon_activation_zone_size = 160
               let player_weapon_activation_zone_size_half = 80
+              const player_weapon_activation_zone_pulse_element = player_weapon_activation_zone_element.querySelector("div")
 
               setInterval(function() {
                 clearInterval(player_weapon_activation_zone_id)
@@ -2285,6 +2360,7 @@
                       (player_offset_top + 28) >= (player_weapon_activation_zone_offset_top + (Math.abs(player_weapon_activation_zone_offset_left_size_half - (player_offset_left + 14)) * 0.34))
                     ) {
                       player_weapon_activation_zone_element.classList.add("active")
+                      player_weapon_activation_zone_pulse_element.classList.remove("pulse")
                       player_weapon_delay_maximum = 3
                       player_weapon_equipped = player_weapon_activated
                       player_weapon_activation_zone_state = false
@@ -2292,7 +2368,14 @@
                     }
 
                     player_weapon_activation_zone_element.classList.remove("active")
-                    player_weapon_delay_maximum = 6
+                    i++
+
+                    if (i == 3) {
+                      i = 0
+                      player_weapon_activation_zone_pulse_element.classList.toggle("pulse")
+                    }
+
+                    player_weapon_delay_maximum = 5
                     player_weapon_equipped = 2
                     player_weapon_activation_zone_state = false
                   }, 100)
@@ -2364,11 +2447,11 @@
                 randomness_state = true
                 i++
 
-                if (i == 26) {
+                if (i == 34) {
                   i = 0
                 }
 
-                enemy_move_speeds[i] = randomness_segmented_medium_a
+                enemy_move_speeds[i] = randomness_segmented_medium_a + 1
                 randomness_segmented_large_a = randomness & 7
                 randomness_segmented_large_b = (randomness >> 3) & 7
                 randomness_segmented_large_c = (randomness >> 6) & 7
