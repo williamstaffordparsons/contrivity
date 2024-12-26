@@ -860,7 +860,7 @@
     }
 
     const player_element = document.createElement("div")
-    const player_inputs = Array(151)
+    const player_inputs = Array(120)
 
     const player_move = function() {
       if (player_inputs_move_state == false) {
@@ -997,8 +997,8 @@
     }
 
     const player_weapon_position = function() {
-      if (player_inputs[150] == 1) {
-        if (player_inputs[141] == 1) {
+      if (player_inputs[112] == 1) {
+        if (player_inputs[101] == 1) {
           player_weapon_offset_increment_left = -17
           player_weapon_offset_increment_top = -17
           player_weapon_offset_left = player_offset_left - 9
@@ -1007,7 +1007,7 @@
           return
         }
 
-        if (player_inputs[147] == 1) {
+        if (player_inputs[105] == 1) {
           player_weapon_offset_increment_left = 17
           player_weapon_offset_increment_top = -17
           player_weapon_offset_left = player_offset_left + 25
@@ -1024,8 +1024,8 @@
         return
       }
 
-      if (player_inputs[147] == 1) {
-        if (player_inputs[133] == 1) {
+      if (player_inputs[105] == 1) {
+        if (player_inputs[111] == 1) {
           player_weapon_offset_increment_left = 17
           player_weapon_offset_increment_top = 17
           player_weapon_offset_left = player_offset_left + 25
@@ -1042,8 +1042,8 @@
         return
       }
 
-      if (player_inputs[141] == 1) {
-        if (player_inputs[133] == 1) {
+      if (player_inputs[101] == 1) {
+        if (player_inputs[111] == 1) {
           player_weapon_offset_increment_left = -17
           player_weapon_offset_increment_top = 17
           player_weapon_offset_left = player_offset_left - 9
@@ -1060,7 +1060,7 @@
         return
       }
 
-      if (player_inputs[133] == 1) {
+      if (player_inputs[111] == 1) {
         player_weapon_offset_increment_left = 0
         player_weapon_offset_increment_top = 23
         player_weapon_offset_left = player_offset_left + 8
@@ -2057,17 +2057,17 @@
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: " + ((innerHeight >> 1) - 189) + "px;"
         )
-        player_inputs[133] = 0
-        player_inputs[141] = 0
-        player_inputs[147] = 0
-        player_inputs[150] = 0
+        player_inputs[101] = 0
+        player_inputs[105] = 0
+        player_inputs[111] = 0
+        player_inputs[112] = 0
 
         document.querySelector("body").addEventListener(
           "keydown",
           function(event) {
             if (event.key.indexOf("r") == 1) {
               event.preventDefault()
-              player_inputs[(event.key.charCodeAt(0) + event.key.charCodeAt(5))] = 1
+              player_inputs[event.key.charCodeAt(6)] = 1
               return
             }
 
@@ -2080,7 +2080,7 @@
           function(event) {
             if (event.key.indexOf("r") == 1) {
               event.preventDefault()
-              player_inputs[(event.key.charCodeAt(0) + event.key.charCodeAt(5))] = 0
+              player_inputs[event.key.charCodeAt(6)] = 0
               return
             }
 
@@ -2137,12 +2137,12 @@
         bounds_element.append(player_element)
         player_inputs[97] = 0
         player_inputs[100] = 0
+        player_inputs[101] = 0
+        player_inputs[105] = 0
+        player_inputs[111] = 0
+        player_inputs[112] = 0
         player_inputs[115] = 0
         player_inputs[119] = 0
-        player_inputs[133] = 0
-        player_inputs[141] = 0
-        player_inputs[147] = 0
-        player_inputs[150] = 0
 
         setTimeout(function() {
           let player_move_state = false
@@ -2182,7 +2182,7 @@
 
             player_inputs_state = true
             player_inputs_move_state = (player_inputs[97] | player_inputs[100] | player_inputs[115] | player_inputs[119]) != 0
-            player_inputs_weapon_use_state = (player_inputs[133] | player_inputs[141] | player_inputs[147] | player_inputs[150]) != 0
+            player_inputs_weapon_use_state = (player_inputs[101] | player_inputs[105] | player_inputs[111] | player_inputs[112]) != 0
             player_inputs_state = false
           }, 20)
         })
