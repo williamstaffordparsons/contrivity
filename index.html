@@ -613,17 +613,15 @@
       enemy_offsets_right[enemy_id] = enemy_offset_left_next + 28
       enemy_offsets_top[enemy_id] = enemy_offset_top_next
 
-      setTimeout(function() {
-        if (
-          (enemy_offsets_right[enemy_id] - 14) >= player_offset_left &&
-          (enemy_offsets_bottom[enemy_id] - 14) >= player_offset_top &&
-          enemy_offsets_left[enemy_id] <= (player_offset_left + 14) &&
-          enemy_offsets_top[enemy_id] <= (player_offset_top + 14) &&
-          player_alive_state == true
-        ) {
-          player_die()
-        }
-      })
+      if (
+        (enemy_offsets_right[enemy_id] - 14) >= player_offset_left &&
+        (enemy_offsets_bottom[enemy_id] - 14) >= player_offset_top &&
+        enemy_offsets_left[enemy_id] <= (player_offset_left + 14) &&
+        enemy_offsets_top[enemy_id] <= (player_offset_top + 14) &&
+        player_alive_state == true
+      ) {
+        player_die()
+      }
 
       if (enemy_offset_left_previous > 0) {
         enemy_offset_left_previous >>= 4
@@ -854,7 +852,7 @@
     }
 
     const player_element = document.createElement("div")
-    const player_inputs = Array(120)
+    const player_inputs = Array(120).fill(0)
 
     const player_move = function() {
       if (player_inputs_move_state == false) {
@@ -2051,10 +2049,6 @@
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: " + ((innerHeight >> 1) - 189) + "px;"
         )
-        player_inputs[101] = 0
-        player_inputs[105] = 0
-        player_inputs[111] = 0
-        player_inputs[112] = 0
 
         document.querySelector("body").addEventListener(
           "keydown",
@@ -2130,14 +2124,6 @@
         player_element.setAttribute("class", "element player")
         player_element.setAttribute("style", "left: " + player_offset_left + "px; top: " + player_offset_top + "px;")
         bounds_element.append(player_element)
-        player_inputs[97] = 0
-        player_inputs[100] = 0
-        player_inputs[101] = 0
-        player_inputs[105] = 0
-        player_inputs[111] = 0
-        player_inputs[112] = 0
-        player_inputs[115] = 0
-        player_inputs[119] = 0
 
         setTimeout(function() {
           let player_move_state = false
