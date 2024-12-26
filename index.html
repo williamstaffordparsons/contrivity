@@ -54,7 +54,7 @@
           border-top-color: #bbb;
         }
           .enemy.strong:before {
-            background-color: #bbb;
+            background-color: #888;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
             border-top-left-radius: 10px;
@@ -97,10 +97,6 @@
           border-top-color: #fff;
           z-index: 5;
         }
-          .enemy.hit.strong:before,
-          .pieces-small-player div[class] {
-            background-color: #fff;
-          }
       .pieces-large,
       .pieces-small {
         z-index: 2;
@@ -330,20 +326,16 @@
         height: 20px;
         width: 20px;
       }
-        .player[recoil="0"] {margin-top: -2px;}
-        .player[recoil="1"] {margin-top: 2px;}
-        .player[recoil="2"] {margin-left: -3px;}
-        .player[recoil="3"] {margin-left: 3px;}
       .player,
       .player-weapon {
         background-color: #000;
+        transition-duration: 0.04s, 0.04s;
+        transition-property: margin-left, margin-top;
+        transition-timing-function: steps(10, jump-none);
         z-index: 6;
       }
       .player-weapon {
         left: -12px;
-        transition-duration: 0.05s, 0.05s;
-        transition-property: margin-left, margin-top;
-        transition-timing-function: steps(10, jump-none);
         width: 4px;
       }
       .player-weapon,
@@ -363,10 +355,10 @@
       }
       .player-weapon-activation-zone,
       .player-weapon-activation-zone div {
-        border-bottom-left-radius: 200px;
-        border-bottom-right-radius: 200px;
-        border-top-left-radius: 200px;
-        border-top-right-radius: 200px;
+        border-bottom-left-radius: 130px;
+        border-bottom-right-radius: 130px;
+        border-top-left-radius: 130px;
+        border-top-right-radius: 130px;
         transition-duration: 0.1s, 0.1s, 0.1s, 0.1s, 0.1s, 0.2s, 0.2s, 0.2s, 0.2s, 0.1s;
         transition-property: border-bottom-color, border-left-color, border-right-color, border-top-color, height, left, padding-left, padding-top, top, width;
         transition-timing-function: steps(13, jump-none);
@@ -403,10 +395,10 @@
             top: -14px;
           }
       .player-weapon-muzzle-flash {
-        border-bottom-left-radius: 128px;
-        border-bottom-right-radius: 128px;
-        border-top-left-radius: 128px;
-        border-top-right-radius: 128px;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
         height: 0;
         width: 0;
         z-index: 4;
@@ -621,15 +613,17 @@
       enemy_offsets_right[enemy_id] = enemy_offset_left_next + 28
       enemy_offsets_top[enemy_id] = enemy_offset_top_next
 
-      if (
-        (enemy_offsets_right[enemy_id] - 14) >= player_offset_left &&
-        (enemy_offsets_bottom[enemy_id] - 14) >= player_offset_top &&
-        enemy_offsets_left[enemy_id] <= (player_offset_left + 14) &&
-        enemy_offsets_top[enemy_id] <= (player_offset_top + 14) &&
-        player_alive_state == true
-      ) {
-        player_die()
-      }
+      setTimeout(function() {
+        if (
+          (enemy_offsets_right[enemy_id] - 14) >= player_offset_left &&
+          (enemy_offsets_bottom[enemy_id] - 14) >= player_offset_top &&
+          enemy_offsets_left[enemy_id] <= (player_offset_left + 14) &&
+          enemy_offsets_top[enemy_id] <= (player_offset_top + 14) &&
+          player_alive_state == true
+        ) {
+          player_die()
+        }
+      })
 
       if (enemy_offset_left_previous > 0) {
         enemy_offset_left_previous >>= 4
@@ -1648,7 +1642,7 @@
               player_weapon_element.setAttribute("recoil", randomness_segmented_medium_b)
               i++
 
-              if (i < 5) {
+              if (i < 3) {
                 return
               }
 
@@ -2112,6 +2106,8 @@
             j++
           }
 
+          pieces_small_elements[i] = bounds_element.appendChild(pieces_small_elements[i])
+
           while (j != 9) {
             const pieces_large_element_child_element = document.createElement("div")
 
@@ -2121,7 +2117,6 @@
           }
 
           pieces_large_elements[i] = bounds_element.appendChild(pieces_large_elements[i])
-          pieces_small_elements[i] = bounds_element.appendChild(pieces_small_elements[i])
           i++
         }
 
