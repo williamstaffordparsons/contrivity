@@ -36,15 +36,9 @@
       }
       .enemy {
         background-color: #000;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        height: 20px;
         transition-duration: 0.13s, 0.13s;
         transition-property: left, top;
         transition-timing-function: steps(15, jump-none);
-        width: 20px;
         z-index: 4;
       }
         .enemy.strong {
@@ -55,10 +49,6 @@
         }
           .enemy.strong:before {
             background-color: #888;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
             content: "";
             height: 8px;
             left: 6px;
@@ -66,12 +56,30 @@
             top: 6px;
             width: 8px;
           }
+          .enemy.strong:before,
+          .pieces-large div,
+          .pieces-small div,
+          .player-weapon {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+          }
         .enemy.weak {
           border-bottom-color: #888;
           border-left-color: #888;
           border-right-color: #888;
           border-top-color: #888;
         }
+      .enemy,
+      .player {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 20px;
+        width: 20px;
+      }
       .enemy,
       .player,
       .player-weapon,
@@ -104,10 +112,6 @@
         .pieces-large div,
         .pieces-small div {
           background-color: #222;
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
           position: absolute;
         }
       .pieces-large-0 .pieces-large-0 {height: 4px; left: 18px; top: 38px; width: 4px;}
@@ -318,14 +322,6 @@
         transition-property: background-color, left, top;
         transition-timing-function: steps(20, jump-none);
       }
-      .player {
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-        height: 20px;
-        width: 20px;
-      }
       .player,
       .player-weapon {
         background-color: #000;
@@ -340,10 +336,6 @@
       }
       .player-weapon,
       .player-weapon-projectile-casing {
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
         height: 4px;
       }
       .player-weapon-activation-zone {
@@ -404,16 +396,16 @@
         z-index: 4;
       }
       .player-weapon-projectile {
-        border-bottom-left-radius: 16px;
-        border-bottom-right-radius: 16px;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
         height: 8px;
         width: 8px;
       }
       .player-weapon-projectile,
       .player-weapon-projectile-casing {
         background-color: #fff;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
         z-index: 5;
       }
     </style>
