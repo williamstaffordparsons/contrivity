@@ -788,17 +788,6 @@
     const enemy_offsets_left = Array(48)
     const enemy_offsets_right = Array(48)
     const enemy_offsets_top = Array(48)
-
-    const on_document_ready = function(callback) {
-      if (document.readyState != "complete") {
-        setTimeout(function() {
-          on_document_ready(callback)
-        }, 10)
-      } else {
-        callback()
-      }
-    }
-
     const pieces_large_elements = Array(16)
     const pieces_small_elements = Array(16)
 
@@ -2020,7 +2009,9 @@
     }
 
     onload = function() {
-      on_document_ready(function() {
+      let play_initialize_state = false
+
+      const play_initialize = function() {
         bounds_container_element.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: " + ((innerHeight >> 1) - 189) + "px;"
@@ -2152,8 +2143,14 @@
           let i = 0
           let player_weapon_activated = 0
           let player_weapon_activation_zone_id = 0
+          let player_weapon_activation_zone_move_state = false
 
           const player_weapon_activation_zone_move = function() {
+            if (player_weapon_activation_zone_move_state == true) {
+              return
+            }
+
+            player_weapon_activation_zone_move_state = true
             clearInterval(player_weapon_activation_zone_id)
             player_weapon_activated ^= 1
             player_weapon_activation_zone_size = (randomness & 63) + 130
@@ -2217,6 +2214,8 @@
                 player_weapon_activation_zone_state = false
               }, 100)
             })
+
+            player_weapon_activation_zone_move_state = false
           }
 
           let player_weapon_activation_zone_size = 160
@@ -2317,7 +2316,22 @@
         })
 
         wave_initialize()
-      })
+      }
+
+      const play_initialize_id = setInterval(function() {
+        if (play_initialize_state == true) {
+          return
+        }
+
+        play_initialize_state = true
+
+        if (document.readyState == "complete") {
+          clearInterval(play_initialize_id)
+          play_initialize()
+        }
+
+        play_initialize_state = false
+      }, 100)
     }
 
     onresize = function() {
