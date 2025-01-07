@@ -17,19 +17,16 @@
         margin-right: 0;
         margin-top: 0;
       }
-      .bounds,
-      .bounds-container {
-        height: 378px;
-        width: 672px;
-      }
-      .bounds-container {
+      .bounds {
         background-color: #000;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
+        height: 378px;
         overflow-x: hidden;
         overflow-y: hidden;
+        width: 672px;
       }
       .element {
         position: absolute;
@@ -38,7 +35,7 @@
         background-color: #000;
         transition-duration: 0.13s, 0.13s;
         transition-property: left, top;
-        transition-timing-function: steps(15, jump-none);
+        transition-timing-function: steps(20, jump-none);
         z-index: 4;
       }
         .enemy.strong {
@@ -411,9 +408,7 @@
     </style>
   </head>
   <body>
-    <div class="bounds-container element">
-      <div class="bounds element"></div>
-    </div>
+    <div class="bounds element"></div>
   </body>
   <script type="text/javascript">
     "use strict"
@@ -421,13 +416,13 @@
     let enemies_count = 8
     let enemy_offsets_map_horizontal = Array(48)
     let enemy_offsets_map_vertical = Array(57)
+    let pieces_large_element_selector = Date.now() & 15
+    let pieces_small_element_selector = pieces_large_element_selector
     let player_alive_state = true
     let player_inputs_move_state = false
     let player_inputs_weapon_use_state = false
-    let pieces_large_element_selector = Date.now() & 15
     let player_offset_left = 322
     let player_offset_top = 175
-    let pieces_small_element_selector = pieces_large_element_selector
     let player_weapon_equipped = 2
     let player_weapon_muzzle_flash_element
     let player_weapon_muzzle_flash_state = false
@@ -456,7 +451,6 @@
     let randomness_segmented_small_d = 0
     let randomness_segmented_small_e = 0
     let randomness_segmented_small_f = 0
-    const bounds_container_element = document.querySelector(".bounds-container")
     const bounds_element = document.querySelector(".bounds")
     const enemy_alive_states = Array(48)
     const enemy_elements = Array(48)
@@ -491,22 +485,6 @@
         enemy_offsets_right[enemy_id] = -34
         enemy_offsets_top[enemy_id] = -34
       }, 130)
-
-      setTimeout(function() {
-        let i = 0
-
-        const bounds_recoil_id = setInterval(function() {
-          bounds_element.setAttribute("recoil", randomness_segmented_medium_a)
-          i++
-
-          if (i < 3) {
-            return
-          }
-
-          clearInterval(bounds_recoil_id)
-          bounds_element.removeAttribute("recoil")
-        }, 15)
-      })
 
       setTimeout(function() {
         if (enemy_offset_left > 0) {
@@ -1339,22 +1317,6 @@
           })
 
           setTimeout(function() {
-            setTimeout(function() {
-              bounds_element.setAttribute("recoil", randomness_segmented_medium_a)
-
-              setTimeout(function() {
-                bounds_element.setAttribute("recoil", randomness_segmented_medium_b)
-
-                setTimeout(function() {
-                  bounds_element.removeAttribute("recoil")
-                }, 15)
-              }, 15)
-            }, 15)
-
-            player_weapon_muzzle_flash()
-          })
-
-          setTimeout(function() {
             let i = 0
 
             const player_weapon_recoil_id = setInterval(function() {
@@ -1371,6 +1333,7 @@
               player_weapon_element.removeAttribute("recoil")
             }, 25)
 
+            player_weapon_muzzle_flash()
             player_weapon_projectile_casing_eject("8")
           })
         }
@@ -1586,18 +1549,6 @@
           })
 
           setTimeout(function() {
-            setTimeout(function() {
-              bounds_element.setAttribute("recoil", randomness_segmented_medium_a)
-
-              setTimeout(function() {
-                bounds_element.removeAttribute("recoil")
-              }, 15)
-            }, 15)
-
-            player_weapon_muzzle_flash()
-          })
-
-          setTimeout(function() {
             let i = 0
 
             const player_weapon_recoil_id = setInterval(function() {
@@ -1614,6 +1565,7 @@
               player_weapon_element.removeAttribute("recoil")
             }, 25)
 
+            player_weapon_muzzle_flash()
             player_weapon_projectile_casing_eject("6")
           })
         }
@@ -1836,18 +1788,6 @@
           })
 
           setTimeout(function() {
-            setTimeout(function() {
-              bounds_element.setAttribute("recoil", randomness_segmented_medium_a)
-
-              setTimeout(function() {
-                bounds_element.removeAttribute("recoil")
-              }, 15)
-            }, 15)
-
-            player_weapon_muzzle_flash()
-          })
-
-          setTimeout(function() {
             let i = 0
 
             const player_weapon_recoil_id = setInterval(function() {
@@ -1864,6 +1804,7 @@
               player_weapon_element.removeAttribute("recoil")
             }, 25)
 
+            player_weapon_muzzle_flash()
             player_weapon_projectile_casing_eject("6")
           })
         }
@@ -2012,7 +1953,7 @@
       let play_initialize_state = false
 
       const play_initialize = function() {
-        bounds_container_element.setAttribute(
+        bounds_element.setAttribute(
           "style",
           "left: " + ((innerWidth >> 1) - 336) + "px; top: " + ((innerHeight >> 1) - 189) + "px;"
         )
@@ -2335,7 +2276,7 @@
     }
 
     onresize = function() {
-      bounds_container_element.setAttribute("style", "left: " + ((innerWidth >> 1) - 336) + "px; top:" + ((innerHeight >> 1) - 189) + "px;")
+      bounds_element.setAttribute("style", "left: " + ((innerWidth >> 1) - 336) + "px; top:" + ((innerHeight >> 1) - 189) + "px;")
     }
   </script>
 </html>
